@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>HarmonyQuest 🎵</title>
+<style>
+* {box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body {background:#0d0d1a;color:#e8e8f0;font-family:system-ui,sans-serif;min-height:100vh}
+.page {display:none;min-height:100vh;padding:20px 12px;justify-content:flex-start}
+.page.on {display:flex;flex-direction:column;align-items:center}
+h1 {font-size:clamp(1.8rem,5vw,2.6rem);font-weight:900;margin:20px 0 10px}
+h1 span {color:#e94560}
+h2 {font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-align:center}
+.sub {color:#8888aa;margin-bottom:28px;text-align:center;font-size:clamp(.8rem,3vw,.9rem);max-width:90%}
+.btn {display:block;width:100%;max-width:320px;padding:15px 20px;margin:7px auto;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;text-align:center;transition:all .15s}
+.btn:active {opacity:.85;transform:scale(.98)}
+.r {background:linear-gradient(135deg,#e94560,#c73652);color:#fff}
+.p {background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
+.t {background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff}
+.o {background:rgba(255,255,255,.08);color:#e8e8f0;border:1.5px solid #333355}
+.sm {padding:12px 20px;font-size:.9rem;width:auto}
+.btn-row {display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.cards {display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;max-width:600px;width:100%}
+.card {background:#16213e;border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;border:2px solid transparent;flex:1;min-width:130px;max-width:180px;transition:all .2s}
+.card:active {transform:scale(.95)}
+.card.sel {border-color:#e94560;box-shadow:0 0 20px rgba(233,69,96,.3)}
+.card .ic {font-size:clamp(1.6rem,4vw,1.8rem);margin-bottom:8px;display:block}
+.card b {font-size:.95rem;font-weight:800;display:block;margin-bottom:4px}
+.card p {font-size:.75rem;color:#8888aa;line-height:1.3}
+#pg-board {padding-top:12px}
+.topbar {display:flex;justify-content:space-between;align-items:center;width:100%;max-width:900px;margin-bottom:12px;flex-wrap:wrap;gap:12px}
+.badge {background:#16213e;border-radius:20px;padding:8px 14px;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:4px}
+.badge span {color:#f0a500;font-weight:900}
+.red-badge {color:#e94560}
+.progbar {width:100%;max-width:900px;height:6px;background:#1e1e3a;border-radius:3px;margin-bottom:12px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.progfill {height:100%;background:linear-gradient(90deg,#7c3aed 0%,#e94560 100%);border-radius:3px;transition:width .4s ease-out;box-shadow:0 0 10px rgba(233,69,96,.4)}
+.legend {display:flex;gap:12px;flex-wrap:wrap;max-width:900px;width:100%;margin-bottom:12px;padding:12px;background:rgba(22,33,62,.5);border-radius:12px;border:1px solid #2a2a4a}
+.leg-item {display:flex;align-items:center;gap:6px;font-size:clamp(.7rem,1vw,.8rem);color:#8888aa;font-weight:500}
+.leg-dot {width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 4px rgba(0,0,0,.5)}
+.board {display:grid;gap:clamp(4px,1.2vw,6px);width:100%;max-width:900px;margin-bottom:16px}
+@media (max-width:600px) {.board {grid-template-columns:repeat(8,1fr)}}
+@media (max-width:450px) {.board {grid-template-columns:repeat(6,1fr)}}
+@media (min-width:601px) {.board {grid-template-columns:repeat(10,1fr)}}
+.cell {aspect-ratio:1;border-radius:12px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;position:relative;transition:all .2s cubic-bezier(.4,0,.2,1);user-select:none}
+.cell:active {transform:scale(.95)}
+.cell.cur {transform:scale(1.15) translateZ(0);box-shadow:0 8px 25px rgba(240,165,0,.6);border-color:#f0a500 !important;z-index:10}
+.cell.vis {opacity:.4}
+.tok {position:absolute;top:-2px;right:-2px;font-size:.8rem;z-index:20;background:rgba(240,165,0,.9);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:900}
+.cell-icon {font-size:clamp(1rem,2.5vw,1.2rem);line-height:1;margin-bottom:2px;display:block}
+.cell-name {font-size:clamp(.45rem,1vw,.55rem);color:rgba(255,255,255,.7);line-height:1.2}
+.ct-start {background:linear-gradient(135deg,#2a4a10,#1a3a00);border-color:#4a7a20}
+.ct-end {background:linear-gradient(135deg,#4a3a10,#3a2a00);border-color:#f0a500}
+.ct-scala {background:linear-gradient(135deg,#1a2a4a,#0a1a3a);border-color:#3a5aaa}
+.ct-accordo {background:linear-gradient(135deg,#2a1a4a,#1a0a3a);border-color:#6a3aaa}
+.ct-ritmo {background:linear-gradient(135deg,#3a1a2a,#2a0a1a);border-color:#aa2a5a}
+.ct-modo {background:linear-gradient(135deg,#1a3a2a,#0a2a1a);border-color:#2aaa6a}
+.ct-audio {background:linear-gradient(135deg,#1a2a38,#0a1a28);border-color:#00aacc;box-shadow:inset 0 0 8px rgba(0,170,204,.3)}
+.ct-bonus {background:linear-gradient(135deg,#2a2a10,#1a1a00);border-color:#ffaa00}
+.ct-penalty {background:linear-gradient(135deg,#3a1010,#2a0808);border-color:#ff4444}
+.ct-wild {background:linear-gradient(135deg,#2a1f10,#1a0f00);border-color:#ff8800}
+.ct-prog {background:linear-gradient(135deg,#2a1a3a,#1a0a28);border-color:#aa00cc}
+.qbox {background:linear-gradient(135deg,#16213e,#0f1628);border-radius:16px;padding:20px;width:100%;max-width:900px;border:1px solid #2a3a4a;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.qcat {font-size:.75rem;color:#0f9b8e;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.qtxt {font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:700;margin-bottom:20px;line-height:1.5;text-align:center}
+.agrid {display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px}
+.abtn {background:#1e1e3a;border:2px solid #2a2a4a;border-radius:12px;padding:14px 16px;text-align:center;color:#e8e8f0;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .2s;-webkit-appearance:none}
+.abtn:active {transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
+.abtn.ok {border-color:#0f9b8e!important;background:linear-gradient(135deg,#0f9b8e,#0d7a6f)!important;color:#fff!important;transform:scale(1.02)}
+.abtn.ko {border-color:#e94560!important;background:linear-gradient(135deg,#e94560,#c73652)!important;color:#fff!important}
+.fbk {margin-top:16px;font-weight:900;font-size:clamp(1rem,2.5vw,1.1rem);min-height:24px;padding:12px;border-radius:10px}
+.fbk.g {background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff;text-align:center}
+.fbk.b {background:linear-gradient(135deg,#e94560,#c73652);color:#fff;text-align:center}
+.hint {background:rgba(28,18,52,.8);border-left:4px solid #7c3aed;padding:12px 16px;border-radius:10px;font-size:.85rem;color:#b8b8d0;margin-top:12px;display:none;line-height:1.5}
+.drow {display:flex;gap:16px;align-items:center;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.dice {font-size:clamp(2.5rem,8vw,3.2rem);cursor:pointer;user-select:none;transition:transform .2s}
+.dice:active {transform:scale(1.1) rotate(90deg)}
+.dinfo {font-size:clamp(.85rem,2vw,.95rem);color:#8888aa;font-weight:500}
+.audio-btn {background:linear-gradient(135deg,#0a1a28,#081428);border:2px solid #00aacc;color:#00ccff;padding:16px 24px;border-radius:14px;font-weight:800;margin:12px 0;cursor:pointer;transition:all .2s;font-size:1rem}
+.audio-btn:active {background:linear-gradient(135deg,#00aacc,#0099aa);color:#000;transform:scale(1.02)}
+.ov {position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:1000}
+.ov.on {display:flex}
+.evcard {background:linear-gradient(135deg,#1a1a2e,#15152a);border-radius:24px;padding:40px 28px;max-width:360px;width:90%;text-align:center;border:3px solid #f0a500;box-shadow:0 20px 40px rgba(240,165,0,.3)}
+.stats {display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;justify-content:center}
+.sbox {background:#16213e;border-radius:16px;padding:16px 20px;text-align:center;min-width:90px}
+.sbox .sv {font-size:clamp(1.2rem,3vw,1.4rem);font-weight:900}
+.sbox .sl {font-size:.75rem;color:#8888aa;margin-top:4px}
+@media (max-width:500px) {.agrid{grid-template-columns:1fr}.cards{flex-direction:column;align-items:stretch}.card{min-width:unset;flex:1 1 100%}.legend{gap:8px;justify-content:center}.legend .leg-item{font-size:.7rem}}
+</style>
+</head>
+<body>
+
+<div id="pg-home" class="page on">
+  <h1>Harmony<span>Quest</span></h1>
+  <p class="sub">Gioco per imparare la teoria musicale con tabellone, audio e domande uniche</p>
+  <button class="btn r" id="b-start">▶ Inizia Gioco</button>
+  <button class="btn t" id="b-theory">📚 Teoria</button>
+  <button class="btn p" id="b-challenge">⚡ Sfida Rapida</button>
+  <div style="margin-top:32px;color:#8888aa;font-size:.85rem">
+    <div>✅ Responsive mobile</div>
+    <div>✅ Domande mai ripetute</div>
+    <div>✅ Riconoscimento audio</div>
+  </div>
+</div>
+
+<div id="pg-board" class="page">
+  <div class="topbar">
+    <span id="level-display" style="color:#8888aa;font-size:.9rem;font-weight:600">Livello: Intermedio</span>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="badge">
+        ⭐ <span id="score-display">0</span>
+      </div>
+      <div class="badge red-badge" id="timer-display" style="display:none">
+        ⏱ <span id="timer-count">15</span>s
+      </div>
+      <button class="btn o sm" id="audio-toggle">🔊</button>
+    </div>
+  </div>
+  <div class="progbar">
+    <div class="progfill" id="progress-bar"></div>
+  </div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#1a6aaa"></div><span>Scala ♭</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:#6a3aaa"></div><span>Accordo ♯</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:#00aacc"></div><span>Audio 🎵</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:#aa2a5a"></div><span>Ritmo ♪</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:#2aaa6a"></div><span>Modo 𝄐</span></div>
+    <div class="leg-item"><div class="leg-dot" style="background:#ffaa00"></div><span>Bonus ⭐</span></div>
+  </div>
+  <div class="board" id="game-board"></div>
+  <div class="qbox">
+    <div class="qcat" id="question-category">Preparati!</div>
+    <div class="qtxt" id="question-text">Tocca il dado per lanciare e iniziare l'avventura musicale 🎲</div>
+    <div class="agrid" id="answer-grid"></div>
+    <div class="fbk" id="feedback-message"></div>
+    <div class="hint" id="question-hint"></div>
+    <div class="drow">
+      <span class="dice" id="roll-dice">🎲</span>
+      <span class="dinfo" id="dice-info">Tocca per lanciare (1-6 caselle)</span>
+    </div>
+  </div>
+</div>
+
+<div id="pg-victory" class="page">
+  <div style="font-size:clamp(4rem,12vw,6rem);margin-bottom:20px">🏆</div>
+  <div id="final-score" style="font-size:clamp(2.5rem,7vw,3.5rem);font-weight:900;color:#f0a500;margin-bottom:24px">0</div>
+  <p style="color:#8888aa;margin-bottom:32px;font-size:clamp(1rem,2.5vw,1.2rem)">Hai completato il percorso!</p>
+  <div class="stats" id="victory-stats">
+    <div class="sbox"><div class="sv" id="stat-correct">0</div><div class="sl">Corrette</div></div>
+    <div class="sbox"><div class="sv" id="stat-wrong">0</div><div class="sl">Sbagliate</div></div>
+    <div class="sbox"><div class="sv" id="stat-streak">0</div><div class="sl">Max Streak</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn r" id="restart-game">🔁 Nuova Partita</button>
+    <button class="btn o" id="back-home">🏠 Home</button>
+  </div>
+</div>
+
+<div class="ov" id="modal-overlay">
+  <div class="evcard">
+    <div id="modal-icon" style="font-size:3.5rem;margin-bottom:16px">🃏</div>
+    <h2 id="modal-title" style="margin-bottom:12px;font-size:1.4rem">Evento Speciale</h2>
+    <p id="modal-description" style="color:#ccc;margin-bottom:24px;line-height:1.5;font-size:1rem">Descrizione dell'evento</p>
+    <button class="btn r" id="modal-confirm">OK!</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  // === GAME STATE ===
+  let gameState = {
+    level: 'intermediate',
+    mode: 'normal',
+    position: 0,
+    score: 0,
+    correct: 0,
+    wrong: 0,
+    streak: 0,
+    maxStreak: 0,
+    audioEnabled: true,
+    usedQuestions: {beginner: [], intermediate: [], advanced: [], audio: []},
+    totalCells: 40,
+    timeLeft: 15,
+    timerInterval: null
+  };
+
+  // === AUDIO CONTEXT ===
+  let audioContext = null;
+
+  // === QUESTIONS DATABASE ===
+  const questionsDB = {
+    beginner: [
+      {category: 'scala', q: 'Quale scala non ha alterazioni?', a: ['Do Maggiore', 'Sol Maggiore', 'Fa Maggiore'], correct: 0, hint: 'Tutti tasti bianchi del pianoforte' },
+      {category: 'ritmo', q: 'In 4/4 ci sono?', a: ['4 quarti', '3 quarti', '6 ottavi'], correct: 0, hint: 'Il numeratore indica i tempi' },
+      {category: 'accordo', q: 'Triade Do Maggiore?', a: ['Do-Mi-Sol', 'Do-Mib-Sol', 'Do-Fa-Sol'], correct: 0, hint: '1a-3a-5a grado' }
+    ],
+    intermediate: [
+      {category: 'progressione', q: 'II-V-I in Do?', a: ['Rem7-Sol7-DoMaj7', 'Do-Fa-Sol', 'Lam-Fa-Do'], correct: 0, hint: 'Standard jazz' },
+      {category: 'modo', q: 'Dorico parte dal?', a: ['II grado', 'VI grado', 'IV grado'], correct: 0, hint: 'Scala minore con VI maggiore' },
+      {category: 'settime', q: 'Sol7 contiene?', a: ['Fa naturale', 'Fa#', 'Sib'], correct: 0, hint: 'b7 del V grado' }
+    ],
+    advanced: [
+      {category: 'modulazione', q: 'Sostituzione tritono?', a: ['bII7 per V7', 'IV per I', 'VI per II'], correct: 0, hint: 'Sol7 → Reb7 in Do' },
+      {category: 'ritmo', q: '6/8 è?', a: ['Binario composto', 'Ternario semplice', 'Quadruplo'], correct: 0, hint: '2 gruppi di 3' }
+    ],
+    audio: [
+      {q: 'Quale intervallo?', a: ['Terza magg.', 'Quarta giu.', 'Quinta giu.', 'Sesta magg.'], correct: 1, frequencies: [440, 554.37], hint: '"Amazing Grace"', category: 'audio'},
+      {q: 'Triade?', a: ['Maggiore', 'Minore', 'Diminuita'], correct: 0, frequencies: [440, 554.37, 659.25], hint: 'Suono luminoso', category: 'audio'}
+    ]
+  };
+
+  // === DOM ELEMENTS ===
+  const els = {};
+  ['pg-home','pg-board','pg-victory','modal-overlay','b-start','b-theory','roll-dice','audio-toggle','game-board','score-display','progress-bar','question-category','question-text','answer-grid','feedback-message','dice-info','modal-icon','modal-title','modal-description','modal-confirm'].forEach(id => {
+    els[id] = document.getElementById(id);
+  });
+
+  // === UTILITY FUNCTIONS ===
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+    document.getElementById(pageId).classList.add('on');
+    window.scrollTo(0, 0);
+  }
+
+  function showModal(icon, title, desc) {
+    els['modal-icon'].textContent = icon;
+    els['modal-title'].textContent = title;
+    els['modal-description'].textContent = desc;
+    els['modal-overlay'].classList.add('on');
+  }
+
+  function hideModal() {
+    els['modal-overlay'].classList.remove('on');
+  }
+
+  function updateUI() {
+    els['score-display'].textContent = gameState.score;
+    els['progress-bar'].style.width = (gameState.position / gameState.totalCells * 100) + '%';
+  }
+
+  function getRandomUniqueQuestion(level = gameState.level, category = null) {
+    const poolKey = category || level;
+    const pool = questionsDB[poolKey] || [];
+    const used = gameState.usedQuestions[poolKey] || [];
+    const available = pool.filter((_, index) => !used.includes(index));
+
+    if (available.length === 0) {
+      gameState.usedQuestions[poolKey] = [];
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    const selectedIndex = Math.floor(Math.random() * available.length);
+    const questionIndex = pool.indexOf(available[selectedIndex]);
+    gameState.usedQuestions[poolKey].push(questionIndex);
+    return pool[questionIndex];
+  }
+
+  function playAudioSequence(frequencies) {
+    if (!gameState.audioEnabled || !audioContext) return;
+
+    if (audioContext.state === 'suspended') audioContext.resume();
+
+    frequencies.forEach((freq, index) => {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.value = freq;
+      oscillator.type = 'sine';
+
+      gainNode.gain.setValueAtTime(0.15, audioContext.currentTime + index * 0.45);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.45 + 0.35);
+
+      oscillator.start(audioContext.currentTime + index * 0.45);
+      oscillator.stop(audioContext.currentTime + index * 0.45 + 0.4);
+    });
+  }
+
+  function createBoardCell(index) {
+    const cellTypes = ['scala', 'scala', 'audio', 'ritmo', 'modo', 'scala', 'accordo', 'progr', 'audio', 'bonus'];
+    const cellType = cellTypes[index % cellTypes.length];
+
+    const cell = document.createElement('div');
+    cell.className = `cell ct-${cellType}`;
+    cell.style.setProperty('--glow', index === gameState.position ? '#f0a500' : '#2a2a4a');
+
+    const icons = {
+      scala: '♭', accordo: '♯', ritmo: '♪', modo: '𝄐', 
+      audio: '🎵', bonus: '⭐', progr: 'II', start: '🎼', end: '🏆'
+    };
+
+    cell.innerHTML = `
+      <span class="cell-icon">${icons[cellType] || '♫'}</span>
+      <span class="cell-name">${index + 1}</span>
+    `;
+
+    cell.addEventListener('click', () => {
+      gameState.position = Math.min(index, gameState.totalCells - 1);
+      updateBoard();
+      showQuestion();
+    });
+
+    return cell;
+  }
+
+  function updateBoard() {
+    const board = els['game-board'];
+    board.innerHTML = '';
+
+    for (let i = 0; i < gameState.totalCells; i++) {
+      board.appendChild(createBoardCell(i));
+    }
+
+    updateUI();
+  }
+
+  function showQuestion() {
+    const cellType = ['scala', 'scala', 'audio', 'ritmo', 'modo', 'scala', 'accordo', 'progr', 'audio', 'bonus'][gameState.position % 10];
+
+    if (cellType === 'audio') {
+      showAudioQuestion();
+    } else {
+      showTextQuestion(cellType);
+    }
+  }
+
+  function showTextQuestion(type) {
+    const q = getRandomUniqueQuestion(gameState.level, type);
+    els['question-category'].textContent = q.category.toUpperCase();
+    els['question-text'].textContent = q.q;
+
+    const grid = els['answer-grid'];
+    grid.innerHTML = '';
+
+    q.a.forEach((answer, index) => {
+      const btn = document.createElement('button');
+      btn.className = 'abtn';
+      btn.textContent = answer;
+      btn.addEventListener('click', () => handleAnswer(q.correct === index, btn));
+      grid.appendChild(btn);
+    });
+
+    els['feedback-message'].textContent = '';
+    els['question-hint'].style.display = 'none';
+  }
+
+  function showAudioQuestion() {
+    const q = getRandomUniqueQuestion('audio');
+    els['question-category'].textContent = '🎧 RICONOSCIMENTO AUDIO';
+    els['question-text'].textContent = q.q;
+
+    const grid = els['answer-grid'];
+    grid.innerHTML = '';
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'audio-btn';
+    playBtn.innerHTML = '▶ <strong>ASCOLTA</strong>';
+    playBtn.addEventListener('click', () => playAudioSequence(q.frequencies));
+    grid.appendChild(playBtn);
+
+    q.a.forEach((answer, index) => {
+      const btn = document.createElement('button');
+      btn.className = 'abtn';
+      btn.textContent = answer;
+      btn.addEventListener('click', () => handleAnswer(q.correct === index, btn));
+      grid.appendChild(btn);
+    });
+
+    els['feedback-message'].textContent = '';
+    els['question-hint'].style.display = 'none';
+  }
+
+  function handleAnswer(isCorrect, clickedButton) {
+    clearInterval(gameState.timerInterval);
+
+    document.querySelectorAll('.abtn').forEach(btn => btn.disabled = true);
+
+    if (isCorrect) {
+      gameState.streak++;
+      if (gameState.streak > gameState.maxStreak) gameState.maxStreak = gameState.streak;
+      gameState.correct++;
+      gameState.score += 100 + (gameState.streak > 2 ? 50 : 0);
+      els['feedback-message'].textContent = `✅ Corretto! +${100 + (gameState.streak > 2 ? 50 : 0)}pt${gameState.streak > 2 ? ' 🔥' : ''}`;
+      els['feedback-message'].className = 'fbk g';
+    } else {
+      gameState.streak = 0;
+      gameState.wrong++;
+      gameState.score = Math.max(0, gameState.score - 25);
+      els['feedback-message'].textContent = '❌ Sbagliato! -25pt';
+      els['feedback-message'].className = 'fbk b';
+    }
+
+    els['question-hint'].textContent = questionsDB[gameState.level][0]?.hint || 'Prova ancora!';
+    els['question-hint'].style.display = 'block';
+
+    clickedButton.classList.add(isCorrect ? 'ok' : 'ko');
+    updateUI();
+
+    setTimeout(() => {
+      gameState.position = Math.min(gameState.position + 1, gameState.totalCells - 1);
+      if (gameState.position >= gameState.totalCells - 1) {
+        showVictory();
+      } else {
+        document.querySelectorAll('.abtn').forEach(btn => btn.disabled = false);
+        document.querySelectorAll('.abtn').forEach(btn => btn.classList.remove('ok', 'ko'));
+        showQuestion();
+      }
+    }, 2500);
+  }
+
+  function rollDice() {
+    els['roll-dice'].style.transform = 'rotate(360deg) scale(1.2)';
+    els['roll-dice'].textContent = ['⚀','⚁','⚂','⚃','⚄','⚅'][Math.floor(Math.random()*6)];
+
+    setTimeout(() => {
+      const roll = Math.floor(Math.random() * 6) + 1;
+      gameState.position = Math.min(gameState.position + roll, gameState.totalCells - 1);
+      els['dice-info'].textContent = `Hai tirato ${roll}!`;
+      updateBoard();
+
+      if (gameState.position >= gameState.totalCells - 1) {
+        showVictory();
+      } else {
+        setTimeout(showQuestion, 800);
+      }
+    }, 600);
+
+    setTimeout(() => {
+      els['roll-dice'].style.transform = '';
+      els['roll-dice'].textContent = '🎲';
+      els['dice-info'].textContent = 'Tocca per lanciare';
+    }, 1200);
+  }
+
+  function showVictory() {
+    els['final-score'].textContent = gameState.score;
+    els['stat-correct'].textContent = gameState.correct;
+    els['stat-wrong'].textContent = gameState.wrong;
+    els['stat-streak'].textContent = gameState.maxStreak;
+    showPage('pg-victory');
+  }
+
+  // === EVENT LISTENERS ===
+  els['b-start'].addEventListener('click', () => {
+    gameState = {
+      level: 'intermediate',
+      mode: 'normal',
+      position: 0,
+      score: 0,
+      correct: 0,
+      wrong: 0,
+      streak: 0,
+      maxStreak: 0,
+      audioEnabled: true,
+      usedQuestions: {beginner: [], intermediate: [], advanced: [], audio: []},
+      totalCells: 40,
+      timeLeft: 15,
+      timerInterval: null
+    };
+    showPage('pg-board');
+    updateBoard();
+    showQuestion();
+  });
+
+  els['roll-dice'].addEventListener('click', rollDice);
+  els['audio-toggle'].addEventListener('click', () => {
+    gameState.audioEnabled = !gameState.audioEnabled;
+    els['audio-toggle'].textContent = gameState.audioEnabled ? '🔊' : '🔇';
+  });
+
+  els['modal-confirm'].addEventListener('click', hideModal);
+  els['restart-game'].addEventListener('click', () => showPage('pg-home'));
+  els['back-home'].addEventListener('click', () => showPage('pg-home'));
+
+  // === INIT ===
+  updateUI();
+})();
+</script>
+</body>
+</html>
