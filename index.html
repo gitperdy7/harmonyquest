@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HarmonyQuest 🎵</title>
+<title>HarmonyQuest</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d1a;color:#e8e8f0;font-family:Arial,sans-serif;min-height:100vh}
@@ -19,8 +19,6 @@ button:active{opacity:.7;transform:scale(.97)}
 .teal{background:#0f9b8e;color:#fff}
 .gray{background:#222244;color:#e8e8f0;border:1px solid #555}
 .sm{padding:12px 20px;width:auto;font-size:.9rem;margin:0}
-
-/* livello */
 .lv-wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;max-width:540px}
 .lv{background:#16213e;border:3px solid transparent;border-radius:14px;padding:20px 16px;text-align:center;cursor:pointer;flex:1;min-width:130px;max-width:165px}
 .lv:hover{border-color:#666688}
@@ -28,8 +26,6 @@ button:active{opacity:.7;transform:scale(.97)}
 .lv .ic{font-size:2rem;display:block;margin-bottom:8px}
 .lv b{display:block;margin-bottom:5px}
 .lv p{color:#8888aa;font-size:.78rem}
-
-/* board */
 #pg-board{justify-content:flex-start;padding-top:14px}
 .topbar{width:100%;max-width:900px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
 .badge{background:#16213e;border-radius:20px;padding:7px 14px;font-weight:800}
@@ -89,67 +85,63 @@ button:active{opacity:.7;transform:scale(.97)}
 </head>
 <body>
 
-<!-- HOME -->
 <div id="pg-home" class="page on">
   <h1>Harmony<em>Quest</em> 🎵</h1>
   <p class="sub">Gioca e impara la teoria musicale</p>
-  <button class="red" onclick="goPage('pg-level')">▶ Nuova Partita</button>
-  <button class="teal" onclick="showHowTo()">📖 Come si gioca</button>
-  <button class="gray" id="btn-audio-home" onclick="toggleAudio()">🔊 Audio: ON</button>
+  <button class="red" onclick="goPage('pg-level')">&#9654; Nuova Partita</button>
+  <button class="teal" onclick="showHowTo()">&#128218; Come si gioca</button>
+  <button class="gray" id="btn-audio-home" onclick="toggleAudio()">&#128266; Audio: ON</button>
 </div>
 
-<!-- LIVELLO -->
 <div id="pg-level" class="page">
   <h2 style="margin-bottom:8px;font-size:1.4rem">Scegli il livello</h2>
-  <p class="sub">Le domande cambiano in base al livello</p>
+  <p class="sub">Le domande cambiano in base al livello scelto</p>
   <div class="lv-wrap">
     <div class="lv" id="lv-beginner" onclick="selectLevel('beginner')">
-      <span class="ic">🌱</span><b>Principiante</b><p>Note, scale, ritmo, accordi base</p>
+      <span class="ic">&#127807;</span><b>Principiante</b><p>Note, scale, ritmo e accordi base</p>
     </div>
     <div class="lv sel" id="lv-intermediate" onclick="selectLevel('intermediate')">
-      <span class="ic">🎸</span><b>Intermedio</b><p>Settime, modi, progressioni jazz</p>
+      <span class="ic">&#127928;</span><b>Intermedio</b><p>Settime, modi, progressioni jazz</p>
     </div>
     <div class="lv" id="lv-advanced" onclick="selectLevel('advanced')">
-      <span class="ic">🎓</span><b>Avanzato</b><p>Modulazioni, jazz, analisi armonica</p>
+      <span class="ic">&#127891;</span><b>Avanzato</b><p>Modulazioni, jazz, analisi armonica</p>
     </div>
   </div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px">
-    <button class="gray sm" onclick="goPage('pg-home')">← Indietro</button>
-    <button class="red sm" onclick="startGame()">Inizia 🎲</button>
+    <button class="gray sm" onclick="goPage('pg-home')">&#8592; Indietro</button>
+    <button class="red sm" onclick="startGame()">Inizia! &#127922;</button>
   </div>
 </div>
 
-<!-- BOARD -->
 <div id="pg-board" class="page">
   <div class="topbar">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
       <span id="lv-badge" style="color:#8888aa;font-size:.88rem;font-weight:600">Intermedio</span>
-      <div class="badge">⭐ <em id="sc">0</em></div>
-      <div class="badge">🔥 <em id="str">0</em></div>
+      <div class="badge">&#11088; <em id="sc">0</em></div>
+      <div class="badge">&#128293; <em id="str">0</em></div>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="gray sm" id="btn-audio-board" onclick="toggleAudio()">🔊</button>
-      <button class="gray sm" onclick="confirmMenu()">🏠 Menu</button>
+      <button class="gray sm" id="btn-audio-board" onclick="toggleAudio()">&#128266;</button>
+      <button class="gray sm" onclick="confirmMenu()">&#127968; Menu</button>
     </div>
   </div>
   <div class="progbar"><div class="progfill" id="pf" style="width:0%"></div></div>
   <div class="board" id="board"></div>
   <div class="qbox">
     <div class="qcat" id="qcat">Benvenuto!</div>
-    <div class="qtxt" id="qtxt">Tocca il dado 🎲 per iniziare!</div>
+    <div class="qtxt" id="qtxt">Tocca il dado per iniziare!</div>
     <div id="opts" class="opts"></div>
     <div id="feedback" class="feedback"></div>
     <div id="hint" class="hint-box"></div>
     <div class="dice-row">
-      <span class="dice" id="dice" onclick="rollDice()">🎲</span>
+      <span class="dice" id="dice" onclick="rollDice()">&#9861;</span>
       <span style="color:#8888aa;font-size:.88rem" id="dinfo">Tocca per lanciare (1-6)</span>
     </div>
   </div>
 </div>
 
-<!-- VITTORIA -->
 <div id="pg-victory" class="page">
-  <div style="font-size:5rem;margin-bottom:16px">🏆</div>
+  <div style="font-size:5rem;margin-bottom:16px">&#127942;</div>
   <div id="final-sc" style="font-size:3rem;font-weight:900;color:#f0a500">0</div>
   <p style="color:#8888aa;margin:10px 0 28px">Hai completato HarmonyQuest!</p>
   <div class="stats">
@@ -157,14 +149,13 @@ button:active{opacity:.7;transform:scale(.97)}
     <div class="sbox"><div class="sval" id="vw">0</div><div class="slbl">Sbagliate</div></div>
     <div class="sbox"><div class="sval" id="vs">0</div><div class="slbl">Streak Max</div></div>
   </div>
-  <button class="red" onclick="goPage('pg-level')">🔁 Nuova Partita</button>
-  <button class="gray" style="margin-top:8px" onclick="goPage('pg-home')">🏠 Home</button>
+  <button class="red" onclick="goPage('pg-level')">&#128257; Nuova Partita</button>
+  <button class="gray" style="margin-top:8px" onclick="goPage('pg-home')">&#127968; Home</button>
 </div>
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal">
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
-    <div id="m-icon" style="font-size:3rem;margin-bottom:10px">📖</div>
+    <div id="m-icon" style="font-size:3rem;margin-bottom:10px"></div>
     <h3 id="m-title"></h3>
     <div id="m-body" class="modal-body"></div>
     <div id="m-btns" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"></div>
@@ -172,315 +163,279 @@ button:active{opacity:.7;transform:scale(.97)}
 </div>
 
 <script>
-// ── STATO ──────────────────────────────────────────────
-var G = { level:'intermediate', pos:0, score:0, streak:0, maxStreak:0, correct:0, wrong:0, audioOn:true, waiting:false, usedQ:{} };
+var G = {level:"intermediate",pos:0,score:0,streak:0,maxStreak:0,correct:0,wrong:0,audioOn:true,waiting:false,usedQ:{}};
 var TOTAL = 40;
 var actx = null;
 
-// ── AUDIO ──────────────────────────────────────────────
-function initCtx() {
-  if (!actx) { try { actx = new (window.AudioContext||window.webkitAudioContext)(); } catch(e){} }
-  if (actx && actx.state==='suspended') actx.resume();
+function initCtx(){
+  if(!actx){try{actx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+  if(actx&&actx.state==="suspended")actx.resume();
   return actx;
 }
-function playMelody(freqs) {
-  if (!G.audioOn) return;
-  var ctx = initCtx(); if (!ctx) return;
+function playMelody(freqs){
+  if(!G.audioOn)return;
+  var ctx=initCtx();if(!ctx)return;
   freqs.forEach(function(f,i){
     var o=ctx.createOscillator(),g=ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.type='sine'; o.frequency.value=f;
+    o.connect(g);g.connect(ctx.destination);
+    o.type="sine";o.frequency.value=f;
     var t=ctx.currentTime+i*0.48;
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(0.18,t+0.05);
-    g.gain.setValueAtTime(0.18,t+0.32); g.gain.linearRampToValueAtTime(0,t+0.46);
-    o.start(t); o.stop(t+0.5);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.18,t+0.05);
+    g.gain.setValueAtTime(0.18,t+0.32);g.gain.linearRampToValueAtTime(0,t+0.46);
+    o.start(t);o.stop(t+0.5);
   });
 }
-function playChord(freqs) {
-  if (!G.audioOn) return;
-  var ctx = initCtx(); if (!ctx) return;
+function playChord(freqs){
+  if(!G.audioOn)return;
+  var ctx=initCtx();if(!ctx)return;
   freqs.forEach(function(f){
     var o=ctx.createOscillator(),g=ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.type='triangle'; o.frequency.value=f;
+    o.connect(g);g.connect(ctx.destination);
+    o.type="triangle";o.frequency.value=f;
     g.gain.setValueAtTime(0.13,ctx.currentTime);
     g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+1.6);
-    o.start(ctx.currentTime); o.stop(ctx.currentTime+1.7);
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+1.7);
   });
 }
-function beep(hz,ok) {
-  if (!G.audioOn) return;
-  var ctx=initCtx(); if (!ctx) return;
+function beep(hz,ok){
+  if(!G.audioOn)return;
+  var ctx=initCtx();if(!ctx)return;
   var o=ctx.createOscillator(),g=ctx.createGain();
-  o.connect(g); g.connect(ctx.destination);
-  o.type='sine'; o.frequency.value=hz;
+  o.connect(g);g.connect(ctx.destination);
+  o.type="sine";o.frequency.value=hz;
   g.gain.setValueAtTime(0.1,ctx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(ok?.15:.35));
-  o.start(ctx.currentTime); o.stop(ctx.currentTime+(ok?.2:.4));
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+(ok?0.15:0.35));
+  o.start(ctx.currentTime);o.stop(ctx.currentTime+(ok?0.2:0.4));
 }
 
-// ── DB DOMANDE ─────────────────────────────────────────
 var QDB = {
   beginner:[
-    {cat:'🎼 Scale',q:'Quale scala usa solo i tasti bianchi del pianoforte?',a:['Do Maggiore','Sol Maggiore','Fa Maggiore','Re Minore'],c:0,hint:'Non ha né diesis né bemolle'},
-    {cat:'🎼 Scale',q:'Quante note ha una scala maggiore?',a:['7','5','12','8'],c:0,hint:'Do-Re-Mi-Fa-Sol-La-Si = 7'},
-    {cat:'♩ Ritmo',q:'In 4/4, quanti quarti ci sono per battuta?',a:['4','3','2','6'],c:0,hint:'Il numeratore indica i battiti'},
-    {cat:'♩ Ritmo',q:'Una semiminima vale?',a:['1 quarto','1 metà','2 quarti','1 ottavo'],c:0,hint:'La nota con la testa nera e il gambo'},
-    {cat:'♯ Accordi',q:'Do Maggiore è formato da?',a:['Do-Mi-Sol','Do-Mib-Sol','Do-Fa-Sol','Re-Fa-La'],c:0,hint:'1a - 3a - 5a della scala di Do'},
-    {cat:'♯ Accordi',q:'Un accordo minore differisce da quello maggiore per?',a:['La terza abbassata di un semitono','La quinta abbassata','La radice alzata','Il raddoppio della sesta'],c:0,hint:'Do magg = Do-Mi-Sol, Do min = Do-Mib-Sol'},
-    {cat:'🎵 Teoria',q:'Quanti semitoni ha un'ottava?',a:['12','7','8','10'],c:0,hint:'Conta tutti i tasti bianchi e neri da Do al Do successivo'},
-    {cat:'🎵 Teoria',q:'Cosa significa BPM?',a:['Battiti Per Minuto','Basso Per Misura','Bemolle Per Modulazione','Battuta Per Metro'],c:0,hint:'Indica la velocità del brano'},
+    {cat:"Scale",q:"Quale scala usa solo i tasti bianchi del pianoforte?",a:["Do Maggiore","Sol Maggiore","Fa Maggiore","Re Minore"],c:0,hint:"Non ha ne diesis ne bemolle"},
+    {cat:"Scale",q:"Quante note ha una scala maggiore?",a:["7","5","12","8"],c:0,hint:"Do-Re-Mi-Fa-Sol-La-Si = 7 note"},
+    {cat:"Ritmo",q:"In 4/4 quanti quarti ci sono per battuta?",a:["4","3","2","6"],c:0,hint:"Il numeratore indica i battiti"},
+    {cat:"Ritmo",q:"Una semiminima vale?",a:["1 quarto","1 meta","2 quarti","1 ottavo"],c:0,hint:"La nota con la testa nera e il gambo"},
+    {cat:"Accordi",q:"Do Maggiore e formato da?",a:["Do-Mi-Sol","Do-Mib-Sol","Do-Fa-Sol","Re-Fa-La"],c:0,hint:"1a - 3a - 5a della scala di Do"},
+    {cat:"Accordi",q:"Un accordo minore ha la terza?",a:["Abbassata di un semitono","Alzata di un semitono","Uguale al maggiore","Abbassata di un tono"],c:0,hint:"Do magg = Do-Mi-Sol, Do min = Do-Mib-Sol"},
+    {cat:"Teoria",q:"Quanti semitoni ha una ottava?",a:["12","7","8","10"],c:0,hint:"Conta tutti i tasti bianchi e neri"},
+    {cat:"Teoria",q:"Cosa significa BPM?",a:["Battiti Per Minuto","Basso Per Misura","Battuta Per Metro","Bemolle Per Modulazione"],c:0,hint:"Indica la velocita del brano"}
   ],
   intermediate:[
-    {cat:'♫ Progressioni',q:'II-V-I in Do Maggiore è?',a:['Rem7-Sol7-DoMaj7','Do-Fa-Sol7','Lam-Rem-Sol','Fa-Sol-Do'],c:0,hint:'La progressione più usata nel jazz'},
-    {cat:'𝄐 Modi',q:'Il modo Dorico parte dal?',a:['II grado','I grado','VI grado','IV grado'],c:0,hint:'"So What" di Miles Davis usa Re Dorico'},
-    {cat:'𝄐 Modi',q:'Il Misolidio differisce dal Maggiore per?',a:['VII abbassato di un semitono','VI abbassato','III abbassato','II abbassato'],c:0,hint:'Come Sol Magg ma con Fa naturale invece di Fa#'},
-    {cat:'♯ Settime',q:'Sol7 (dominante) contiene?',a:['Fa naturale','Fa#','La#','Sib'],c:0,hint:'V7 ha la settima minore'},
-    {cat:'♯ Settime',q:'Un accordo min7 ha?',a:['3a min + 7a min','3a magg + 7a min','3a min + 7a magg','3a magg + 7a magg'],c:0,hint:'Lam7 = La-Do-Mi-Sol'},
-    {cat:'🎼 Scale',q:'La scala pentatonica ha quante note?',a:['5','7','6','4'],c:0,hint:'Penta = cinque in greco'},
-    {cat:'♩ Ritmo',q:'La sincope è?',a:['Accento su tempo debole','Ripetizione del forte','Pausa lunga','Nota tenuta 4 tempi'],c:0,hint:'Crea tensione anticipando il battere'},
-    {cat:'♩ Ritmo',q:'Le terzine dividono il tempo in?',a:['3 parti uguali','2 parti uguali','4 parti uguali','6 parti uguali'],c:0,hint:'Tre note nello spazio di due'},
-    {cat:'♫ Progressioni',q:'I-V-vi-IV è usata in?',a:['Migliaia di canzoni pop','Solo classica','Solo metal','Solo jazz'],c:0,hint:'"Let It Be", "Someone Like You", "No Woman No Cry"'},
-    {cat:'𝄐 Modi',q:'Il Lidio differisce dal Maggiore per?',a:['IV alzato (#4)','VII alzato','II alzato','V alzato'],c:0,hint:'Suono sospeso e magico, usato da Morricone'},
+    {cat:"Progressioni",q:"II-V-I in Do Maggiore e?",a:["Rem7-Sol7-DoMaj7","Do-Fa-Sol7","Lam-Rem-Sol","Fa-Sol-Do"],c:0,hint:"La progressione piu usata nel jazz"},
+    {cat:"Modi",q:"Il modo Dorico parte dal?",a:["II grado","I grado","VI grado","IV grado"],c:0,hint:"So What di Miles Davis usa Re Dorico"},
+    {cat:"Modi",q:"Il Misolidio differisce dal Maggiore per?",a:["VII abbassato di un semitono","VI abbassato","III abbassato","II abbassato"],c:0,hint:"Come Sol Magg ma con Fa naturale"},
+    {cat:"Settime",q:"Sol7 dominante contiene?",a:["Fa naturale","Fa diesis","La diesis","Si bemolle"],c:0,hint:"V7 ha la settima minore"},
+    {cat:"Settime",q:"Un accordo min7 ha?",a:["3a min + 7a min","3a magg + 7a min","3a min + 7a magg","3a magg + 7a magg"],c:0,hint:"Lam7 = La-Do-Mi-Sol"},
+    {cat:"Scale",q:"La scala pentatonica ha quante note?",a:["5","7","6","4"],c:0,hint:"Penta significa cinque in greco"},
+    {cat:"Ritmo",q:"La sincope e?",a:["Accento su tempo debole","Ripetizione del forte","Pausa lunga","Nota tenuta 4 tempi"],c:0,hint:"Crea tensione anticipando il battere"},
+    {cat:"Ritmo",q:"Le terzine dividono il tempo in?",a:["3 parti uguali","2 parti uguali","4 parti uguali","6 parti uguali"],c:0,hint:"Tre note nello spazio di due"},
+    {cat:"Progressioni",q:"I-V-vi-IV e usata in?",a:["Migliaia di canzoni pop","Solo classica","Solo metal","Solo jazz"],c:0,hint:"Let It Be, Someone Like You, No Woman No Cry"},
+    {cat:"Modi",q:"Il Lidio differisce dal Maggiore per?",a:["IV alzato (#4)","VII alzato","II alzato","V alzato"],c:0,hint:"Suono sospeso e magico, usato da Morricone"}
   ],
   advanced:[
-    {cat:'♯ Armonia',q:'La sostituzione di tritono sostituisce?',a:['V7 con bII7','I con bVII','II con IV','IV con bVI'],c:0,hint:'Sol7 → Reb7 nella tonalità di Do'},
-    {cat:'𝄐 Modi',q:'La Superlocria si usa su?',a:['Accordi alterati (7alt)','Accordi maj7','Accordi dim7','Accordi sus4'],c:0,hint:'Contiene b9, #9, #11, b13'},
-    {cat:'♫ Modulazione',q:'La modulazione enarmonica sfrutta?',a:['Note uguali con nome diverso','Cambio di metro','Scale parallele','Cadenze evitate'],c:0,hint:'Sol# = Lab — permette tonalità lontane'},
-    {cat:'♩ Ritmo',q:'L'emiola è?',a:['2 gruppi da 3 percepiti come 3 da 2','Ritmo binario su ternario','Poliritmia in 5/4','Sincope sul 4° tempo'],c:0,hint:'Crea ambiguità metrica, comune in Brahms'},
-    {cat:'♫ Coltrane',q:'I "Coltrane Changes" usano?',a:['Modulazioni per terze di grande terza','Solo II-V-I','Pedali armonici','Scale esatonali'],c:0,hint:'"Giant Steps" — tre centri tonali'},
-    {cat:'♯ Armonia',q:'L'accordo Napolitano (bII) si usa in?',a:['1° rivolto prima della V','Posizione fondamentale sulla I','Come sostituto della VII','2° rivolto'],c:0,hint:'Tipico del periodo romantico: Schubert, Beethoven'},
+    {cat:"Armonia",q:"La sostituzione di tritono sostituisce?",a:["V7 con bII7","I con bVII","II con IV","IV con bVI"],c:0,hint:"Sol7 diventa Reb7 nella tonalita di Do"},
+    {cat:"Modi",q:"La Superlocria si usa su?",a:["Accordi alterati 7alt","Accordi maj7","Accordi dim7","Accordi sus4"],c:0,hint:"Contiene b9 #9 #11 b13"},
+    {cat:"Modulazione",q:"La modulazione enarmonica sfrutta?",a:["Note uguali con nome diverso","Cambio di metro","Scale parallele","Cadenze evitate"],c:0,hint:"Sol diesis = La bemolle, permette tonalita lontane"},
+    {cat:"Ritmo",q:"L emiola e?",a:["2 gruppi da 3 percepiti come 3 da 2","Ritmo binario su ternario","Poliritmia in 5/4","Sincope sul 4 tempo"],c:0,hint:"Crea ambiguita metrica, comune in Brahms"},
+    {cat:"Coltrane",q:"I Coltrane Changes usano?",a:["Modulazioni per terze di grande terza","Solo II-V-I","Pedali armonici","Scale esatonali"],c:0,hint:"Giant Steps: tre centri tonali"},
+    {cat:"Armonia",q:"Il Napolitano bII si usa prima della?",a:["V (dominante)","I (tonica)","IV (sottodominante)","VII (sensibile)"],c:0,hint:"Tipico del periodo romantico: Schubert e Beethoven"}
   ],
   audio:[
-    {cat:'🎧 Audio',q:'Ascolta e riconosci: quale intervallo senti?',a:['Seconda Magg.','Terza Magg.','Quarta Giusta','Quinta Giusta'],c:1,play:'melody',freqs:[440,554.37],hint:'Do→Mi: la terza che apre la triade maggiore'},
-    {cat:'🎧 Audio',q:'Che intervallo è questo salto?',a:['Terza Giusta','Quarta Giusta','Quinta Giusta','Ottava'],c:2,play:'melody',freqs:[440,659.25],hint:'"Star Wars" di Williams inizia con questa quinta'},
-    {cat:'🎧 Audio',q:'Questa triade è?',a:['Maggiore','Minore','Diminuita','Aumentata'],c:0,play:'chord',freqs:[261.63,329.63,392.00],hint:'Suono brillante e stabile = maggiore'},
-    {cat:'🎧 Audio',q:'Questa triade è?',a:['Maggiore','Minore','Diminuita','Aumentata'],c:1,play:'chord',freqs:[261.63,311.13,392.00],hint:'Suono cupo e malinconico = minore'},
-    {cat:'🎧 Audio',q:'Questa scala è?',a:['Maggiore','Minore naturale','Dorica','Pentatonica'],c:0,play:'melody',freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25],hint:'T-T-S-T-T-T-S: la scala di Do Maggiore'},
-    {cat:'🎧 Audio',q:'Che salto senti?',a:['Quarta Giusta','Sesta Magg.','Ottava','Settima Magg.'],c:2,play:'melody',freqs:[261.63,523.25],hint:'"Somewhere Over The Rainbow" inizia così'},
-    {cat:'🎧 Audio',q:'Questo accordo a 4 voci è?',a:['Maj7','Dominante 7a','Minore 7a','Dim7'],c:1,play:'chord',freqs:[392.00,493.88,587.33,698.46],hint:'Sol-Si-Re-Fa: settima dominante'},
+    {cat:"Audio",q:"Quale intervallo senti?",a:["Seconda Magg","Terza Magg","Quarta Giusta","Quinta Giusta"],c:1,play:"melody",freqs:[440,554.37],hint:"Do verso Mi: la terza che apre la triade maggiore"},
+    {cat:"Audio",q:"Che intervallo e questo salto?",a:["Terza","Quarta Giusta","Quinta Giusta","Ottava"],c:2,play:"melody",freqs:[440,659.25],hint:"Star Wars di Williams inizia con questa quinta"},
+    {cat:"Audio",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:0,play:"chord",freqs:[261.63,329.63,392.00],hint:"Suono brillante e stabile uguale a maggiore"},
+    {cat:"Audio",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:1,play:"chord",freqs:[261.63,311.13,392.00],hint:"Suono cupo e malinconico uguale a minore"},
+    {cat:"Audio",q:"Questa scala e?",a:["Maggiore","Minore naturale","Dorica","Pentatonica"],c:0,play:"melody",freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25],hint:"T-T-S-T-T-T-S: la scala di Do Maggiore"},
+    {cat:"Audio",q:"Che salto senti?",a:["Quarta Giusta","Sesta Magg","Ottava","Settima Magg"],c:2,play:"melody",freqs:[261.63,523.25],hint:"Somewhere Over The Rainbow inizia cosi"},
+    {cat:"Audio",q:"Questo accordo a 4 voci e?",a:["Maj7","Dominante 7a","Minore 7a","Dim7"],c:1,play:"chord",freqs:[392.00,493.88,587.33,698.46],hint:"Sol-Si-Re-Fa: settima dominante"}
   ]
 };
 
-// ── CELLE ─────────────────────────────────────────────
-var CT = ['start','scala','audio','ritmo','scala','modo','accordo','audio','prog','bonus','scala','accordo','ritmo','audio','scala','modo','prog','scala','accordo','bonus','scala','audio','modo','ritmo','scala','accordo','audio','scala','prog','bonus','scala','ritmo','accordo','audio','scala','modo','scala','audio','ritmo','end'];
-var CI = {start:'🎼',end:'🏆',scala:'♭',accordo:'♯',ritmo:'♩',modo:'𝄐',audio:'🎵',bonus:'⭐',prog:'♫'};
-var CL = {start:'Start',end:'Fine',scala:'Scala',accordo:'Accordo',ritmo:'Ritmo',modo:'Modo',audio:'Audio',bonus:'Bonus',prog:'Prog.'};
+var CT=["start","scala","audio","ritmo","scala","modo","accordo","audio","prog","bonus","scala","accordo","ritmo","audio","scala","modo","prog","scala","accordo","bonus","scala","audio","modo","ritmo","scala","accordo","audio","scala","prog","bonus","scala","ritmo","accordo","audio","scala","modo","scala","audio","ritmo","end"];
+var CI={start:"&#127900;",end:"&#127942;",scala:"&#9837;",accordo:"&#9839;",ritmo:"&#9833;",modo:"&#119824;",audio:"&#127925;",bonus:"&#11088;",prog:"&#9835;"};
+var CL={start:"Start",end:"Fine",scala:"Scala",accordo:"Accordo",ritmo:"Ritmo",modo:"Modo",audio:"Audio",bonus:"Bonus",prog:"Prog."};
 
-// ── NAVIGAZIONE ────────────────────────────────────────
-function goPage(id) {
-  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
-  document.getElementById(id).classList.add('on');
+function goPage(id){
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("on");});
+  document.getElementById(id).classList.add("on");
   window.scrollTo(0,0);
 }
 
-// ── LIVELLO ────────────────────────────────────────────
-function selectLevel(lv) {
-  G.level = lv;
-  document.querySelectorAll('.lv').forEach(function(c){ c.classList.remove('sel'); });
-  document.getElementById('lv-'+lv).classList.add('sel');
+function selectLevel(lv){
+  G.level=lv;
+  document.querySelectorAll(".lv").forEach(function(c){c.classList.remove("sel");});
+  document.getElementById("lv-"+lv).classList.add("sel");
 }
 
-// ── AVVIO ──────────────────────────────────────────────
-function startGame() {
-  G.pos=0; G.score=0; G.streak=0; G.maxStreak=0; G.correct=0; G.wrong=0; G.waiting=false; G.usedQ={};
-  var n = {beginner:'🌱 Principiante', intermediate:'🎸 Intermedio', advanced:'🎓 Avanzato'};
-  document.getElementById('lv-badge').textContent = n[G.level]||G.level;
-  goPage('pg-board');
+function startGame(){
+  G.pos=0;G.score=0;G.streak=0;G.maxStreak=0;G.correct=0;G.wrong=0;G.waiting=false;G.usedQ={};
+  var n={beginner:"Principiante",intermediate:"Intermedio",advanced:"Avanzato"};
+  document.getElementById("lv-badge").textContent=n[G.level]||G.level;
+  goPage("pg-board");
   renderBoard();
-  showIdle();
+  document.getElementById("qcat").textContent="Pronto!";
+  document.getElementById("qtxt").textContent="Tocca il dado per iniziare!";
+  document.getElementById("opts").innerHTML="";
+  document.getElementById("feedback").textContent="";
+  document.getElementById("hint").style.display="none";
 }
 
-// ── BOARD ──────────────────────────────────────────────
-function renderBoard() {
-  var el = document.getElementById('board');
-  el.innerHTML = '';
-  for (var i=0; i<TOTAL; i++) {
-    var t = CT[i]||'scala';
-    var d = document.createElement('div');
-    d.className = 'cell c-'+t+(i===G.pos?' cur':'')+(i<G.pos?' past':'');
-    d.innerHTML = '<span class="ci">'+(CI[t]||'♫')+'</span><span class="cn">'+(i+1)+'</span>';
+function renderBoard(){
+  var el=document.getElementById("board");el.innerHTML="";
+  for(var i=0;i<TOTAL;i++){
+    var t=CT[i]||"scala";
+    var d=document.createElement("div");
+    d.className="cell c-"+t+(i===G.pos?" cur":"")+(i<G.pos?" past":"");
+    d.innerHTML="<span class='ci'>"+(CI[t]||"&#9835;")+"</span><span class='cn'>"+(i+1)+"</span>";
     el.appendChild(d);
   }
-  document.getElementById('pf').style.width = (G.pos/(TOTAL-1)*100)+'%';
-  document.getElementById('sc').textContent = G.score;
-  document.getElementById('str').textContent = G.streak;
+  document.getElementById("pf").style.width=(G.pos/(TOTAL-1)*100)+"%";
+  document.getElementById("sc").textContent=G.score;
+  document.getElementById("str").textContent=G.streak;
 }
 
-// ── DOMANDE UNICHE ────────────────────────────────────
-function pickQ(key) {
-  var pool = QDB[key]; if (!pool||!pool.length) return null;
-  if (!G.usedQ[key]) G.usedQ[key]=[];
+function pickQ(key){
+  var pool=QDB[key];if(!pool||!pool.length)return null;
+  if(!G.usedQ[key])G.usedQ[key]=[];
   var avail=[];
-  for (var i=0;i<pool.length;i++) if (G.usedQ[key].indexOf(i)===-1) avail.push(i);
-  if (!avail.length) { G.usedQ[key]=[]; avail=pool.map(function(_,i){return i;}); }
+  for(var i=0;i<pool.length;i++)if(G.usedQ[key].indexOf(i)===-1)avail.push(i);
+  if(!avail.length){G.usedQ[key]=[];avail=pool.map(function(_,i){return i;});}
   var idx=avail[Math.floor(Math.random()*avail.length)];
   G.usedQ[key].push(idx);
   return pool[idx];
 }
 
-// ── MOSTRA DOMANDA ────────────────────────────────────
-function showIdle() {
-  document.getElementById('qcat').textContent='—';
-  document.getElementById('qtxt').textContent='Tocca il dado 🎲 per avanzare!';
-  document.getElementById('opts').innerHTML='';
-  document.getElementById('feedback').textContent='';
-  document.getElementById('feedback').className='feedback';
-  document.getElementById('hint').style.display='none';
-}
-
-function showQuestion() {
-  var t = CT[G.pos];
-  if (t==='start') { showIdle(); return; }
-  if (t==='end')   { setTimeout(doVictory,600); return; }
-  if (t==='bonus') {
-    document.getElementById('qcat').textContent='⭐ Bonus';
-    document.getElementById('qtxt').textContent='Casella bonus! +50 punti gratis! 🎉';
-    document.getElementById('opts').innerHTML='';
-    document.getElementById('feedback').textContent='';
-    document.getElementById('feedback').className='feedback';
-    document.getElementById('hint').style.display='none';
-    G.score+=50; document.getElementById('sc').textContent=G.score;
-    beep(880,true); G.waiting=false; return;
+function showQuestion(){
+  var t=CT[G.pos];
+  if(t==="start"||t==="bonus"){
+    if(t==="bonus"){G.score+=50;document.getElementById("sc").textContent=G.score;beep(880,true);}
+    document.getElementById("qcat").textContent=t==="bonus"?"Bonus!":"Inizio";
+    document.getElementById("qtxt").textContent=t==="bonus"?"Casella bonus! +50 punti gratis!":"Tocca il dado per avanzare!";
+    document.getElementById("opts").innerHTML="";
+    document.getElementById("feedback").textContent="";
+    document.getElementById("hint").style.display="none";
+    G.waiting=false;return;
   }
-  var key = (t==='audio') ? 'audio' : G.level;
-  var q = pickQ(key); if (!q) { showIdle(); return; }
-  document.getElementById('qcat').textContent = q.cat;
-  document.getElementById('qtxt').textContent = q.q;
-  document.getElementById('feedback').textContent='';
-  document.getElementById('feedback').className='feedback';
-  document.getElementById('hint').style.display='none';
-  var grid = document.getElementById('opts');
-  grid.innerHTML='';
-  if (t==='audio' && q.freqs) {
-    var ab=document.createElement('button');
-    ab.className='audio-play';
-    ab.textContent='▶  Ascolta';
-    var freqsCopy=q.freqs.slice(), playCopy=q.play||'melody';
-    ab.onclick=function(){ initCtx(); if(playCopy==='chord') playChord(freqsCopy); else playMelody(freqsCopy); };
+  if(t==="end"){setTimeout(doVictory,600);return;}
+  var key=(t==="audio")?"audio":G.level;
+  var q=pickQ(key);if(!q){G.waiting=false;return;}
+  document.getElementById("qcat").textContent=q.cat;
+  document.getElementById("qtxt").textContent=q.q;
+  document.getElementById("feedback").textContent="";
+  document.getElementById("feedback").className="feedback";
+  document.getElementById("hint").style.display="none";
+  var grid=document.getElementById("opts");grid.innerHTML="";
+  if(t==="audio"&&q.freqs){
+    var ab=document.createElement("button");
+    ab.className="audio-play";
+    ab.textContent="Ascolta";
+    var fc=q.freqs.slice(),pc=q.play||"melody";
+    ab.onclick=function(){initCtx();if(pc==="chord")playChord(fc);else playMelody(fc);};
     grid.appendChild(ab);
   }
   q.a.forEach(function(ans,i){
-    var btn=document.createElement('button');
-    btn.className='opt';
-    btn.textContent=ans;
-    var iCopy=i, qCopy=q;
-    btn.onclick=function(){ handleAnswer(iCopy===qCopy.c, btn, qCopy.hint); };
+    var btn=document.createElement("button");
+    btn.className="opt";btn.textContent=ans;
+    var iC=i,qC=q;
+    btn.onclick=function(){handleAnswer(iC===qC.c,btn,qC.hint);};
     grid.appendChild(btn);
   });
   G.waiting=false;
 }
 
-// ── RISPOSTA ──────────────────────────────────────────
-function handleAnswer(correct, btn, hint) {
-  if (G.waiting) return; G.waiting=true;
-  document.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; });
-  if (correct) {
-    G.streak++; if (G.streak>G.maxStreak) G.maxStreak=G.streak; G.correct++;
-    var pts=100+(G.streak>=3?50:0); G.score+=pts;
-    btn.classList.add('ok');
-    document.getElementById('feedback').textContent='✅ Corretto! +'+pts+'pt'+(G.streak>=3?' 🔥':'');
-    document.getElementById('feedback').className='feedback fb-ok';
+function handleAnswer(correct,btn,hint){
+  if(G.waiting)return;G.waiting=true;
+  document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;});
+  if(correct){
+    G.streak++;if(G.streak>G.maxStreak)G.maxStreak=G.streak;G.correct++;
+    var pts=100+(G.streak>=3?50:0);G.score+=pts;
+    btn.classList.add("ok");
+    document.getElementById("feedback").textContent="Corretto! +"+pts+"pt"+(G.streak>=3?" Streak!":"");
+    document.getElementById("feedback").className="feedback fb-ok";
     beep(880,true);
-  } else {
-    G.streak=0; G.wrong++; G.score=Math.max(0,G.score-20);
-    btn.classList.add('ko');
-    document.getElementById('feedback').textContent='❌ Sbagliato! -20pt';
-    document.getElementById('feedback').className='feedback fb-ko';
+  }else{
+    G.streak=0;G.wrong++;G.score=Math.max(0,G.score-20);
+    btn.classList.add("ko");
+    document.getElementById("feedback").textContent="Sbagliato! -20pt";
+    document.getElementById("feedback").className="feedback fb-ko";
     beep(180,false);
   }
-  if (hint) { document.getElementById('hint').textContent='💡 '+hint; document.getElementById('hint').style.display='block'; }
-  document.getElementById('sc').textContent=G.score;
-  document.getElementById('str').textContent=G.streak;
+  if(hint){document.getElementById("hint").textContent="Suggerimento: "+hint;document.getElementById("hint").style.display="block";}
+  document.getElementById("sc").textContent=G.score;
+  document.getElementById("str").textContent=G.streak;
 }
 
-// ── DADO ──────────────────────────────────────────────
-function rollDice() {
-  if (G.waiting) return;
+function rollDice(){
+  if(G.waiting)return;
   initCtx();
-  var d=document.getElementById('dice');
-  d.style.transform='rotate(720deg) scale(1.3)';
-  d.textContent=['⚀','⚁','⚂','⚃','⚄','⚅'][Math.floor(Math.random()*6)];
+  var d=document.getElementById("dice");
+  d.style.transform="rotate(720deg) scale(1.3)";
   setTimeout(function(){
     var roll=Math.floor(Math.random()*6)+1;
     G.pos=Math.min(G.pos+roll,TOTAL-1);
-    document.getElementById('dinfo').textContent='Hai tirato '+roll+'!';
-    d.style.transform=''; d.textContent='🎲';
+    document.getElementById("dinfo").textContent="Hai tirato "+roll+"!";
+    d.style.transform="";
     renderBoard();
     setTimeout(showQuestion,500);
-  },600);
+  },500);
 }
 
-// ── VITTORIA ──────────────────────────────────────────
-function doVictory() {
-  document.getElementById('final-sc').textContent=G.score;
-  document.getElementById('vc').textContent=G.correct;
-  document.getElementById('vw').textContent=G.wrong;
-  document.getElementById('vs').textContent=G.maxStreak;
-  goPage('pg-victory');
+function doVictory(){
+  document.getElementById("final-sc").textContent=G.score;
+  document.getElementById("vc").textContent=G.correct;
+  document.getElementById("vw").textContent=G.wrong;
+  document.getElementById("vs").textContent=G.maxStreak;
+  goPage("pg-victory");
 }
 
-// ── MODAL ──────────────────────────────────────────────
-function openModal(icon,title,bodyHTML,buttons) {
-  document.getElementById('m-icon').textContent=icon;
-  document.getElementById('m-title').textContent=title;
-  document.getElementById('m-body').innerHTML=bodyHTML;
-  var bc=document.getElementById('m-btns'); bc.innerHTML='';
+function openModal(icon,title,bodyHTML,buttons){
+  document.getElementById("m-icon").textContent=icon;
+  document.getElementById("m-title").textContent=title;
+  document.getElementById("m-body").innerHTML=bodyHTML;
+  var bc=document.getElementById("m-btns");bc.innerHTML="";
   buttons.forEach(function(b){
-    var btn=document.createElement('button');
-    btn.className=(b.red?'red':'gray')+' sm';
-    btn.style.maxWidth='200px'; btn.textContent=b.label;
-    btn.onclick=function(){ closeModal(); b.fn(); };
+    var btn=document.createElement("button");
+    btn.className=(b.red?"red":"gray")+" sm";
+    btn.style.maxWidth="200px";btn.textContent=b.label;
+    btn.onclick=function(){closeModal();b.fn();};
     bc.appendChild(btn);
   });
-  document.getElementById('modal').classList.add('on');
+  document.getElementById("modal").classList.add("on");
 }
-function closeModal(){ document.getElementById('modal').classList.remove('on'); }
+function closeModal(){document.getElementById("modal").classList.remove("on");}
 
-// ── ISTRUZIONI ────────────────────────────────────────
-function showHowTo() {
-  openModal('📖','Come si gioca',
-    '<ul>'+
-    '<li>🎯 <b>Obiettivo:</b> arriva all'ultima casella del tabellone!</li>'+
-    '<li>🎲 <b>Dado:</b> tocca il dado per avanzare da 1 a 6 caselle.</li>'+
-    '<li>❓ <b>Domande:</b> ogni casella ha una categoria. Scegli la risposta giusta tra le opzioni.</li>'+
-    '<li>✅ <b>Risposta giusta:</b> guadagni +100pt. Con 3 risposte giuste di fila: +50 bonus!</li>'+
-    '<li>❌ <b>Risposta sbagliata:</b> perdi 20pt e lo streak si azzera.</li>'+
-    '<li>🎵 <b>Caselle Audio (blu 🎵):</b> premi ▶ per ascoltare un suono, poi scegli cosa hai sentito.</li>'+
-    '<li>🌱🎸🎓 <b>Livello:</b> sceglilo prima di giocare — le domande cambiano!</li>'+
-    '<li>🏠 <b>Menu:</b> puoi tornare al menu in qualsiasi momento (ti verrà chiesto conferma).</li>'+
-    '</ul>'+
-    '<div style="margin-top:14px;background:#0e0e28;padding:12px;border-radius:8px;font-size:.83rem;line-height:1.9">'+
-    '<div>♭ <b style="color:#4a7aee">Scala</b> — domande sulle scale</div>'+
-    '<div>♯ <b style="color:#8a4aee">Accordo</b> — accordi e triadi</div>'+
-    '<div>🎵 <b style="color:#00aacc">Audio</b> — ascolta e riconosci</div>'+
-    '<div>♩ <b style="color:#ee4a7a">Ritmo</b> — tempi e misure</div>'+
-    '<div>𝄐 <b style="color:#4aee9a">Modo</b> — modi greci</div>'+
-    '<div>♫ <b style="color:#aa44ee">Prog.</b> — progressioni armoniche</div>'+
-    '<div>⭐ <b style="color:#ccaa00">Bonus</b> — punti gratis!</div>'+
-    '</div>',
-    [{label:'Ho capito! 🎸',red:true,fn:function(){}}]
+function showHowTo(){
+  openModal(
+    "Regole","Come si gioca",
+    "<ul>"+
+    "<li><b>Obiettivo:</b> arriva all ultima casella del tabellone!</li>"+
+    "<li><b>Dado:</b> tocca il dado per avanzare da 1 a 6 caselle.</li>"+
+    "<li><b>Domande:</b> ogni casella ha una categoria. Scegli la risposta giusta.</li>"+
+    "<li><b>Risposta giusta:</b> guadagni +100pt. Con 3 di fila: +50 bonus!</li>"+
+    "<li><b>Risposta sbagliata:</b> perdi 20pt e lo streak si azzera.</li>"+
+    "<li><b>Caselle Audio (blu):</b> premi Ascolta, poi scegli cosa hai sentito.</li>"+
+    "<li><b>Livello:</b> sceglilo prima di giocare, le domande cambiano.</li>"+
+    "<li><b>Menu:</b> puoi tornare al menu in qualsiasi momento.</li>"+
+    "</ul>",
+    [{label:"Ho capito!",red:true,fn:function(){}}]
   );
 }
 
-// ── CONFERMA MENU ─────────────────────────────────────
-function confirmMenu() {
-  openModal('⚠️','Tornare al menu?',
-    '<p>Se torni al menu <b>perderai i tuoi progressi</b> attuali (posizione e punteggio).<br><br>Sei sicuro?</p>',
+function confirmMenu(){
+  openModal(
+    "Attenzione","Tornare al menu?",
+    "<p>Se torni al menu <b>perderai i tuoi progressi</b> attuali. Sei sicuro?</p>",
     [
-      {label:'Sì, torna al menu',red:true,fn:function(){ goPage('pg-home'); }},
-      {label:'No, continuo a giocare',red:false,fn:function(){}}
+      {label:"Si, torna al menu",red:true,fn:function(){goPage("pg-home");}},
+      {label:"No, continuo",red:false,fn:function(){}}
     ]
   );
 }
 
-// ── AUDIO TOGGLE ─────────────────────────────────────
-function toggleAudio() {
+function toggleAudio(){
   G.audioOn=!G.audioOn;
-  var t=G.audioOn?'🔊 Audio: ON':'🔇 Audio: OFF';
-  document.getElementById('btn-audio-home').textContent=t;
-  document.getElementById('btn-audio-board').textContent=G.audioOn?'🔊':'🔇';
-  if (G.audioOn) initCtx();
+  document.getElementById("btn-audio-home").textContent=G.audioOn?"Audio: ON":"Audio: OFF";
+  document.getElementById("btn-audio-board").textContent=G.audioOn?"ON":"OFF";
+  if(G.audioOn)initCtx();
 }
 </script>
 </body>
