@@ -11,12 +11,13 @@ body{background:#0d0d1a;color:#e8e8f0;font-family:Arial,sans-serif;min-height:10
 .page.on{display:flex}
 h1{font-size:2.4rem;font-weight:900;margin-bottom:10px;text-align:center}
 h1 em{color:#e94560;font-style:normal}
-.sub{color:#8888aa;margin-bottom:30px;text-align:center;font-size:1rem}
+.sub{color:#8888aa;margin-bottom:26px;text-align:center;font-size:1rem}
 button{display:block;width:100%;max-width:300px;padding:16px;margin:8px auto;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;text-align:center}
 button:hover{opacity:.88}
 button:active{opacity:.7;transform:scale(.97)}
 .red{background:#e94560;color:#fff}
 .teal{background:#0f9b8e;color:#fff}
+.purple{background:#7c3aed;color:#fff}
 .gray{background:#222244;color:#e8e8f0;border:1px solid #555}
 .sm{padding:12px 20px;width:auto;font-size:.9rem;margin:0}
 .lv-wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;max-width:540px}
@@ -64,35 +65,60 @@ button:active{opacity:.7;transform:scale(.97)}
 .fb-ok{background:#0a2a24;color:#4fffcc}
 .fb-ko{background:#2a0812;color:#ff9aaa}
 .hint-box{background:#0e0e28;border-left:3px solid #7c3aed;padding:10px 14px;border-radius:8px;font-size:.83rem;color:#aaa;display:none;margin-bottom:10px;line-height:1.5}
+.deepen-btn{background:#1a0a3a;border:2px solid #7c3aed;color:#b39ddb;padding:11px;border-radius:10px;font-weight:700;cursor:pointer;text-align:center;margin-top:8px;font-size:.88rem;width:100%;display:none}
+.deepen-btn:hover{background:#2a1050;border-color:#a06aff}
 .audio-play{background:#001824;border:2px solid #00aacc;color:#00ddff;padding:13px;border-radius:12px;font-weight:800;cursor:pointer;text-align:center;margin-bottom:10px;font-size:.95rem;width:100%;display:block}
 .audio-play:hover{background:#003050}
+.cont-btn{background:#e94560;color:#fff;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;margin-top:12px;font-size:.95rem;width:100%;max-width:200px;display:none;margin-left:auto;margin-right:auto}
 .dice-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:16px}
 .dice{font-size:2.8rem;cursor:pointer;user-select:none;display:inline-block;transition:transform .3s}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
 .modal-bg.on{display:flex}
-.modal-box{background:#181830;border:2px solid #f0a500;border-radius:20px;padding:34px 26px;max-width:440px;width:100%;text-align:center;max-height:90vh;overflow-y:auto}
+.modal-box{background:#181830;border:2px solid #f0a500;border-radius:20px;padding:30px 24px;max-width:480px;width:100%;text-align:center;max-height:90vh;overflow-y:auto}
 .modal-box h3{margin-bottom:14px;font-size:1.3rem}
 .modal-body{text-align:left;color:#b8b8d0;font-size:.9rem;line-height:1.8;margin-bottom:22px}
 .modal-body ul{padding-left:18px}
 .modal-body li{margin-bottom:8px}
 .modal-body b{color:#f0a500}
+.modal-body .note-box{background:#0e0e28;border-left:3px solid #7c3aed;padding:10px 14px;border-radius:8px;margin-top:10px;font-size:.85rem;color:#ccc}
 .stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:20px 0}
 .sbox{background:#16213e;border-radius:12px;padding:14px 20px;text-align:center;min-width:85px}
 .sval{font-size:1.4rem;font-weight:900}
 .slbl{font-size:.72rem;color:#8888aa;margin-top:3px}
+/* Approfondimenti */
+#pg-theory{justify-content:flex-start;padding-top:20px}
+.theory-header{width:100%;max-width:700px;margin-bottom:20px;text-align:center}
+.th-tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:16px 0}
+.th-tab{background:#16213e;border:2px solid transparent;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:700;font-size:.9rem;color:#aaa}
+.th-tab:hover{border-color:#555}
+.th-tab.sel{border-color:#7c3aed;color:#e8e8f0;background:#1e1230}
+.th-cards{width:100%;max-width:700px;display:flex;flex-direction:column;gap:14px;margin-bottom:24px}
+.th-card{background:#13192e;border:1px solid #2a3a4a;border-radius:14px;padding:20px;cursor:pointer}
+.th-card:hover{border-color:#7c3aed}
+.th-card-title{font-weight:800;font-size:1rem;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.th-card-sub{color:#8888aa;font-size:.82rem}
+.th-card-body{margin-top:14px;display:none;color:#c8c8e0;font-size:.9rem;line-height:1.7}
+.th-card-body.open{display:block}
+.th-card-body p{margin-bottom:10px}
+.th-card-body .example{background:#0e0e28;border-left:3px solid #0f9b8e;padding:10px 14px;border-radius:8px;font-size:.85rem;color:#aaccaa;margin:8px 0}
+.th-card-body .tip{background:#0e0e28;border-left:3px solid #f0a500;padding:10px 14px;border-radius:8px;font-size:.85rem;color:#ddcc88;margin:8px 0}
+.badge-wrong{background:#e94560;color:#fff;font-size:.65rem;padding:2px 8px;border-radius:10px;font-weight:800;margin-left:8px}
 @media(max-width:500px){.lv-wrap{flex-direction:column;align-items:center}.lv{max-width:90%;width:90%}}
 </style>
 </head>
 <body>
 
+<!-- HOME -->
 <div id="pg-home" class="page on">
-  <h1>Harmony<em>Quest</em> 🎵</h1>
+  <h1>Harmony<em>Quest</em> &#127925;</h1>
   <p class="sub">Gioca e impara la teoria musicale</p>
   <button class="red" onclick="goPage('pg-level')">&#9654; Nuova Partita</button>
-  <button class="teal" onclick="showHowTo()">&#128218; Come si gioca</button>
+  <button class="purple" onclick="goPage('pg-theory')">&#128218; Approfondimenti</button>
+  <button class="teal" onclick="showHowTo()">&#10067; Come si gioca</button>
   <button class="gray" id="btn-audio-home" onclick="toggleAudio()">&#128266; Audio: ON</button>
 </div>
 
+<!-- LIVELLO -->
 <div id="pg-level" class="page">
   <h2 style="margin-bottom:8px;font-size:1.4rem">Scegli il livello</h2>
   <p class="sub">Le domande cambiano in base al livello scelto</p>
@@ -113,6 +139,7 @@ button:active{opacity:.7;transform:scale(.97)}
   </div>
 </div>
 
+<!-- BOARD -->
 <div id="pg-board" class="page">
   <div class="topbar">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
@@ -120,7 +147,8 @@ button:active{opacity:.7;transform:scale(.97)}
       <div class="badge">&#11088; <em id="sc">0</em></div>
       <div class="badge">&#128293; <em id="str">0</em></div>
     </div>
-    <div style="display:flex;gap:10px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="purple sm" onclick="goPage('pg-theory')">&#128218;</button>
       <button class="gray sm" id="btn-audio-board" onclick="toggleAudio()">&#128266;</button>
       <button class="gray sm" onclick="confirmMenu()">&#127968; Menu</button>
     </div>
@@ -133,6 +161,8 @@ button:active{opacity:.7;transform:scale(.97)}
     <div id="opts" class="opts"></div>
     <div id="feedback" class="feedback"></div>
     <div id="hint" class="hint-box"></div>
+    <button class="deepen-btn" id="deepen-btn" onclick="openDeepen()">&#128218; Approfondisci questo argomento</button>
+    <button class="cont-btn" id="cont-btn" onclick="doNext()">Continua &#9654;</button>
     <div class="dice-row">
       <span class="dice" id="dice" onclick="rollDice()">&#9861;</span>
       <span style="color:#8888aa;font-size:.88rem" id="dinfo">Tocca per lanciare (1-6)</span>
@@ -140,6 +170,7 @@ button:active{opacity:.7;transform:scale(.97)}
   </div>
 </div>
 
+<!-- VITTORIA -->
 <div id="pg-victory" class="page">
   <div style="font-size:5rem;margin-bottom:16px">&#127942;</div>
   <div id="final-sc" style="font-size:3rem;font-weight:900;color:#f0a500">0</div>
@@ -150,9 +181,26 @@ button:active{opacity:.7;transform:scale(.97)}
     <div class="sbox"><div class="sval" id="vs">0</div><div class="slbl">Streak Max</div></div>
   </div>
   <button class="red" onclick="goPage('pg-level')">&#128257; Nuova Partita</button>
+  <button class="purple" onclick="goPage('pg-theory')">&#128218; Approfondimenti</button>
   <button class="gray" style="margin-top:8px" onclick="goPage('pg-home')">&#127968; Home</button>
 </div>
 
+<!-- APPROFONDIMENTI -->
+<div id="pg-theory" class="page">
+  <div class="theory-header">
+    <h2 style="font-size:1.5rem;margin-bottom:6px">&#128218; Approfondimenti</h2>
+    <p class="sub" style="margin-bottom:0">Teoria musicale spiegata semplicemente</p>
+    <div class="th-tabs">
+      <div class="th-tab sel" onclick="setThTab('beginner',this)">&#127807; Principiante</div>
+      <div class="th-tab" onclick="setThTab('intermediate',this)">&#127928; Intermedio</div>
+      <div class="th-tab" onclick="setThTab('advanced',this)">&#127891; Avanzato</div>
+    </div>
+  </div>
+  <div class="th-cards" id="th-cards"></div>
+  <button class="gray sm" style="margin-bottom:24px" onclick="goBack()">&#8592; Torna indietro</button>
+</div>
+
+<!-- MODAL -->
 <div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <div id="m-icon" style="font-size:3rem;margin-bottom:10px"></div>
@@ -163,7 +211,7 @@ button:active{opacity:.7;transform:scale(.97)}
 </div>
 
 <script>
-var G = {level:"intermediate",pos:0,score:0,streak:0,maxStreak:0,correct:0,wrong:0,audioOn:true,waiting:false,usedQ:{}};
+var G = {level:"intermediate",pos:0,score:0,streak:0,maxStreak:0,correct:0,wrong:0,audioOn:true,waiting:false,usedQ:{},lastCat:"",prevPage:"pg-home"};
 var TOTAL = 40;
 var actx = null;
 
@@ -208,56 +256,97 @@ function beep(hz,ok){
   o.start(ctx.currentTime);o.stop(ctx.currentTime+(ok?0.2:0.4));
 }
 
+/* ── DOMANDE ── */
 var QDB = {
   beginner:[
-    {cat:"Scale",q:"Quale scala usa solo i tasti bianchi del pianoforte?",a:["Do Maggiore","Sol Maggiore","Fa Maggiore","Re Minore"],c:0,hint:"Non ha ne diesis ne bemolle"},
-    {cat:"Scale",q:"Quante note ha una scala maggiore?",a:["7","5","12","8"],c:0,hint:"Do-Re-Mi-Fa-Sol-La-Si = 7 note"},
-    {cat:"Ritmo",q:"In 4/4 quanti quarti ci sono per battuta?",a:["4","3","2","6"],c:0,hint:"Il numeratore indica i battiti"},
-    {cat:"Ritmo",q:"Una semiminima vale?",a:["1 quarto","1 meta","2 quarti","1 ottavo"],c:0,hint:"La nota con la testa nera e il gambo"},
-    {cat:"Accordi",q:"Do Maggiore e formato da?",a:["Do-Mi-Sol","Do-Mib-Sol","Do-Fa-Sol","Re-Fa-La"],c:0,hint:"1a - 3a - 5a della scala di Do"},
-    {cat:"Accordi",q:"Un accordo minore ha la terza?",a:["Abbassata di un semitono","Alzata di un semitono","Uguale al maggiore","Abbassata di un tono"],c:0,hint:"Do magg = Do-Mi-Sol, Do min = Do-Mib-Sol"},
-    {cat:"Teoria",q:"Quanti semitoni ha una ottava?",a:["12","7","8","10"],c:0,hint:"Conta tutti i tasti bianchi e neri"},
-    {cat:"Teoria",q:"Cosa significa BPM?",a:["Battiti Per Minuto","Basso Per Misura","Battuta Per Metro","Bemolle Per Modulazione"],c:0,hint:"Indica la velocita del brano"}
+    {cat:"Scale",topic:"scale-maggiore",q:"Quale scala usa solo i tasti bianchi del pianoforte?",a:["Do Maggiore","Sol Maggiore","Fa Maggiore","Re Minore"],c:0,hint:"Non ha ne diesis ne bemolle"},
+    {cat:"Scale",topic:"scale-maggiore",q:"Quante note ha una scala maggiore?",a:["7","5","12","8"],c:0,hint:"Do-Re-Mi-Fa-Sol-La-Si = 7 note"},
+    {cat:"Ritmo",topic:"ritmo-base",q:"In 4/4 quanti quarti ci sono per battuta?",a:["4","3","2","6"],c:0,hint:"Il numeratore indica i battiti"},
+    {cat:"Ritmo",topic:"ritmo-base",q:"Una semiminima vale?",a:["1 quarto","1 meta","2 quarti","1 ottavo"],c:0,hint:"La nota con la testa nera e il gambo"},
+    {cat:"Accordi",topic:"accordi-base",q:"Do Maggiore e formato da?",a:["Do-Mi-Sol","Do-Mib-Sol","Do-Fa-Sol","Re-Fa-La"],c:0,hint:"1a - 3a - 5a della scala di Do"},
+    {cat:"Accordi",topic:"accordi-base",q:"Un accordo minore ha la terza?",a:["Abbassata di un semitono","Alzata di un semitono","Uguale al maggiore","Abbassata di un tono"],c:0,hint:"Do magg = Do-Mi-Sol, Do min = Do-Mib-Sol"},
+    {cat:"Teoria",topic:"semitoni",q:"Quanti semitoni ha una ottava?",a:["12","7","8","10"],c:0,hint:"Conta tutti i tasti bianchi e neri"},
+    {cat:"Teoria",topic:"bpm",q:"Cosa significa BPM?",a:["Battiti Per Minuto","Basso Per Misura","Battuta Per Metro","Bemolle Per Modulazione"],c:0,hint:"Indica la velocita del brano"}
   ],
   intermediate:[
-    {cat:"Progressioni",q:"II-V-I in Do Maggiore e?",a:["Rem7-Sol7-DoMaj7","Do-Fa-Sol7","Lam-Rem-Sol","Fa-Sol-Do"],c:0,hint:"La progressione piu usata nel jazz"},
-    {cat:"Modi",q:"Il modo Dorico parte dal?",a:["II grado","I grado","VI grado","IV grado"],c:0,hint:"So What di Miles Davis usa Re Dorico"},
-    {cat:"Modi",q:"Il Misolidio differisce dal Maggiore per?",a:["VII abbassato di un semitono","VI abbassato","III abbassato","II abbassato"],c:0,hint:"Come Sol Magg ma con Fa naturale"},
-    {cat:"Settime",q:"Sol7 dominante contiene?",a:["Fa naturale","Fa diesis","La diesis","Si bemolle"],c:0,hint:"V7 ha la settima minore"},
-    {cat:"Settime",q:"Un accordo min7 ha?",a:["3a min + 7a min","3a magg + 7a min","3a min + 7a magg","3a magg + 7a magg"],c:0,hint:"Lam7 = La-Do-Mi-Sol"},
-    {cat:"Scale",q:"La scala pentatonica ha quante note?",a:["5","7","6","4"],c:0,hint:"Penta significa cinque in greco"},
-    {cat:"Ritmo",q:"La sincope e?",a:["Accento su tempo debole","Ripetizione del forte","Pausa lunga","Nota tenuta 4 tempi"],c:0,hint:"Crea tensione anticipando il battere"},
-    {cat:"Ritmo",q:"Le terzine dividono il tempo in?",a:["3 parti uguali","2 parti uguali","4 parti uguali","6 parti uguali"],c:0,hint:"Tre note nello spazio di due"},
-    {cat:"Progressioni",q:"I-V-vi-IV e usata in?",a:["Migliaia di canzoni pop","Solo classica","Solo metal","Solo jazz"],c:0,hint:"Let It Be, Someone Like You, No Woman No Cry"},
-    {cat:"Modi",q:"Il Lidio differisce dal Maggiore per?",a:["IV alzato (#4)","VII alzato","II alzato","V alzato"],c:0,hint:"Suono sospeso e magico, usato da Morricone"}
+    {cat:"Progressioni",topic:"ii-v-i",q:"II-V-I in Do Maggiore e?",a:["Rem7-Sol7-DoMaj7","Do-Fa-Sol7","Lam-Rem-Sol","Fa-Sol-Do"],c:0,hint:"La progressione piu usata nel jazz"},
+    {cat:"Modi",topic:"dorico",q:"Il modo Dorico parte dal?",a:["II grado","I grado","VI grado","IV grado"],c:0,hint:"So What di Miles Davis usa Re Dorico"},
+    {cat:"Modi",topic:"misolidio",q:"Il Misolidio differisce dal Maggiore per?",a:["VII abbassato di un semitono","VI abbassato","III abbassato","II abbassato"],c:0,hint:"Come Sol Magg ma con Fa naturale"},
+    {cat:"Settime",topic:"settima-dominante",q:"Sol7 dominante contiene?",a:["Fa naturale","Fa diesis","La diesis","Si bemolle"],c:0,hint:"V7 ha la settima minore"},
+    {cat:"Settime",topic:"accordi-settima",q:"Un accordo min7 ha?",a:["3a min + 7a min","3a magg + 7a min","3a min + 7a magg","3a magg + 7a magg"],c:0,hint:"Lam7 = La-Do-Mi-Sol"},
+    {cat:"Scale",topic:"pentatonica",q:"La scala pentatonica ha quante note?",a:["5","7","6","4"],c:0,hint:"Penta significa cinque in greco"},
+    {cat:"Ritmo",topic:"sincope",q:"La sincope e?",a:["Accento su tempo debole","Ripetizione del forte","Pausa lunga","Nota tenuta 4 tempi"],c:0,hint:"Crea tensione anticipando il battere"},
+    {cat:"Ritmo",topic:"terzine",q:"Le terzine dividono il tempo in?",a:["3 parti uguali","2 parti uguali","4 parti uguali","6 parti uguali"],c:0,hint:"Tre note nello spazio di due"},
+    {cat:"Progressioni",topic:"i-v-vi-iv",q:"I-V-vi-IV e usata in?",a:["Migliaia di canzoni pop","Solo classica","Solo metal","Solo jazz"],c:0,hint:"Let It Be, Someone Like You, No Woman No Cry"},
+    {cat:"Modi",topic:"lidio",q:"Il Lidio differisce dal Maggiore per?",a:["IV alzato (#4)","VII alzato","II alzato","V alzato"],c:0,hint:"Suono sospeso e magico, usato da Morricone"}
   ],
   advanced:[
-    {cat:"Armonia",q:"La sostituzione di tritono sostituisce?",a:["V7 con bII7","I con bVII","II con IV","IV con bVI"],c:0,hint:"Sol7 diventa Reb7 nella tonalita di Do"},
-    {cat:"Modi",q:"La Superlocria si usa su?",a:["Accordi alterati 7alt","Accordi maj7","Accordi dim7","Accordi sus4"],c:0,hint:"Contiene b9 #9 #11 b13"},
-    {cat:"Modulazione",q:"La modulazione enarmonica sfrutta?",a:["Note uguali con nome diverso","Cambio di metro","Scale parallele","Cadenze evitate"],c:0,hint:"Sol diesis = La bemolle, permette tonalita lontane"},
-    {cat:"Ritmo",q:"L emiola e?",a:["2 gruppi da 3 percepiti come 3 da 2","Ritmo binario su ternario","Poliritmia in 5/4","Sincope sul 4 tempo"],c:0,hint:"Crea ambiguita metrica, comune in Brahms"},
-    {cat:"Coltrane",q:"I Coltrane Changes usano?",a:["Modulazioni per terze di grande terza","Solo II-V-I","Pedali armonici","Scale esatonali"],c:0,hint:"Giant Steps: tre centri tonali"},
-    {cat:"Armonia",q:"Il Napolitano bII si usa prima della?",a:["V (dominante)","I (tonica)","IV (sottodominante)","VII (sensibile)"],c:0,hint:"Tipico del periodo romantico: Schubert e Beethoven"}
+    {cat:"Armonia",topic:"sub-tritono",q:"La sostituzione di tritono sostituisce?",a:["V7 con bII7","I con bVII","II con IV","IV con bVI"],c:0,hint:"Sol7 diventa Reb7 nella tonalita di Do"},
+    {cat:"Modi",topic:"superlocria",q:"La Superlocria si usa su?",a:["Accordi alterati 7alt","Accordi maj7","Accordi dim7","Accordi sus4"],c:0,hint:"Contiene b9 #9 #11 b13"},
+    {cat:"Modulazione",topic:"enarmonia",q:"La modulazione enarmonica sfrutta?",a:["Note uguali con nome diverso","Cambio di metro","Scale parallele","Cadenze evitate"],c:0,hint:"Sol diesis = La bemolle, permette tonalita lontane"},
+    {cat:"Ritmo",topic:"emiola",q:"L emiola e?",a:["2 gruppi da 3 percepiti come 3 da 2","Ritmo binario su ternario","Poliritmia in 5/4","Sincope sul 4 tempo"],c:0,hint:"Crea ambiguita metrica, comune in Brahms"},
+    {cat:"Coltrane",topic:"coltrane-changes",q:"I Coltrane Changes usano?",a:["Modulazioni per terze di grande terza","Solo II-V-I","Pedali armonici","Scale esatonali"],c:0,hint:"Giant Steps: tre centri tonali"},
+    {cat:"Armonia",topic:"napolitano",q:"Il Napolitano bII si usa prima della?",a:["V (dominante)","I (tonica)","IV (sottodominante)","VII (sensibile)"],c:0,hint:"Tipico del periodo romantico: Schubert e Beethoven"}
   ],
   audio:[
-    {cat:"Audio",q:"Quale intervallo senti?",a:["Seconda Magg","Terza Magg","Quarta Giusta","Quinta Giusta"],c:1,play:"melody",freqs:[440,554.37],hint:"Do verso Mi: la terza che apre la triade maggiore"},
-    {cat:"Audio",q:"Che intervallo e questo salto?",a:["Terza","Quarta Giusta","Quinta Giusta","Ottava"],c:2,play:"melody",freqs:[440,659.25],hint:"Star Wars di Williams inizia con questa quinta"},
-    {cat:"Audio",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:0,play:"chord",freqs:[261.63,329.63,392.00],hint:"Suono brillante e stabile uguale a maggiore"},
-    {cat:"Audio",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:1,play:"chord",freqs:[261.63,311.13,392.00],hint:"Suono cupo e malinconico uguale a minore"},
-    {cat:"Audio",q:"Questa scala e?",a:["Maggiore","Minore naturale","Dorica","Pentatonica"],c:0,play:"melody",freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25],hint:"T-T-S-T-T-T-S: la scala di Do Maggiore"},
-    {cat:"Audio",q:"Che salto senti?",a:["Quarta Giusta","Sesta Magg","Ottava","Settima Magg"],c:2,play:"melody",freqs:[261.63,523.25],hint:"Somewhere Over The Rainbow inizia cosi"},
-    {cat:"Audio",q:"Questo accordo a 4 voci e?",a:["Maj7","Dominante 7a","Minore 7a","Dim7"],c:1,play:"chord",freqs:[392.00,493.88,587.33,698.46],hint:"Sol-Si-Re-Fa: settima dominante"}
+    {cat:"Audio",topic:"terza-maggiore",q:"Quale intervallo senti?",a:["Seconda Magg","Terza Magg","Quarta Giusta","Quinta Giusta"],c:1,play:"melody",freqs:[440,554.37],hint:"Do verso Mi: la terza che apre la triade maggiore"},
+    {cat:"Audio",topic:"quinta-giusta",q:"Che intervallo e questo salto?",a:["Terza","Quarta Giusta","Quinta Giusta","Ottava"],c:2,play:"melody",freqs:[440,659.25],hint:"Star Wars di Williams inizia con questa quinta"},
+    {cat:"Audio",topic:"accordi-base",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:0,play:"chord",freqs:[261.63,329.63,392.00],hint:"Suono brillante e stabile uguale a maggiore"},
+    {cat:"Audio",topic:"accordi-base",q:"Questa triade e?",a:["Maggiore","Minore","Diminuita","Aumentata"],c:1,play:"chord",freqs:[261.63,311.13,392.00],hint:"Suono cupo e malinconico uguale a minore"},
+    {cat:"Audio",topic:"scale-maggiore",q:"Questa scala e?",a:["Maggiore","Minore naturale","Dorica","Pentatonica"],c:0,play:"melody",freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25],hint:"T-T-S-T-T-T-S: la scala di Do Maggiore"},
+    {cat:"Audio",topic:"ottava",q:"Che salto senti?",a:["Quarta Giusta","Sesta Magg","Ottava","Settima Magg"],c:2,play:"melody",freqs:[261.63,523.25],hint:"Somewhere Over The Rainbow inizia cosi"},
+    {cat:"Audio",topic:"settima-dominante",q:"Questo accordo a 4 voci e?",a:["Maj7","Dominante 7a","Minore 7a","Dim7"],c:1,play:"chord",freqs:[392.00,493.88,587.33,698.46],hint:"Sol-Si-Re-Fa: settima dominante"}
+  ]
+};
+
+/* ── SCHEDE TEORIA ── */
+var THEORY = {
+  beginner:[
+    {id:"scale-maggiore",title:"La scala maggiore",sub:"Do Re Mi Fa Sol La Si",body:'<p>Una scala e una sequenza di 7 note con distanze fisse tra loro. La scala di <b>Do Maggiore</b> e la piu semplice: suona tutti i tasti bianchi del pianoforte dall inizio.</p><p>La formula e: <b>Tono - Tono - Semitono - Tono - Tono - Tono - Semitono</b>. Un tono = 2 tasti, un semitono = 1 tasto.</p><div class="example">&#127925; Esempio: <b>Do Re Mi Fa Sol La Si Do</b><br>Ascolta "Do Re Mi" dal film Il Suono della Musica: e esattamente questa scala!</div><div class="tip">&#128161; Trucco: al pianoforte, inizia dal Do (tasto bianco a sinistra del gruppo di 2 neri) e suona solo tasti bianchi fino al Do successivo.</div>'},
+    {id:"accordi-base",title:"Gli accordi maggiori e minori",sub:"Il mattone della musica",body:'<p>Un accordo e un insieme di almeno 3 note suonate insieme. Il piu semplice e la <b>triade</b>, formata da 3 note: la fondamentale, la terza e la quinta.</p><p><b>Accordo maggiore</b> = suono brillante, felice. Do Magg = Do + Mi + Sol.<br><b>Accordo minore</b> = suono cupo, malinconico. Do Min = Do + Mi bemolle + Sol.</p><div class="example">&#127925; Esempi famosi:<br>- <b>Do Maggiore:</b> inizio di "Let It Be" dei Beatles<br>- <b>La Minore:</b> inizio di "Stairway to Heaven" dei Led Zeppelin</div><div class="tip">&#128161; La differenza tra maggiore e minore e solo UN semitono: la terza abbassata rende tutto piu triste!</div>'},
+    {id:"semitoni",title:"Semitoni e toni",sub:"I mattoni delle scale",body:'<p>Il <b>semitono</b> e la distanza piu piccola tra due note nella musica occidentale: corrisponde a un solo tasto di distanza al pianoforte (anche tra bianco e nero).</p><p>Un <b>tono</b> = 2 semitoni. Una <b>ottava</b> = 12 semitoni: da un Do al Do successivo ci sono esattamente 12 passi.</p><div class="example">&#127925; Prova: sul pianoforte premi Do, poi il tasto nero subito a destra (Do diesis). Hai fatto un semitono!<br>Poi salta al Re bianco: hai fatto un tono.</div>'},
+    {id:"ritmo-base",title:"Il ritmo e le misure",sub:"4/4, 3/4, semiminime...",body:'<p>Il <b>tempo</b> e come viene divisa la musica in gruppi regolari. Il <b>4/4</b> (quattro quarti) e il piu comune: ogni misura ha 4 battiti, come contare 1-2-3-4 ripetendo.</p><p>La <b>semiminima</b> e la nota di base: vale 1 battito. La <b>minima</b> vale 2 battiti, la <b>semibreve</b> vale 4.</p><div class="example">&#127925; Brani in 4/4: quasi tutto il pop e il rock (Yesterday, Bohemian Rhapsody, Shape of You).<br>Brani in 3/4 (valzer): "My Favorite Things", "Take Three" di Brubeck.</div>'},
+    {id:"bpm",title:"BPM: la velocita della musica",sub:"Battiti Per Minuto",body:'<p>I <b>BPM</b> indicano quante volte al minuto cade il battito principale. 60 BPM = 1 battito al secondo, come un orologio.</p><p>Piu i BPM sono alti, piu il brano e veloce. La musica classica usa termini italiani: <b>Adagio</b> (lento), <b>Andante</b> (passo), <b>Allegro</b> (veloce), <b>Presto</b> (molto veloce).</p><div class="example">&#127925; Esempi:<br>- Ballate lente: 60-80 BPM (Someone Like You di Adele: 67 BPM)<br>- Pop normale: 100-130 BPM (Happy di Pharrell: 160 BPM!)<br>- Techno/EDM: 130-160 BPM</div>'}
+  ],
+  intermediate:[
+    {id:"ii-v-i",title:"La progressione II-V-I",sub:"Il DNA del jazz",body:'<p>La <b>II-V-I</b> e la progressione armonica piu importante del jazz. In Do Maggiore e: <b>Re min7 - Sol7 - Do Maj7</b>. Crea una tensione (Sol7) che si risolve sulla tonica (Do).</p><p>Il II grado prepara il V, il V grado vuole risolvere sull I. E come un respiro: inspirazione (IIm7), trattenere (V7), espirazione (Imaj7).</p><div class="example">&#127925; La trovi in quasi ogni standard jazz:<br>- "Autumn Leaves" e piena di II-V-I in tonalita diverse<br>- "Fly Me to the Moon" di Frank Sinatra<br>- "All the Things You Are" di Jerome Kern</div><div class="tip">&#128161; Impara questa progressione in tutte le 12 tonalita: e il fondamento per suonare jazz.</div>'},
+    {id:"dorico",title:"Il modo Dorico",sub:"Il modo del jazz e del funk",body:'<p>Il modo <b>Dorico</b> e come una scala minore ma con il VI grado alzato. Se parti dal II grado di una scala maggiore ottieni il Dorico: es. da Re nella scala di Do.</p><p>Formula: T - S - T - T - T - S - T. Ha un suono minore ma con una luce in piu rispetto alla minore naturale.</p><div class="example">&#127925; Esempi famosi:<br>- <b>"So What"</b> di Miles Davis (1959): il riff principale e in Re Dorico<br>- <b>"Scarborough Fair"</b>: melodia tradizionale inglese in Dorico<br>- <b>"Smoke on the Water"</b> dei Deep Purple: il riff usa Do Dorico</div>'},
+    {id:"misolidio",title:"Il modo Misolidio",sub:"Il modo del blues e del rock",body:'<p>Il <b>Misolidio</b> e come una scala maggiore ma con il VII grado abbassato di un semitono. Si ottiene partendo dal V grado di una scala maggiore.</p><p>E il modo degli accordi dominanti: Sol Misolidio = Sol La Si Do Re Mi Fa Sol (Fa naturale invece di Fa#).</p><div class="example">&#127925; Esempi famosi:<br>- <b>"Sweet Home Chicago"</b>: blues classico in Misolidio<br>- <b>"Norwegian Wood"</b> dei Beatles: parte in Mi Misolidio<br>- <b>"Tomorrow Never Knows"</b>: drone su accordo dominante Misolidio</div>'},
+    {id:"settima-dominante",title:"Gli accordi di settima dominante",sub:"La tensione che vuole risolvere",body:'<p>Un accordo di <b>settima dominante</b> (es. Sol7) e formato da: triade maggiore + settima minore. Ha una tensione naturale che vuole risolvere un quinto sotto (Sol7 vuole andare a Do).</p><p>Questa tensione nasce dal <b>tritono</b> interno: la terza (Si) e la settima (Fa) di Sol7 distano esattamente 3 toni, la distanza piu instabile in musica.</p><div class="example">&#127925; Esempi:<br>- Sol7 che risolve su Do: il finale di quasi ogni brano tonal<br>- <b>"Watermelon Man"</b> di Herbie Hancock: riff su accordo dominante<br>- <b>"Feelin Good"</b>: il giro di blues usa accordi dominanti</div>'},
+    {id:"accordi-settima",title:"Tutti gli accordi di settima",sub:"maj7, min7, dom7, m7b5",body:'<p>Aggiungendo una settima a una triade otteniamo gli accordi di settima, fondamentali nel jazz:</p><p><b>Maj7</b>: triade magg + 7a magg. Suono morbido. DoMaj7 = Do-Mi-Sol-Si.<br><b>min7</b>: triade min + 7a min. Suono scuro ma stabile. Rem7 = Re-Fa-La-Do.<br><b>Dom7</b>: triade magg + 7a min. Tensione! Sol7 = Sol-Si-Re-Fa.<br><b>m7b5</b> (semidiminuito): triade dim + 7a min. Bim7b5 = Si-Re-Fa-La.</p><div class="example">&#127925; "Autumn Leaves" usa tutti e quattro questi tipi di accordo nel suo giro armonico!</div>'},
+    {id:"pentatonica",title:"La scala pentatonica",sub:"5 note, infinite possibilita",body:'<p>La scala <b>pentatonica</b> ha solo 5 note (penta = cinque). La pentatonica maggiore di Do = Do Re Mi Sol La. Quella minore di La = La Do Re Mi Sol.</p><p>E la scala piu usata nelle improvvisazioni di rock, blues e pop perche non ha note che creano dissonanza: qualsiasi nota suona bene su quasi qualsiasi accordo.</p><div class="example">&#127925; Esempi ovunque:<br>- Quasi tutti i riff di chitarra blues: BB King, Eric Clapton<br>- <b>"My Girl"</b> dei Temptations: intro di chitarra in pentatonica<br>- <b>"Blackbird"</b> dei Beatles: usa la pentatonica di Sol</div>'},
+    {id:"sincope",title:"La sincope",sub:"Il segreto del groove",body:'<p>La <b>sincope</b> si crea quando una nota viene accentata su un tempo debole (le e degli off-beat) anziche su quelli forti (1, 2, 3, 4 in 4/4). Crea un senso di spinta e movimento.</p><p>E l elemento principale del funky, jazz, reggae e di molto pop: la sensazione di groove nasce dall interazione tra il ritmo regolare e le sincopi.</p><div class="example">&#127925; Esempi famosi:<br>- <b>"Superstition"</b> di Stevie Wonder: clavinet tutto sincopi<br>- <b>"Miss You"</b> dei Rolling Stones: basso sincopato<br>- Il reggae in generale: la chitarra suona sul 2 e 4 (off-beat)</div>'},
+    {id:"terzine",title:"Le terzine",sub:"Tre note nello spazio di due",body:'<p>Una <b>terzina</b> divide un tempo in 3 parti uguali invece di 2. Si scrive con un 3 sopra o sotto le note. Il risultato e un ritmo che "ondeggia".</p><p>Quando una musica ha terzine su ogni battito si dice che ha un <b>feel ternario</b> o un groove di shuffle/swing.</p><div class="example">&#127925; Esempi:<br>- <b>"Nothing Else Matters"</b> dei Metallica: l arpeggio iniziale e in terzine<br>- Il jazz swing usa terzine sulle crome: ta-TAA, ta-TAA<br>- Il blues shuffle: il groove di BB King e pieno di terzine</div>'},
+    {id:"i-v-vi-iv",title:"La progressione I-V-vi-IV",sub:"La progressione pop piu famosa al mondo",body:'<p>I - V - vi - IV e la sequenza di accordi piu ricorrente nella musica pop. In Do: <b>Do - Sol - La min - Fa</b>. Il giro dura 4 battute e si ripete.</p><p>Funziona cosi bene perche i quattro accordi coprono quasi tutte le note della scala e creano un flusso circolare che non vuole fermarsi mai.</p><div class="example">&#127925; Canzoni costruite su I-V-vi-IV:<br>- <b>"Let It Be"</b> dei Beatles<br>- <b>"No Woman No Cry"</b> di Bob Marley<br>- <b>"Someone Like You"</b> di Adele<br>- <b>"With or Without You"</b> degli U2<br>- <b>"Despacito"</b></div>'},
+    {id:"lidio",title:"Il modo Lidio",sub:"Il suono del sogno e della magia",body:'<p>Il <b>Lidio</b> e come una scala maggiore ma con il IV grado alzato di un semitono (#4). Si ottiene partendo dal IV grado di una scala maggiore. Fa Lidio = Fa Sol La Si Do Re Mi Fa.</p><p>Ha un suono "sospeso, luminoso, onirico" ed e molto usato nella musica cinematografica e nelle ballate.</p><div class="example">&#127925; Esempi famosi:<br>- <b>Ennio Morricone</b> usa spesso il Lidio nelle colonne sonore<br>- <b>"Flying" dei Beatles</b>: strumentale in Lidio<br>- Joe Satriani: "Flying in a Blue Dream" usa il Lidio<br>- La musica di <b>Debussy</b> spesso si avvicina al Lidio</div>'}
+  ],
+  advanced:[
+    {id:"sub-tritono",title:"La sostituzione di tritono",sub:"Il trucco armonico del bebop",body:'<p>La <b>sostituzione di tritono</b> sostituisce un accordo dominante (V7) con un altro dominante distante un tritono (bII7). In Do: Sol7 viene sostituito da Reb7.</p><p>Funziona perche Sol7 e Reb7 condividono le stesse note di tensione (il tritono Si-Fa di Sol7 = Fa-Si di Reb7, enarmonia). Il basso scende cromaticamente, creando moto fluido.</p><div class="example">&#127925; Esempi:<br>- <b>"There Will Never Be Another You"</b>: giro con tritone sub nel finale<br>- Charlie Parker usava questa sostituzione sistematicamente nel bebop<br>- Il movimento del basso Do - Si - Sib - La e spesso tritone substitution a cascata</div>'},
+    {id:"superlocria",title:"La scala Superlocria (Alterata)",sub:"La scala degli accordi alterati",body:'<p>La scala <b>Superlocria</b> (o scala alterata, o 7a modalita del minore melodico) si usa sugli accordi dominanti alterati (7alt). Contiene: b9, #9, #11, b13.</p><p>Ogni nota non appartenente alla triade e alterata, da cui il nome. E la scelta standard dei jazzisti quando vedono un accordo scritto 7alt o 7#5#9.</p><div class="example">&#127925; Esempi:<br>- John Coltrane, Miles Davis e Bill Evans la usano continuamente nei standard<br>- Ascolta il solo di McCoy Tyner su <b>"Mr. PC"</b>: usa scale alterate sugli accordi dominanti<br>- In <b>"Giant Steps"</b> la scala alterata appare su ogni dominante</div>'},
+    {id:"enarmonia",title:"La modulazione enarmonica",sub:"Il portale tra tonalita lontane",body:'<p>La <b>modulazione enarmonica</b> sfrutta il fatto che la stessa nota puo avere due nomi: Sol# = Lab, Si# = Do, Dob = Si. Reinterpretando un accordo con un nome enarmico si puo modulare a tonalita lontanissime.</p><p>Il caso piu classico: il <b>diminuito di settima</b> e simmetrico e ambiguo, puo essere re-interpretato in 4 tonalita diverse.</p><div class="example">&#127925; Esempi:<br>- <b>Schubert</b> usa la modulazione enarmonica in modo magistrale nelle sue sonate<br>- <b>Beethoven</b>, Sonata "Waldstein": modulazione enarmonica nel finale<br>- <b>"Giant Steps"</b> di Coltrane: in un certo senso usa un principio simile</div>'},
+    {id:"emiola",title:"L emiola",sub:"L illusione metrica",body:'<p>L <b>emiola</b> si crea quando un ritmo in metro binario viene raggruppato temporaneamente in ternario (o viceversa). Il risultato e una percepita ambiguita metrica.</p><p>Concretamente: in 3/4 si suonano 2 gruppi da 3 ottavi (6 ottavi) che sembrano 3 gruppi da 2 (3 quarti). La sensazione e di "slittare" dal ritmo.</p><div class="example">&#127925; Esempi:<br>- <b>Brahms</b>: quasi tutte le sue composizioni contengono emiole<br>- <b>"America"</b> da West Side Story (Bernstein): alterna 6/8 e 3/4<br>- La <b>hemiola</b> e comune nella musica rinascimentale e barocca</div>'},
+    {id:"coltrane-changes",title:"I Coltrane Changes",sub:"Giant Steps e la rivoluzione armonica",body:'<p>I <b>Coltrane Changes</b> sono il sistema armonico inventato da John Coltrane in "Giant Steps" (1960). Divide l ottava in 3 parti uguali (terze di grande terza) creando 3 centri tonali: Si Magg, Sol Magg, Mib Magg.</p><p>Invece di muoversi nell ambito di una sola tonalita, il pezzo modula continuamente tra queste tre aree lontane. I musicisti devono improvvisare su progressioni II-V-I che cambiano ogni due accordi.</p><div class="example">&#127925; Esempi:<br>- <b>"Giant Steps"</b> (1960): il pezzo originale, rivoluzionario<br>- <b>"Countdown"</b>: reharmonization di "Tune Up" con i changes<br>- <b>"Central Park West"</b>: versione piu lenta e lirica dello stesso sistema</div>'},
+    {id:"napolitano",title:"Il accordo Napolitano (bII)",sub:"L accordo del dramma romantico",body:'<p>Il <b>accordo Napolitano</b> e una triade maggiore costruita sul II grado abbassato (bII). In Do minore: Re bemolle Maggiore. Si usa tipicamente in primo rivolto (Re bemolle basso) prima della dominante.</p><p>Ha un colore scuro, drammatico, tipico del periodo romantico. Crea una dissonanza cromatica molto espressiva.</p><div class="example">&#127925; Esempi:<br>- <b>Schubert</b>: "Der Erlkonig" usa il Napolitano per creare tensione drammatica<br>- <b>Beethoven</b>: Patetica op.13, Chiaro di Luna op.27 n.2<br>- <b>Chopin</b>: Ballata n.1 in Sol minore<br>- Nel flamenco il accordo Napolitano e comunissimo</div>'}
   ]
 };
 
 var CT=["start","scala","audio","ritmo","scala","modo","accordo","audio","prog","bonus","scala","accordo","ritmo","audio","scala","modo","prog","scala","accordo","bonus","scala","audio","modo","ritmo","scala","accordo","audio","scala","prog","bonus","scala","ritmo","accordo","audio","scala","modo","scala","audio","ritmo","end"];
-var CI={start:"&#127900;",end:"&#127942;",scala:"&#9837;",accordo:"&#9839;",ritmo:"&#9833;",modo:"&#119824;",audio:"&#127925;",bonus:"&#11088;",prog:"&#9835;"};
-var CL={start:"Start",end:"Fine",scala:"Scala",accordo:"Accordo",ritmo:"Ritmo",modo:"Modo",audio:"Audio",bonus:"Bonus",prog:"Prog."};
+var CI={start:"&#9836;",end:"&#127942;",scala:"&#9837;",accordo:"&#9839;",ritmo:"&#9833;",modo:"&#119824;",audio:"&#127925;",bonus:"&#11088;",prog:"&#9835;"};
+
+var currentTopic = "";
+var currentLevel = "beginner";
+var wrongTopics = {};
 
 function goPage(id){
+  G.prevPage=document.querySelector(".page.on")?document.querySelector(".page.on").id:"pg-home";
   document.querySelectorAll(".page").forEach(function(p){p.classList.remove("on");});
   document.getElementById(id).classList.add("on");
   window.scrollTo(0,0);
+  if(id==="pg-theory") renderTheory(currentLevel);
+}
+
+function goBack(){
+  goPage(G.prevPage||"pg-home");
 }
 
 function selectLevel(lv){
@@ -268,8 +357,10 @@ function selectLevel(lv){
 
 function startGame(){
   G.pos=0;G.score=0;G.streak=0;G.maxStreak=0;G.correct=0;G.wrong=0;G.waiting=false;G.usedQ={};
+  wrongTopics={};
   var n={beginner:"Principiante",intermediate:"Intermedio",advanced:"Avanzato"};
   document.getElementById("lv-badge").textContent=n[G.level]||G.level;
+  currentLevel=G.level;
   goPage("pg-board");
   renderBoard();
   document.getElementById("qcat").textContent="Pronto!";
@@ -277,6 +368,8 @@ function startGame(){
   document.getElementById("opts").innerHTML="";
   document.getElementById("feedback").textContent="";
   document.getElementById("hint").style.display="none";
+  document.getElementById("deepen-btn").style.display="none";
+  document.getElementById("cont-btn").style.display="none";
 }
 
 function renderBoard(){
@@ -306,6 +399,8 @@ function pickQ(key){
 
 function showQuestion(){
   var t=CT[G.pos];
+  document.getElementById("deepen-btn").style.display="none";
+  document.getElementById("cont-btn").style.display="none";
   if(t==="start"||t==="bonus"){
     if(t==="bonus"){G.score+=50;document.getElementById("sc").textContent=G.score;beep(880,true);}
     document.getElementById("qcat").textContent=t==="bonus"?"Bonus!":"Inizio";
@@ -318,6 +413,7 @@ function showQuestion(){
   if(t==="end"){setTimeout(doVictory,600);return;}
   var key=(t==="audio")?"audio":G.level;
   var q=pickQ(key);if(!q){G.waiting=false;return;}
+  currentTopic=q.topic||"";
   document.getElementById("qcat").textContent=q.cat;
   document.getElementById("qtxt").textContent=q.q;
   document.getElementById("feedback").textContent="";
@@ -327,7 +423,7 @@ function showQuestion(){
   if(t==="audio"&&q.freqs){
     var ab=document.createElement("button");
     ab.className="audio-play";
-    ab.textContent="Ascolta";
+    ab.textContent="&#9654; Ascolta";
     var fc=q.freqs.slice(),pc=q.play||"melody";
     ab.onclick=function(){initCtx();if(pc==="chord")playChord(fc);else playMelody(fc);};
     grid.appendChild(ab);
@@ -336,13 +432,13 @@ function showQuestion(){
     var btn=document.createElement("button");
     btn.className="opt";btn.textContent=ans;
     var iC=i,qC=q;
-    btn.onclick=function(){handleAnswer(iC===qC.c,btn,qC.hint);};
+    btn.onclick=function(){handleAnswer(iC===qC.c,btn,qC.hint,qC.topic);};
     grid.appendChild(btn);
   });
   G.waiting=false;
 }
 
-function handleAnswer(correct,btn,hint){
+function handleAnswer(correct,btn,hint,topic){
   if(G.waiting)return;G.waiting=true;
   document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;});
   if(correct){
@@ -358,10 +454,40 @@ function handleAnswer(correct,btn,hint){
     document.getElementById("feedback").textContent="Sbagliato! -20pt";
     document.getElementById("feedback").className="feedback fb-ko";
     beep(180,false);
+    if(topic){wrongTopics[topic]=true;}
+    document.getElementById("deepen-btn").style.display="block";
   }
   if(hint){document.getElementById("hint").textContent="Suggerimento: "+hint;document.getElementById("hint").style.display="block";}
   document.getElementById("sc").textContent=G.score;
   document.getElementById("str").textContent=G.streak;
+  document.getElementById("cont-btn").style.display="block";
+}
+
+function doNext(){
+  document.getElementById("cont-btn").style.display="none";
+  document.getElementById("deepen-btn").style.display="none";
+  G.waiting=false;
+  document.getElementById("dinfo").textContent="Tocca il dado per avanzare!";
+}
+
+function openDeepen(){
+  var lvOrder=["beginner","intermediate","advanced"];
+  var found=false;
+  for(var li=0;li<lvOrder.length&&!found;li++){
+    var lv=lvOrder[li];
+    var cards=THEORY[lv]||[];
+    for(var ci=0;ci<cards.length&&!found;ci++){
+      if(cards[ci].id===currentTopic){
+        currentLevel=lv;
+        found=true;
+      }
+    }
+  }
+  G.prevPage="pg-board";
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("on");});
+  document.getElementById("pg-theory").classList.add("on");
+  window.scrollTo(0,0);
+  renderTheory(currentLevel,currentTopic);
 }
 
 function rollDice(){
@@ -384,9 +510,47 @@ function doVictory(){
   document.getElementById("vc").textContent=G.correct;
   document.getElementById("vw").textContent=G.wrong;
   document.getElementById("vs").textContent=G.maxStreak;
+  currentLevel=G.level;
   goPage("pg-victory");
 }
 
+/* ── TEORIA ── */
+var thTab = "beginner";
+function setThTab(lv,el){
+  thTab=lv;
+  document.querySelectorAll(".th-tab").forEach(function(t){t.classList.remove("sel");});
+  el.classList.add("sel");
+  renderTheory(lv);
+}
+
+function renderTheory(lv,openId){
+  thTab=lv;
+  document.querySelectorAll(".th-tab").forEach(function(t){
+    t.classList.toggle("sel",t.textContent.indexOf(lv==="beginner"?"Principiante":lv==="intermediate"?"Intermedio":"Avanzato")>=0);
+  });
+  var cards=THEORY[lv]||[];
+  var container=document.getElementById("th-cards");
+  container.innerHTML="";
+  cards.forEach(function(card){
+    var isWrong=wrongTopics[card.id];
+    var div=document.createElement("div");
+    div.className="th-card";
+    div.innerHTML='<div class="th-card-title">'+card.title+(isWrong?'<span class="badge-wrong">Ripassalo!</span>':'')+'<span style="color:#8888aa;font-size:.85rem">&#9660;</span></div><div class="th-card-sub">'+card.sub+'</div><div class="th-card-body" id="thb-'+card.id+'">'+card.body+'</div>';
+    div.onclick=function(){
+      var body=document.getElementById("thb-"+card.id);
+      body.classList.toggle("open");
+    };
+    container.appendChild(div);
+    if(openId&&card.id===openId){
+      setTimeout(function(){
+        var b=document.getElementById("thb-"+card.id);
+        if(b){b.classList.add("open");b.scrollIntoView({behavior:"smooth",block:"center"});}
+      },100);
+    }
+  });
+}
+
+/* ── MODAL ── */
 function openModal(icon,title,bodyHTML,buttons){
   document.getElementById("m-icon").textContent=icon;
   document.getElementById("m-title").textContent=title;
@@ -410,11 +574,11 @@ function showHowTo(){
     "<li><b>Obiettivo:</b> arriva all ultima casella del tabellone!</li>"+
     "<li><b>Dado:</b> tocca il dado per avanzare da 1 a 6 caselle.</li>"+
     "<li><b>Domande:</b> ogni casella ha una categoria. Scegli la risposta giusta.</li>"+
-    "<li><b>Risposta giusta:</b> guadagni +100pt. Con 3 di fila: +50 bonus!</li>"+
-    "<li><b>Risposta sbagliata:</b> perdi 20pt e lo streak si azzera.</li>"+
-    "<li><b>Caselle Audio (blu):</b> premi Ascolta, poi scegli cosa hai sentito.</li>"+
-    "<li><b>Livello:</b> sceglilo prima di giocare, le domande cambiano.</li>"+
-    "<li><b>Menu:</b> puoi tornare al menu in qualsiasi momento.</li>"+
+    "<li><b>Risposta giusta:</b> +100pt. Con 3 di fila: +50 bonus!</li>"+
+    "<li><b>Risposta sbagliata:</b> -20pt. Appare il tasto Approfondisci.</li>"+
+    "<li><b>Approfondisci:</b> dopo una risposta sbagliata puoi leggere la spiegazione completa con esempi su canzoni famose.</li>"+
+    "<li><b>Caselle Audio:</b> premi Ascolta, poi scegli cosa hai sentito.</li>"+
+    "<li><b>Menu:</b> puoi tornare al menu in qualsiasi momento, ti verra chiesta conferma.</li>"+
     "</ul>",
     [{label:"Ho capito!",red:true,fn:function(){}}]
   );
@@ -433,8 +597,8 @@ function confirmMenu(){
 
 function toggleAudio(){
   G.audioOn=!G.audioOn;
-  document.getElementById("btn-audio-home").textContent=G.audioOn?"Audio: ON":"Audio: OFF";
-  document.getElementById("btn-audio-board").textContent=G.audioOn?"ON":"OFF";
+  document.getElementById("btn-audio-home").textContent=G.audioOn?"&#128266; Audio: ON":"&#128263; Audio: OFF";
+  document.getElementById("btn-audio-board").textContent=G.audioOn?"&#128266;":"&#128263;";
   if(G.audioOn)initCtx();
 }
 </script>
