@@ -2,150 +2,136 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>HarmonyQuest 🎵</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HarmonyQuest</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-body{background:#0d0d1a;color:#e8e8f0;font-family:system-ui,sans-serif;min-height:100vh}
-.page{display:none;min-height:100vh;padding:20px 14px;flex-direction:column;align-items:center;justify-content:center}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d1a;color:#e8e8f0;font-family:Arial,sans-serif;min-height:100vh}
+.page{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
 .page.on{display:flex}
-h1{font-size:clamp(2rem,6vw,3rem);font-weight:900;margin-bottom:8px;letter-spacing:-1px}
-h1 span{color:#e94560}
-h2{font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-align:center}
-.sub{color:#8888aa;margin-bottom:24px;text-align:center;font-size:clamp(.85rem,2.5vw,1rem)}
-.btn{display:block;width:100%;max-width:320px;padding:15px 20px;margin:8px auto;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;text-align:center;transition:all .15s}
-.btn:hover{filter:brightness(1.1)}
-.btn:active{transform:scale(.97);filter:brightness(.9)}
-.r{background:linear-gradient(135deg,#e94560,#c73652);color:#fff}
-.p{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
-.t{background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff}
-.g{background:linear-gradient(135deg,#2a7a2a,#1a5a1a);color:#fff}
-.o{background:rgba(255,255,255,.08);color:#e8e8f0;border:1.5px solid #444466}
-.sm{padding:12px 18px;font-size:.9rem;width:auto}
-.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+h1{font-size:2.2rem;font-weight:900;margin-bottom:8px}
+h1 em{color:#e94560;font-style:normal}
+.sub{color:#8888aa;margin-bottom:28px;text-align:center}
+.btn{display:block;width:100%;max-width:300px;padding:15px;margin:8px auto;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer}
+.btn-red{background:#e94560;color:#fff}
+.btn-teal{background:#0f9b8e;color:#fff}
+.btn-purple{background:#7c3aed;color:#fff}
+.btn-gray{background:#222244;color:#e8e8f0;border:1px solid #444}
+.btn:hover{opacity:.9}
+.btn:active{opacity:.7;transform:scale(.98)}
 
-/* === CARDS LIVELLO === */
-.cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;width:100%;max-width:600px}
-.card{background:#16213e;border-radius:16px;padding:22px 18px;text-align:center;cursor:pointer;border:3px solid transparent;flex:1;min-width:130px;max-width:180px;transition:all .2s;user-select:none}
-.card:hover{border-color:#666688;transform:translateY(-2px)}
-.card:active{transform:scale(.95)}
-.card.sel{border-color:#e94560;box-shadow:0 0 20px rgba(233,69,96,.4);background:#1e1a2e}
-.card .ic{font-size:2rem;margin-bottom:10px;display:block}
-.card b{font-size:1rem;font-weight:800;display:block;margin-bottom:6px}
-.card p{font-size:.78rem;color:#8888aa;line-height:1.4}
-@media(max-width:500px){.cards{flex-direction:column;align-items:center}.card{max-width:90%;width:90%}}
+/* livello */
+.lv-grid{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:20px 0;max-width:560px}
+.lv-card{background:#16213e;border:3px solid transparent;border-radius:14px;padding:22px 18px;text-align:center;cursor:pointer;flex:1;min-width:130px;max-width:170px;transition:.2s}
+.lv-card:hover{border-color:#555577}
+.lv-card.sel{border-color:#e94560;background:#1e1230}
+.lv-card .big{font-size:2rem;display:block;margin-bottom:8px}
+.lv-card b{display:block;margin-bottom:5px;font-size:.95rem}
+.lv-card p{color:#8888aa;font-size:.78rem}
 
-/* === BOARD === */
+/* board */
 #pg-board{justify-content:flex-start;padding-top:14px}
-.topbar{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:920px;margin-bottom:12px;flex-wrap:wrap;gap:10px}
-.badge{background:#16213e;border-radius:20px;padding:8px 14px;font-weight:800;font-size:.95rem}
-.badge span{color:#f0a500}
-.progbar{width:100%;max-width:920px;height:6px;background:#1e1e3a;border-radius:3px;margin-bottom:12px;overflow:hidden}
-.progfill{height:100%;background:linear-gradient(90deg,#7c3aed,#e94560);border-radius:3px;transition:width .5s ease-out}
-.legend{display:flex;gap:10px;flex-wrap:wrap;max-width:920px;width:100%;margin-bottom:12px;font-size:.75rem}
-.leg-item{display:flex;align-items:center;gap:5px;color:#8888aa}
-.leg-dot{width:11px;height:11px;border-radius:50%}
-.board{display:grid;gap:clamp(3px,1vw,6px);width:100%;max-width:920px;margin-bottom:16px}
-@media(min-width:601px){.board{grid-template-columns:repeat(10,1fr)}}
-@media(max-width:600px){.board{grid-template-columns:repeat(8,1fr)}}
-@media(max-width:420px){.board{grid-template-columns:repeat(6,1fr)}.legend{display:none}}
-.cell{aspect-ratio:1;border-radius:10px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:all .2s;cursor:default}
-.cell.cur{transform:scale(1.18) translateZ(0);box-shadow:0 0 18px rgba(240,165,0,.7);border-color:#f0a500 !important;z-index:10}
-.cell.vis{opacity:.35}
-.cell-icon{font-size:clamp(1rem,2.5vw,1.2rem);line-height:1;margin-bottom:1px}
-.cell-name{font-size:clamp(.42rem,1vw,.55rem);color:rgba(255,255,255,.6);line-height:1.1}
-.ct-start{background:linear-gradient(135deg,#1a3a00,#0a2a00);border-color:#3a6a10}
-.ct-end{background:linear-gradient(135deg,#3a2a00,#2a1a00);border-color:#f0a500}
-.ct-scala{background:linear-gradient(135deg,#0a1a3a,#061226);border-color:#2a4aaa}
-.ct-accordo{background:linear-gradient(135deg,#1a0a3a,#100626);border-color:#6a2aaa}
-.ct-ritmo{background:linear-gradient(135deg,#2a0a1a,#1a0610);border-color:#aa2a5a}
-.ct-modo{background:linear-gradient(135deg,#0a2a1a,#062010);border-color:#2aaa6a}
-.ct-audio{background:linear-gradient(135deg,#001a28,#001018);border-color:#00aacc;box-shadow:inset 0 0 8px rgba(0,170,204,.2)}
-.ct-bonus{background:linear-gradient(135deg,#2a2a00,#1a1a00);border-color:#ccaa00}
-.ct-prog{background:linear-gradient(135deg,#1a0a28,#100618);border-color:#9900cc}
-.ct-wild{background:linear-gradient(135deg,#1a1000,#100800);border-color:#cc6600}
+.topbar{width:100%;max-width:900px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.badge{background:#16213e;border-radius:20px;padding:7px 14px;font-weight:800}
+.badge em{color:#f0a500;font-style:normal}
+.progbar{width:100%;max-width:900px;height:5px;background:#222;border-radius:3px;margin-bottom:10px}
+.progfill{height:100%;background:linear-gradient(90deg,#7c3aed,#e94560);border-radius:3px;transition:width .4s}
+.board{display:grid;gap:5px;width:100%;max-width:900px;margin-bottom:14px}
+@media(min-width:600px){.board{grid-template-columns:repeat(10,1fr)}}
+@media(max-width:599px){.board{grid-template-columns:repeat(8,1fr)}}
+@media(max-width:400px){.board{grid-template-columns:repeat(6,1fr)}}
+.cell{aspect-ratio:1;border-radius:8px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.6rem;text-align:center;position:relative;transition:.15s}
+.cell.cur{transform:scale(1.15);box-shadow:0 0 14px #f0a50099;border-color:#f0a500!important;z-index:5}
+.cell.past{opacity:.35}
+.ci{font-size:1.1rem;margin-bottom:1px}
+.cn{font-size:.46rem;color:rgba(255,255,255,.6)}
+.c-start{background:#0f2a00;border-color:#3a7a00}
+.c-end{background:#2a1a00;border-color:#f0a500}
+.c-scala{background:#0a1a3a;border-color:#2a5aaa}
+.c-accordo{background:#1a0a3a;border-color:#6a2aaa}
+.c-ritmo{background:#2a0a18;border-color:#aa2a55}
+.c-modo{background:#0a2a1a;border-color:#2aaa6a}
+.c-audio{background:#001824;border-color:#00aacc}
+.c-bonus{background:#1a1a00;border-color:#ccaa00}
+.c-prog{background:#130a2a;border-color:#8800cc}
 
-/* === QBOX === */
-.qbox{background:linear-gradient(135deg,#13192e,#0d1220);border-radius:16px;padding:20px 18px;width:100%;max-width:920px;border:1px solid #2a3a4a;box-shadow:0 4px 24px rgba(0,0,0,.5)}
-.qcat{font-size:.75rem;color:#0f9b8e;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
-.qtxt{font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:700;margin-bottom:18px;line-height:1.5;text-align:center;min-height:40px}
-.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px}
-@media(max-width:400px){.agrid{grid-template-columns:1fr 1fr}}
-.abtn{background:#1a1a32;border:2px solid #2a2a4a;border-radius:12px;padding:14px 12px;text-align:center;color:#e8e8f0;cursor:pointer;font-size:.92rem;font-weight:600;transition:all .2s;width:100%}
-.abtn:hover{border-color:#4a4a8a;background:#22223a}
-.abtn:active{transform:scale(.97)}
-.abtn.ok{border-color:#0f9b8e !important;background:linear-gradient(135deg,#0f4a44,#0a3a34) !important;color:#4fffcc !important}
-.abtn.ko{border-color:#e94560 !important;background:linear-gradient(135deg,#4a0a18,#3a0610) !important;color:#ff9aa8 !important}
-.abtn:disabled{cursor:default;opacity:.8}
-.fbk{margin-top:14px;font-weight:800;font-size:clamp(1rem,2.5vw,1.1rem);min-height:22px;text-align:center;padding:10px;border-radius:10px}
-.fbk.g{background:linear-gradient(135deg,#0f3a34,#0a2a28);color:#4fffcc}
-.fbk.b{background:linear-gradient(135deg,#3a0a14,#2a060e);color:#ff9aa8}
-.hint{background:#0e0e28;border-left:4px solid #7c3aed;padding:12px 14px;border-radius:10px;font-size:.85rem;color:#b0b0cc;margin-top:12px;display:none;line-height:1.6}
-.drow{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:18px;flex-wrap:wrap}
-.dice{font-size:clamp(2.5rem,7vw,3rem);cursor:pointer;user-select:none;transition:transform .3s;display:inline-block}
-.dinfo{font-size:.9rem;color:#8888aa}
+/* qbox */
+.qbox{background:#13192e;border:1px solid #2a3a4a;border-radius:14px;padding:20px;width:100%;max-width:900px}
+.qcat{font-size:.72rem;color:#0f9b8e;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.qtxt{font-size:1rem;font-weight:700;margin-bottom:18px;line-height:1.5;text-align:center}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+@media(max-width:480px){.opts{grid-template-columns:1fr}}
+.opt{background:#1a1a32;border:2px solid #2a2a4a;border-radius:10px;padding:13px;color:#e8e8f0;cursor:pointer;font-size:.9rem;font-weight:600;text-align:center;transition:.2s;width:100%}
+.opt:hover{border-color:#5a5aaa;background:#22223a}
+.opt:active{transform:scale(.97)}
+.opt.ok{background:#0a3030;border-color:#0f9b8e;color:#4fffcc}
+.opt.ko{background:#2a0808;border-color:#e94560;color:#ff9aaa}
+.opt:disabled{cursor:default}
+.feedback{font-weight:800;font-size:.95rem;text-align:center;padding:10px;border-radius:8px;min-height:18px;margin-bottom:8px}
+.fb-ok{background:#0a2a24;color:#4fffcc}
+.fb-ko{background:#2a0812;color:#ff9aaa}
+.hint-box{background:#0e0e28;border-left:3px solid #7c3aed;padding:10px 14px;border-radius:8px;font-size:.83rem;color:#aaa;display:none;margin-bottom:10px;line-height:1.5}
+.audio-play{background:#001824;border:2px solid #00aacc;color:#00ddff;padding:13px;border-radius:12px;font-weight:800;cursor:pointer;text-align:center;margin-bottom:10px;font-size:.95rem;width:100%;display:block}
+.audio-play:hover{background:#003050}
+.audio-play:active{background:#00aacc;color:#000}
+.dice-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:16px}
+.dice{font-size:2.8rem;cursor:pointer;user-select:none;display:inline-block;transition:transform .3s}
+.dice-info{color:#8888aa;font-size:.88rem}
 
-/* === AUDIO BTN === */
-.audio-play-btn{background:linear-gradient(135deg,#00334a,#001e2e);border:2px solid #00aacc;color:#00ddff;padding:14px 22px;border-radius:14px;font-weight:800;margin:10px 0;cursor:pointer;transition:all .2s;font-size:1rem;width:100%;display:block;text-align:center}
-.audio-play-btn:hover{background:linear-gradient(135deg,#004a6a,#003050);border-color:#00ddff}
-.audio-play-btn:active{transform:scale(.97);background:linear-gradient(135deg,#00aacc,#0099aa);color:#000}
+/* modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.modal-bg.on{display:flex}
+.modal-box{background:#181830;border:2px solid #f0a500;border-radius:20px;padding:34px 26px;max-width:440px;width:100%;text-align:center;max-height:90vh;overflow-y:auto}
+.modal-box h3{margin-bottom:14px;font-size:1.3rem}
+.modal-body{text-align:left;color:#b8b8d0;font-size:.9rem;line-height:1.8;margin-bottom:22px}
+.modal-body ul{padding-left:18px}
+.modal-body li{margin-bottom:8px}
+.modal-body b{color:#f0a500}
+.modal-body .leg{margin-top:14px;background:#0e0e28;padding:12px;border-radius:8px;font-size:.83rem}
+.modal-body .leg div{margin-bottom:5px}
 
-/* === MODAL === */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
-.ov.on{display:flex}
-.evcard{background:linear-gradient(135deg,#181830,#121228);border-radius:24px;padding:36px 28px;max-width:420px;width:100%;text-align:center;border:3px solid #f0a500;box-shadow:0 20px 50px rgba(240,165,0,.25);overflow-y:auto;max-height:90vh}
-.evcard h3{font-size:1.4rem;margin-bottom:16px}
-
-/* === VICTORY === */
-#pg-victory{justify-content:center}
-.stats{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;justify-content:center}
-.sbox{background:#16213e;border-radius:16px;padding:16px 22px;text-align:center;min-width:90px}
-.sbox .sv{font-size:1.5rem;font-weight:900}
-.sbox .sl{font-size:.75rem;color:#8888aa;margin-top:4px}
-
-/* === ISTRUZIONI === */
-.instructions{text-align:left;color:#c8c8e0;line-height:1.8;font-size:.95rem}
-.instructions li{margin-bottom:10px;padding-left:4px}
-.instructions b{color:#f0a500}
-.legend-desc{margin-top:16px;padding:14px;background:#0e0e28;border-radius:10px;font-size:.85rem;line-height:1.8}
-.legend-desc div{margin-bottom:6px}
+/* vittoria */
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.sbox{background:#16213e;border-radius:12px;padding:14px 20px;text-align:center;min-width:85px}
+.sval{font-size:1.4rem;font-weight:900}
+.slbl{font-size:.72rem;color:#8888aa;margin-top:3px}
 </style>
 </head>
 <body>
 
 <!-- HOME -->
 <div id="pg-home" class="page on">
-  <h1>Harmony<span>Quest</span></h1>
-  <p class="sub">Esplora la teoria musicale giocando 🎲</p>
-  <button class="btn r" id="b-start">▶ Nuova Partita</button>
-  <button class="btn t" id="b-howto">📖 Come si gioca</button>
-  <button class="btn o" id="b-au-home">🔊 Audio: <span id="au-lbl-home">ON</span></button>
+  <h1>Harmony<em>Quest</em> 🎵</h1>
+  <p class="sub">Gioca e impara la teoria musicale</p>
+  <button class="btn btn-red" id="btn-start">▶ Nuova Partita</button>
+  <button class="btn btn-teal" id="btn-howto">📖 Come si gioca</button>
+  <button class="btn btn-gray" id="btn-audio-toggle">🔊 Audio: ON</button>
 </div>
 
 <!-- SELEZIONE LIVELLO -->
 <div id="pg-level" class="page">
-  <h2>Scegli il tuo livello</h2>
-  <p class="sub">Puoi tornare a cambiarlo in qualsiasi momento</p>
-  <div class="cards" id="level-cards">
-    <div class="card" data-level="beginner">
-      <span class="ic">🌱</span>
+  <h2 style="margin-bottom:8px">Scegli il livello</h2>
+  <p class="sub">Le domande cambiano in base al livello</p>
+  <div class="lv-grid">
+    <div class="lv-card" id="lv-beginner" data-lv="beginner">
+      <span class="big">🌱</span>
       <b>Principiante</b>
-      <p>Note, scale, accordi base e ritmo semplice</p>
+      <p>Note, scale, ritmo, accordi base</p>
     </div>
-    <div class="card sel" data-level="intermediate">
-      <span class="ic">🎸</span>
+    <div class="lv-card sel" id="lv-intermediate" data-lv="intermediate">
+      <span class="big">🎸</span>
       <b>Intermedio</b>
-      <p>Settime, modi, progressioni II-V-I</p>
+      <p>Settime, modi, progressioni jazz</p>
     </div>
-    <div class="card" data-level="advanced">
-      <span class="ic">🎓</span>
+    <div class="lv-card" id="lv-advanced" data-lv="advanced">
+      <span class="big">🎓</span>
       <b>Avanzato</b>
       <p>Modulazioni, jazz, analisi armonica</p>
     </div>
   </div>
-  <div class="btn-row">
-    <button class="btn o sm" id="b-lv-back">← Indietro</button>
-    <button class="btn r sm" id="b-lv-go">Inizia! 🎲</button>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+    <button class="btn btn-gray" style="max-width:140px" id="btn-lv-back">← Indietro</button>
+    <button class="btn btn-red" style="max-width:180px" id="btn-lv-go">Inizia 🎲</button>
   </div>
 </div>
 
@@ -153,36 +139,26 @@ h2{font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-ali
 <div id="pg-board" class="page">
   <div class="topbar">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <span id="lv-badge" style="color:#8888aa;font-size:.9rem;font-weight:600">Intermedio</span>
-      <div class="badge">⭐ <span id="score-el">0</span></div>
-      <div class="badge" style="color:#e94560">🔥 <span id="streak-el">0</span></div>
+      <span id="lv-display" style="color:#8888aa;font-size:.88rem;font-weight:600">Intermedio</span>
+      <div class="badge">⭐ <em id="sc">0</em></div>
+      <div class="badge">🔥 <em id="str">0</em></div>
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn o sm" id="b-au-board">🔊</button>
-      <button class="btn o sm" id="b-home-board">🏠</button>
+      <button class="btn btn-gray" style="max-width:80px;padding:8px 12px;font-size:.85rem;margin:0" id="btn-audio-board">🔊</button>
+      <button class="btn btn-gray" style="max-width:80px;padding:8px 12px;font-size:.85rem;margin:0" id="btn-menu">🏠 Menu</button>
     </div>
   </div>
-  <div class="progbar"><div class="progfill" id="progress-fill"></div></div>
-  <div class="legend">
-    <div class="leg-item"><div class="leg-dot" style="background:#2a4aaa"></div>Scala ♭</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#6a2aaa"></div>Accordo ♯</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#00aacc"></div>Audio 🎵</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#aa2a5a"></div>Ritmo ♩</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#2aaa6a"></div>Modo 𝄐</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#9900cc"></div>Prog. ♫</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#ccaa00"></div>Bonus ⭐</div>
-    <div class="leg-item"><div class="leg-dot" style="background:#cc6600"></div>Jolly 🃏</div>
-  </div>
-  <div class="board" id="board-grid"></div>
+  <div class="progbar"><div class="progfill" id="pf" style="width:0%"></div></div>
+  <div class="board" id="board"></div>
   <div class="qbox">
-    <div id="qcat" class="qcat">—</div>
-    <div id="qtxt" class="qtxt">Tocca il dado per iniziare il viaggio! 🎲</div>
-    <div id="agrid" class="agrid"></div>
-    <div id="fbk" class="fbk"></div>
-    <div id="hint-box" class="hint"></div>
-    <div class="drow">
-      <span id="dice-el" class="dice">🎲</span>
-      <span id="dinfo" class="dinfo">Tocca per lanciare (1–6 caselle)</span>
+    <div class="qcat" id="qcat">Benvenuto!</div>
+    <div class="qtxt" id="qtxt">Tocca il dado 🎲 per iniziare il viaggio musicale!</div>
+    <div id="opts" class="opts"></div>
+    <div id="feedback" class="feedback"></div>
+    <div id="hint" class="hint-box"></div>
+    <div class="dice-row">
+      <span class="dice" id="dice">🎲</span>
+      <span class="dice-info" id="dinfo">Tocca per lanciare (1-6 caselle)</span>
     </div>
   </div>
 </div>
@@ -190,443 +166,463 @@ h2{font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-ali
 <!-- VITTORIA -->
 <div id="pg-victory" class="page">
   <div style="font-size:5rem;margin-bottom:16px">🏆</div>
-  <div id="final-score" style="font-size:3rem;font-weight:900;color:#f0a500">0</div>
-  <p style="color:#8888aa;margin:12px 0 28px;font-size:1.1rem">Hai completato HarmonyQuest!</p>
+  <div id="final-sc" style="font-size:3rem;font-weight:900;color:#f0a500">0</div>
+  <p style="color:#8888aa;margin:10px 0 28px">Hai completato il percorso musicale!</p>
   <div class="stats">
-    <div class="sbox"><div class="sv" id="v-correct">0</div><div class="sl">Corrette</div></div>
-    <div class="sbox"><div class="sv" id="v-wrong">0</div><div class="sl">Sbagliate</div></div>
-    <div class="sbox"><div class="sv" id="v-streak">0</div><div class="sl">Max Streak</div></div>
+    <div class="sbox"><div class="sval" id="vc">0</div><div class="slbl">Corrette</div></div>
+    <div class="sbox"><div class="sval" id="vw">0</div><div class="slbl">Sbagliate</div></div>
+    <div class="sbox"><div class="sval" id="vs">0</div><div class="slbl">Max Streak</div></div>
   </div>
-  <button class="btn r" id="b-restart">🔁 Nuova Partita</button>
-  <button class="btn o" id="b-v-home" style="margin-top:10px">🏠 Home</button>
+  <button class="btn btn-red" id="btn-replay">🔁 Nuova Partita</button>
+  <button class="btn btn-gray" style="margin-top:8px" id="btn-vh">🏠 Home</button>
 </div>
 
-<!-- MODAL GENERICO -->
-<div class="ov" id="modal">
-  <div class="evcard" id="modal-card">
-    <div id="m-icon" style="font-size:3rem;margin-bottom:12px">🎵</div>
+<!-- MODAL (istruzioni, conferma, eventi) -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <div id="m-icon" style="font-size:3rem;margin-bottom:10px">📖</div>
     <h3 id="m-title">Titolo</h3>
-    <div id="m-body" style="color:#aaa;font-size:.95rem;line-height:1.7;margin-bottom:24px;text-align:left"></div>
-    <button class="btn r" id="b-modal-ok">OK!</button>
+    <div id="m-body" class="modal-body"></div>
+    <div id="m-btns" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"></div>
   </div>
 </div>
 
 <script>
-(function() {
-  // =====================
-  // STATO GLOBALE
-  // =====================
-  var G = {
-    level: 'intermediate',
-    pos: 0,
-    score: 0,
-    streak: 0,
-    maxStreak: 0,
-    correct: 0,
-    wrong: 0,
-    audioOn: true,
-    waiting: false,
-    usedQ: { beginner: [], intermediate: [], advanced: [], audio: [] },
-    TOTAL: 40
-  };
+// ─────────────────────────────────
+// STATO
+// ─────────────────────────────────
+var G = {
+  level: 'intermediate',
+  pos: 0,
+  score: 0,
+  streak: 0,
+  maxStreak: 0,
+  correct: 0,
+  wrong: 0,
+  audioOn: true,
+  waiting: false,
+  usedQ: {}
+};
+var TOTAL = 40;
+var actx = null;
 
-  // =====================
-  // AUDIO CONTEXT
-  // =====================
-  var actx = null;
+// ─────────────────────────────────
+// AUDIO
+// ─────────────────────────────────
+function initCtx() {
+  if (!actx) {
+    try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){}
+  }
+  if (actx && actx.state === 'suspended') actx.resume();
+  return actx;
+}
 
-  function initAudio() {
-    if (!actx) {
-      try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
-    }
-    if (actx && actx.state === 'suspended') actx.resume();
+function playMelody(freqs) {
+  if (!G.audioOn) return;
+  var ctx = initCtx(); if (!ctx) return;
+  freqs.forEach(function(f, i) {
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine'; o.frequency.value = f;
+    var t = ctx.currentTime + i * 0.48;
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(0.18, t + 0.05);
+    g.gain.setValueAtTime(0.18, t + 0.32);
+    g.gain.linearRampToValueAtTime(0, t + 0.46);
+    o.start(t); o.stop(t + 0.48);
+  });
+}
+
+function playChord(freqs) {
+  if (!G.audioOn) return;
+  var ctx = initCtx(); if (!ctx) return;
+  var t = ctx.currentTime;
+  freqs.forEach(function(f) {
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'triangle'; o.frequency.value = f;
+    g.gain.setValueAtTime(0.13, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 1.6);
+    o.start(t); o.stop(t + 1.7);
+  });
+}
+
+function beep(freq, ok) {
+  if (!G.audioOn) return;
+  var ctx = initCtx(); if (!ctx) return;
+  var o = ctx.createOscillator(), g = ctx.createGain();
+  o.connect(g); g.connect(ctx.destination);
+  o.type = 'sine'; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.1, ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (ok ? 0.15 : 0.35));
+  o.start(ctx.currentTime); o.stop(ctx.currentTime + (ok ? 0.2 : 0.4));
+}
+
+// ─────────────────────────────────
+// DOMANDE
+// ─────────────────────────────────
+var QDB = {
+  beginner: [
+    {cat:'🎼 Scale', q:'Quale scala usa solo i tasti bianchi del pianoforte?', a:['Do Maggiore','Sol Maggiore','Fa Maggiore','Re Minore'], c:0, hint:'Non ha né diesis né bemolle: Do Re Mi Fa Sol La Si Do'},
+    {cat:'🎼 Scale', q:'Quante note ha una scala maggiore?', a:['7','5','12','8'], c:0, hint:'Do-Re-Mi-Fa-Sol-La-Si = 7 gradi'},
+    {cat:'♩ Ritmo', q:'In 4/4, quanti quarti ci sono per battuta?', a:['4','3','2','6'], c:0, hint:'Il numero in alto indica i battiti per misura'},
+    {cat:'♩ Ritmo', q:'Una semiminima (nota nera) vale?', a:['1 quarto','1 metà','2 quarti','1 ottavo'], c:0, hint:'È la nota di base del conteggio'},
+    {cat:'♯ Accordi', q:'L'accordo di Do Maggiore è formato da?', a:['Do-Mi-Sol','Do-Mib-Sol','Do-Fa-Sol','Re-Fa-La'], c:0, hint:'1a - 3a - 5a della scala di Do'},
+    {cat:'♯ Accordi', q:'Un accordo minore differisce da quello maggiore per?', a:['La terza abbassata di un semitono','La quinta abbassata','La radice alzata','Il raddoppio della sesta'], c:0, hint:'Do maggiore = Do-Mi-Sol, Do minore = Do-Mib-Sol'},
+    {cat:'🎵 Teoria', q:'Quanti semitoni compongono un'ottava?', a:['12','7','8','10'], c:0, hint:'Conta tutti i tasti (bianchi e neri) da Do al Do successivo'},
+    {cat:'🎵 Teoria', q:'Cosa significa BPM?', a:['Battiti Per Minuto','Basso Per Misura','Bemolle Per Modulazione','Battuta Per Metro'], c:0, hint:'Indica la velocità del brano'},
+  ],
+  intermediate: [
+    {cat:'♫ Progressioni', q:'II-V-I in Do Maggiore è?', a:['Rem7 - Sol7 - DoMaj7','Do - Fa - Sol7','Lam - Rem - Sol','Fa - Sol - Do'], c:0, hint:'La progressione più importante del jazz'},
+    {cat:'𝄐 Modi', q:'Il modo Dorico parte dal?', a:['II grado','I grado','VI grado','IV grado'], c:0, hint:'"So What" di Miles Davis usa Re Dorico'},
+    {cat:'𝄐 Modi', q:'Il Misolidio differisce dal Maggiore per?', a:['VII abbassato di un semitono','VI abbassato','III abbassato','II abbassato'], c:0, hint:'Come Sol Magg ma con Fa naturale invece di Fa#'},
+    {cat:'♯ Settime', q:'Sol7 (dominante) contiene quale nota?', a:['Fa naturale','Fa#','La#','Sib'], c:0, hint:'La settima minore abbassata dalla scala di Sol Magg'},
+    {cat:'♯ Settime', q:'Un accordo minore settima (min7) ha?', a:['3a min + 7a min','3a magg + 7a min','3a min + 7a magg','3a magg + 7a magg'], c:0, hint:'Es: Lam7 = La-Do-Mi-Sol'},
+    {cat:'🎼 Scale', q:'La scala pentatonica ha quante note?', a:['5','7','6','4'], c:0, hint:'Penta = cinque in greco'},
+    {cat:'♩ Ritmo', q:'La sincope è?', a:['Accento su un tempo debole','Ripetizione del tempo forte','Pausa lunga nel ritmo','Nota tenuta per 4 tempi'], c:0, hint:'Crea tensione anticipando il battere — es. funk e jazz'},
+    {cat:'♩ Ritmo', q:'Le terzine dividono il tempo in?', a:['3 parti uguali','2 parti uguali','4 parti uguali','6 parti uguali'], c:0, hint:'Tre note nello spazio di due normali'},
+    {cat:'♫ Progressioni', q:'I-V-vi-IV è la progressione di?', a:['Migliaia di canzoni pop','Solo classica','Solo metal','Solo jazz'], c:0, hint:'"Let It Be", "Someone Like You", "No Woman No Cry"'},
+    {cat:'𝄐 Modi', q:'Il Lidio differisce dal Maggiore per?', a:['IV alzato (#4)','VII alzato','II alzato','V alzato'], c:0, hint:'Suono "sospeso, magico" — usato da Morricone e Satriani'},
+  ],
+  advanced: [
+    {cat:'♯ Armonia', q:'La sostituzione di tritono sostituisce?', a:['V7 con bII7','I con bVII','II con IV','IV con bVI'], c:0, hint:'Sol7 → Reb7 nella tonalità di Do'},
+    {cat:'𝄐 Modi', q:'La Superlocria si usa tipicamente su?', a:['Accordi alterati (7alt)','Accordi maj7','Accordi dim7','Accordi sus4'], c:0, hint:'Contiene b9, #9, #11, b13'},
+    {cat:'♫ Modulazione', q:'La modulazione enarmonica sfrutta?', a:['Note uguali con nome diverso','Cambio di metro','Scale parallele','Cadenze evitate'], c:0, hint:'Sol# = Lab — permette di passare a tonalità lontane'},
+    {cat:'♩ Ritmo', q:'L'emiola è?', a:['2 gruppi da 3 percepiti come 3 da 2','Ritmo binario su base ternaria','Poliritmia in 5/4','Sincope sul quarto tempo'], c:0, hint:'Crea ambiguità metrica, comune in Brahms e Handel'},
+    {cat:'♫ Coltrane', q:'I "Coltrane Changes" usano?', a:['Modulazioni per terze di grande terza','Solo II-V-I','Pedali armonici','Scale esatonali'], c:0, hint:'"Giant Steps" — tre centri tonali distanti una terza maggiore'},
+    {cat:'♯ Armonia', q:'L'accordo Napolitano (bII) si usa in?', a:['1° rivolto prima della V','Posizione fondamentale sulla I','Come sostituto della VII','Posizione di 2° rivolto'], c:0, hint:'Tipico del periodo romantico: Schubert, Beethoven'},
+  ],
+  audio: [
+    {cat:'🎧 Audio', q:'Ascolta l'intervallo. Quale è?', a:['Seconda Magg.','Terza Magg.','Quarta Giusta','Quinta Giusta'], c:1, play:'melody', freqs:[440,554.37], hint:'Do→Mi: la terza che apre la triade maggiore', song:'"Mi" e "Sol#"'},
+    {cat:'🎧 Audio', q:'Ascolta il salto. Che intervallo è?', a:['Terza Giusta','Quarta Giusta','Quinta Giusta','Ottava'], c:2, play:'melody', freqs:[440,659.25], hint:'Do→Sol: il più stabile, base degli accordi', song:'"Star Wars" di Williams inizia con questa quinta'},
+    {cat:'🎧 Audio', q:'Questa triade è?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:0, play:'chord', freqs:[261.63,329.63,392.00], hint:'Suono brillante e stabile = maggiore'},
+    {cat:'🎧 Audio', q:'Questa triade è?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:1, play:'chord', freqs:[261.63,311.13,392.00], hint:'Suono cupo e malinconico = minore'},
+    {cat:'🎧 Audio', q:'Questa scala è?', a:['Maggiore','Minore naturale','Dorica','Pentatonica'], c:0, play:'melody', freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25], hint:'T-T-S-T-T-T-S: la scala di Do Maggiore'},
+    {cat:'🎧 Audio', q:'Che salto senti?', a:['Quarta Giusta','Sesta Magg.','Ottava','Settima Magg.'], c:2, play:'melody', freqs:[261.63,523.25], hint:'"Somewhere Over The Rainbow" inizia esattamente così'},
+    {cat:'🎧 Audio', q:'Questo accordo a 4 voci è?', a:['Maj7','Dominante 7a','Minore 7a','Dim7'], c:1, play:'chord', freqs:[392.00,493.88,587.33,698.46], hint:'Sol-Si-Re-Fa: la settima dominante, vuole risolvere'},
+    {cat:'🎧 Audio', q:'Ascolta la sequenza. Che accordo è?', a:['Do Magg','Do Min','Sol7','Fa Magg'], c:0, play:'chord', freqs:[261.63,329.63,392.00,523.25], hint:'Do-Mi-Sol-Do: triade maggiore con raddoppio'},
+  ]
+};
+
+// ─────────────────────────────────
+// CELLE DEL TABELLONE
+// ─────────────────────────────────
+var CELL_TYPES = [
+  'start','scala','audio','ritmo','scala','modo','accordo','audio','prog','bonus',
+  'scala','accordo','ritmo','audio','scala','modo','prog','scala','accordo','bonus',
+  'scala','audio','modo','ritmo','scala','accordo','audio','scala','prog','bonus',
+  'scala','ritmo','accordo','audio','scala','modo','scala','audio','ritmo','end'
+];
+var CELL_ICONS  = {start:'🎼',end:'🏆',scala:'♭',accordo:'♯',ritmo:'♩',modo:'𝄐',audio:'🎵',bonus:'⭐',prog:'♫'};
+var CELL_LABELS = {start:'Start',end:'Fine',scala:'Scala',accordo:'Accordo',ritmo:'Ritmo',modo:'Modo',audio:'Audio',bonus:'Bonus',prog:'Prog.'};
+
+// ─────────────────────────────────
+// NAVIGAZIONE PAGINE
+// ─────────────────────────────────
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────
+// MODAL GENERICO
+// ─────────────────────────────────
+function openModal(icon, title, bodyHTML, buttons) {
+  document.getElementById('m-icon').textContent = icon;
+  document.getElementById('m-title').textContent = title;
+  document.getElementById('m-body').innerHTML = bodyHTML;
+  var bc = document.getElementById('m-btns');
+  bc.innerHTML = '';
+  buttons.forEach(function(b) {
+    var btn = document.createElement('button');
+    btn.className = 'btn ' + (b.cls || 'btn-gray');
+    btn.textContent = b.label;
+    btn.style.maxWidth = '180px';
+    btn.onclick = function(){ closeModal(); b.fn(); };
+    bc.appendChild(btn);
+  });
+  document.getElementById('modal').classList.add('on');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('on');
+}
+
+// ─────────────────────────────────
+// ISTRUZIONI
+// ─────────────────────────────────
+function showHowTo() {
+  openModal('📖','Come si gioca',
+    '<ul>' +
+    '<li>🎯 <b>Obiettivo:</b> arriva all'ultima casella rispondendo alle domande di teoria musicale.</li>' +
+    '<li>🎲 <b>Dado:</b> tocca il dado per avanzare da 1 a 6 caselle.</li>' +
+    '<li>❓ <b>Domande:</b> ogni casella ha una categoria (Scala, Accordo, Ritmo, Modo, Progressione, Audio). Scegli la risposta giusta.</li>' +
+    '<li>✅ <b>Risposta corretta:</b> guadagni +100 punti. Con 3+ risposte di fila corrette ottieni +50 extra!</li>' +
+    '<li>❌ <b>Risposta sbagliata:</b> perdi 20 punti e lo streak si azzera.</li>' +
+    '<li>🎵 <b>Caselle Audio (blu):</b> premi ▶ per ascoltare un intervallo o accordo, poi scegli la risposta giusta.</li>' +
+    '<li>🌱🎸🎓 <b>Livelli:</b> le domande si adattano al livello scelto all'inizio.</li>' +
+    '<li>🏠 <b>Menu:</b> puoi tornare al menu in qualsiasi momento, ti verrà chiesta conferma per non perdere i progressi.</li>' +
+    '</ul>' +
+    '<div style="margin-top:14px;background:#0e0e28;padding:12px;border-radius:8px;font-size:.83rem">' +
+    '<div>♭ <b style="color:#4a7aee">Scala</b> — domande sulle scale</div>' +
+    '<div>♯ <b style="color:#8a4aee">Accordo</b> — accordi e triadi</div>' +
+    '<div>🎵 <b style="color:#00aacc">Audio</b> — ascolta e riconosci</div>' +
+    '<div>♩ <b style="color:#ee4a7a">Ritmo</b> — tempi e misure</div>' +
+    '<div>𝄐 <b style="color:#4aee9a">Modo</b> — modi greci</div>' +
+    '<div>♫ <b style="color:#aa44ee">Prog.</b> — progressioni armoniche</div>' +
+    '<div>⭐ <b style="color:#ccaa00">Bonus</b> — punti gratis!</div>' +
+    '</div>',
+    [{label:'Ho capito!', cls:'btn-red', fn:function(){}}]
+  );
+}
+
+// ─────────────────────────────────
+// RENDER BOARD
+// ─────────────────────────────────
+function renderBoard() {
+  var el = document.getElementById('board');
+  el.innerHTML = '';
+  for (var i=0; i<TOTAL; i++) {
+    var t = CELL_TYPES[i] || 'scala';
+    var div = document.createElement('div');
+    div.className = 'cell c-' + t + (i===G.pos?' cur':'') + (i<G.pos?' past':'');
+    div.innerHTML = '<span class="ci">' + (CELL_ICONS[t]||'♫') + '</span><span class="cn">' + (i+1) + '</span>';
+    el.appendChild(div);
+  }
+  document.getElementById('pf').style.width = (G.pos/(TOTAL-1)*100) + '%';
+  document.getElementById('sc').textContent = G.score;
+  document.getElementById('str').textContent = G.streak;
+}
+
+// ─────────────────────────────────
+// DOMANDE UNICHE
+// ─────────────────────────────────
+function pickQ(poolKey) {
+  var pool = QDB[poolKey]; if (!pool||!pool.length) return null;
+  if (!G.usedQ[poolKey]) G.usedQ[poolKey] = [];
+  var avail = [];
+  for (var i=0;i<pool.length;i++) if (G.usedQ[poolKey].indexOf(i)===-1) avail.push(i);
+  if (!avail.length) { G.usedQ[poolKey]=[]; avail=pool.map(function(_,i){return i;}); }
+  var idx = avail[Math.floor(Math.random()*avail.length)];
+  G.usedQ[poolKey].push(idx);
+  return pool[idx];
+}
+
+function showQuestion() {
+  var t = CELL_TYPES[G.pos];
+  if (t==='start') { showIdle(); return; }
+  if (t==='end')   { showVictory(); return; }
+  if (t==='bonus') { showBonus(); return; }
+
+  var poolKey = (t==='audio') ? 'audio' : G.level;
+  var q = pickQ(poolKey);
+  if (!q) { showIdle(); return; }
+
+  document.getElementById('qcat').textContent = q.cat;
+  document.getElementById('qtxt').textContent = q.q;
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('hint').style.display = 'none';
+  document.getElementById('hint').textContent = '';
+
+  var grid = document.getElementById('opts');
+  grid.innerHTML = '';
+
+  // Pulsante audio
+  if (t==='audio' && q.freqs) {
+    var ab = document.createElement('button');
+    ab.className = 'audio-play';
+    ab.textContent = '▶  Ascolta';
+    ab.setAttribute('data-play', q.play || 'melody');
+    ab.setAttribute('data-freqs', JSON.stringify(q.freqs));
+    ab.onclick = function() {
+      var f = JSON.parse(this.getAttribute('data-freqs'));
+      var p = this.getAttribute('data-play');
+      initCtx();
+      if (p==='chord') playChord(f); else playMelody(f);
+    };
+    grid.appendChild(ab);
   }
 
-  function playTones(freqs, type) {
-    if (!G.audioOn) return;
-    initAudio();
-    if (!actx) return;
-    var t = actx.currentTime;
-    freqs.forEach(function(f, i) {
-      try {
-        var osc = actx.createOscillator();
-        var gain = actx.createGain();
-        osc.connect(gain);
-        gain.connect(actx.destination);
-        osc.type = type || 'sine';
-        osc.frequency.value = f;
-        gain.gain.setValueAtTime(0, t + i * 0.5);
-        gain.gain.linearRampToValueAtTime(0.18, t + i * 0.5 + 0.05);
-        gain.gain.setValueAtTime(0.18, t + i * 0.5 + 0.3);
-        gain.gain.linearRampToValueAtTime(0, t + i * 0.5 + 0.45);
-        osc.start(t + i * 0.5);
-        osc.stop(t + i * 0.5 + 0.5);
-      } catch(e) {}
-    });
+  // Opzioni risposta
+  q.a.forEach(function(ans, i) {
+    var btn = document.createElement('button');
+    btn.className = 'opt';
+    btn.textContent = ans;
+    btn.onclick = function() { handleAnswer(i===q.c, btn, q.hint); };
+    grid.appendChild(btn);
+  });
+
+  G.waiting = false;
+}
+
+function showIdle() {
+  document.getElementById('qcat').textContent = '—';
+  document.getElementById('qtxt').textContent = 'Tocca il dado 🎲 per avanzare!';
+  document.getElementById('opts').innerHTML = '';
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('hint').style.display = 'none';
+}
+
+function showBonus() {
+  document.getElementById('qcat').textContent = '⭐ Bonus';
+  document.getElementById('qtxt').textContent = 'Casella bonus! +50 punti gratis!';
+  document.getElementById('opts').innerHTML = '';
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('hint').style.display = 'none';
+  G.score += 50;
+  document.getElementById('sc').textContent = G.score;
+  beep(880, true);
+  G.waiting = false;
+}
+
+// ─────────────────────────────────
+// RISPOSTA
+// ─────────────────────────────────
+function handleAnswer(correct, btn, hint) {
+  if (G.waiting) return;
+  G.waiting = true;
+  document.querySelectorAll('.opt').forEach(function(b){ b.disabled=true; });
+
+  if (correct) {
+    G.streak++; if (G.streak>G.maxStreak) G.maxStreak=G.streak;
+    G.correct++;
+    var pts = 100 + (G.streak>=3 ? 50 : 0);
+    G.score += pts;
+    btn.classList.add('ok');
+    document.getElementById('feedback').textContent = '✅ Corretto! +' + pts + 'pt' + (G.streak>=3?' 🔥':'' );
+    document.getElementById('feedback').className = 'feedback fb-ok';
+    beep(880, true);
+  } else {
+    G.streak=0; G.wrong++;
+    G.score = Math.max(0, G.score-20);
+    btn.classList.add('ko');
+    document.getElementById('feedback').textContent = '❌ Sbagliato! -20pt';
+    document.getElementById('feedback').className = 'feedback fb-ko';
+    beep(180, false);
   }
-
-  function playChord(freqs) {
-    if (!G.audioOn) return;
-    initAudio();
-    if (!actx) return;
-    var t = actx.currentTime;
-    freqs.forEach(function(f) {
-      try {
-        var osc = actx.createOscillator();
-        var gain = actx.createGain();
-        osc.connect(gain);
-        gain.connect(actx.destination);
-        osc.type = 'triangle';
-        osc.frequency.value = f;
-        gain.gain.setValueAtTime(0.12, t);
-        gain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
-        osc.start(t);
-        osc.stop(t + 1.5);
-      } catch(e) {}
-    });
+  if (hint) {
+    document.getElementById('hint').textContent = '💡 ' + hint;
+    document.getElementById('hint').style.display = 'block';
   }
+  document.getElementById('sc').textContent = G.score;
+  document.getElementById('str').textContent = G.streak;
+}
 
-  function beep(freq, dur, vol) {
-    if (!G.audioOn) return;
-    initAudio();
-    if (!actx) return;
-    try {
-      var osc = actx.createOscillator();
-      var gain = actx.createGain();
-      osc.connect(gain); gain.connect(actx.destination);
-      osc.frequency.value = freq || 440; osc.type = 'sine';
-      gain.gain.setValueAtTime(vol || 0.1, actx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + (dur || 0.2));
-      osc.start(actx.currentTime); osc.stop(actx.currentTime + (dur || 0.2));
-    } catch(e) {}
-  }
-
-  // =====================
-  // DOMANDE DB (pool unici per livello)
-  // =====================
-  var QDB = {
-    beginner: [
-      {cat:'🎼 Scala', q:'Quale scala ha solo tasti bianchi al pianoforte?', a:['Do Maggiore','Sol Maggiore','Re Maggiore','Fa Maggiore'], c:0, hint:'Non ha diesis né bemolle. Pensa a "Do Re Mi Fa Sol La Si Do"'},
-      {cat:'🎼 Scala', q:'Quante note ha una scala maggiore?', a:['7','5','8','12'], c:0, hint:'Do Re Mi Fa Sol La Si — poi si ripete'},
-      {cat:'♩ Ritmo', q:'In 4/4, quanti quarti ci sono per battuta?', a:['4','3','2','6'], c:0, hint:'Il numeratore indica i tempi'},
-      {cat:'♩ Ritmo', q:'Una semiminima vale?', a:['1 quarto','1 mezzo','2 quarti','1 ottavo'], c:0, hint:'È la nota con la testa nera e il gambo'},
-      {cat:'♯ Accordo', q:'Do Maggiore è formato da?', a:['Do-Mi-Sol','Do-Mib-Sol','Do-Fa-Sol','Re-Fa-La'], c:0, hint:'1a - 3a - 5a della scala'},
-      {cat:'♯ Accordo', q:'Un accordo minore ha il?', a:['III grado abbassato di un semitono','V grado abbassato','VII grado abbassato','II grado abbassato'], c:0, hint:'La terza minore: es. La-Do-Mi'},
-      {cat:'🎵 Teoria', q:'Quanti semitoni ha un\'ottava?', a:['12','7','8','6'], c:0, hint:'Da Do al Do successivo contando tutti i tasti'},
-      {cat:'🎵 Teoria', q:'Cos\'è il BPM?', a:['Battiti per minuto','Basso per misura','Battuta per metro','Bemolle per modulazione'], c:0, hint:'Indica la velocità del brano'},
-    ],
-    intermediate: [
-      {cat:'♫ Progressione', q:'II-V-I in Do è?', a:['Rem7-Sol7-DoMaj7','Do-Fa-Sol7','Lam-Rem-Sol','Fa-Sol-Do'], c:0, hint:'Standard jazz fondamentale'},
-      {cat:'𝄐 Modo', q:'Il Dorico parte dal?', a:['II grado','I grado','VI grado','IV grado'], c:0, hint:'"So What" di Miles Davis — scala di Re con 2 bemolle'},
-      {cat:'𝄐 Modo', q:'Il Misolidio differisce dal Maggiore per?', a:['VII abbassato','VI abbassato','III abbassato','II abbassato'], c:0, hint:'Come la scala di Sol con Fa naturale invece di Fa#'},
-      {cat:'♯ Settime', q:'Sol7 contiene?', a:['Fa naturale','Fa#','La#','Sib'], c:0, hint:'V7 ha la settima minore, dominante per eccellenza'},
-      {cat:'♯ Settime', q:'Un accordo min7 ha?', a:['3a minore + 7a minore','3a magg + 7a minore','3a minore + 7a magg','3a magg + 7a magg'], c:0, hint:'Es. Lam7 = La-Do-Mi-Sol'},
-      {cat:'🎼 Scala', q:'Scala pentatonica maggiore ha?', a:['5 note','7 note','6 note','4 note'], c:0, hint:'"My Girl" o riff di blues classici'},
-      {cat:'♩ Ritmo', q:'La sincope è?', a:['Accento su tempo debole','Tempo forte che si ripete','Pausa nel ritmo','Nota tenuta lunga'], c:0, hint:'Crea tensione: anticipi il battere'},
-      {cat:'♩ Ritmo', q:'Le terzine dividono il tempo in?', a:['3 parti uguali','2 parti uguali','4 parti uguali','5 parti uguali'], c:0, hint:'Tre note nello spazio di due'},
-      {cat:'♫ Progressione', q:'La progressione I-V-vi-IV è usata in?', a:['Migliaia di pop','Solo jazz','Solo classica','Solo metal'], c:0, hint:'"Let It Be", "No Woman No Cry", "Someone Like You"'},
-      {cat:'𝄐 Modo', q:'Il Lidio differisce dal Maggiore per?', a:['IV alzato (#4)','VII alzato','II alzato','VI alzato'], c:0, hint:'Suono "magico, sospeso" — "Lydian" di Joe Satriani'},
-    ],
-    advanced: [
-      {cat:'♯ Armonia', q:'La sostituzione di tritono sostituisce?', a:['V7 con bII7','I con VI','II con IV','VII con V'], c:0, hint:'Sol7 → Reb7 nella tonalità di Do'},
-      {cat:'𝄐 Modo', q:'La Superlocria si usa su?', a:['Accordi alterati','Accordi maj7','Accordi dim','Accordi sus4'], c:0, hint:'7alt: b9, #9, #11, b13'},
-      {cat:'♫ Modulazione', q:'La modulazione enarmonica sfrutta?', a:['Note con stesso suono ma nome diverso','Cambio di tempo','Modulazione cromatica','Cadenza deceptiva'], c:0, hint:'Es. Sol# = Lab per passare a una tonalità lontana'},
-      {cat:'♩ Ritmo', q:'L\'emiola è?', a:['2 gruppi di 3 sentiti come 3 di 2','Ritmo binario su ternario','Poliritmia in 5/4','Sincope sul IV tempo'], c:0, hint:'Crea ambiguità metrica, comune in Brahms'},
-      {cat:'♯ Armonia', q:'Accordo di Napoli (bII) si usa tipicamente?', a:['In posizione di 1° rivolto sulla IV','In posizione fondamentale sulla I','Come sostituto della V','In posizione di 2° rivolto'], c:0, hint:'Tipico nella musica romantica'},
-      {cat:'♫ Progressione', q:'Il "coltrane changes" usa?', a:['Cadenze per terze di grande terza','II-V-I semplice','Pedali e ostinati','Solo accordi di settima'], c:0, hint:'"Giant Steps" di Coltrane — tre centri tonali a distanza di 3a'},
-    ],
-    audio: [
-      {cat:'🎧 Audio', q:'Ascolta e riconosci: quale intervallo senti?', a:['2a Maggiore','3a Maggiore','4a Giusta','5a Giusta'], c:1, freqs:[440,554.37], type:'melody', hint:'"Mi" e "Sol#" — base di mille accordi maggiori', song:'Pensa al Do-Mi delle canzonette'},
-      {cat:'🎧 Audio', q:'Ascolta l\'intervallo. Qual è?', a:['3a Minore','4a Giusta','5a Giusta','Ottava'], c:2, freqs:[440,659.25], type:'melody', hint:'Do-Sol — l\'intervallo più stabile in assoluto', song:'"Star Wars" di John Williams parte da questo'},
-      {cat:'🎧 Audio', q:'Che tipo di triade senti?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:0, freqs:[261.63,329.63,392.00], type:'chord', hint:'Suono brillante e stabile', song:'"Happy Birthday" — inizio'},
-      {cat:'🎧 Audio', q:'Questa triade è?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:1, freqs:[261.63,311.13,392.00], type:'chord', hint:'Suono cupo, malinconico', song:'"Requiem" di Mozart — accordo di Re minore'},
-      {cat:'🎧 Audio', q:'Ascolta la scala. È?', a:['Scala Maggiore','Scala Minore Naturale','Scala Dorica','Scala Pentatonica'], c:0, freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25], type:'melody', hint:'Toni e semitoni: T-T-S-T-T-T-S', song:'"Do Re Mi" del Sound of Music'},
-      {cat:'🎧 Audio', q:'Che intervallo è questo salto?', a:['4a Giusta','5a Giusta','6a Maggiore','Ottava'], c:3, freqs:[261.63,523.25], type:'melody', hint:'Il salto doppio della nota', song:'"Somewhere Over The Rainbow" — primo intervallo'},
-      {cat:'🎧 Audio', q:'Questo accordo a 4 voci è?', a:['Maj7','Dom7 (7a dominante)','Min7','Dim7'], c:1, freqs:[392.00,493.88,587.33,698.46], type:'chord', hint:'Ha la settima minore sopra la triade maggiore', song:'Base di ogni jazz standard: "Autumn Leaves"'},
-    ]
-  };
-
-  // =====================
-  // LAYOUT BOARD
-  // =====================
-  var CELLS = [];
-  (function buildCells() {
-    var pattern = ['scala','scala','audio','ritmo','scala','modo','accordo','scala','audio','bonus',
-                   'scala','prog','accordo','scala','audio','ritmo','scala','modo','accordo','bonus',
-                   'scala','audio','prog','scala','ritmo','accordo','scala','audio','modo','bonus',
-                   'scala','ritmo','scala','audio','accordo','scala','prog','ritmo','scala','end'];
-    var icons = {scala:'♭',accordo:'♯',ritmo:'♩',modo:'𝄐',audio:'🎵',bonus:'⭐',prog:'♫',wild:'🃏',end:'🏆',start:'🎼'};
-    var labels = {scala:'Scala',accordo:'Accordo',ritmo:'Ritmo',modo:'Modo',audio:'Audio',bonus:'Bonus',prog:'Prog.',wild:'Jolly',end:'Fine',start:'Inizio'};
-    CELLS = pattern.map(function(t,i) {
-      return {type:t, icon:icons[t]||'♫', label:labels[t]||t};
-    });
-    CELLS[0] = {type:'start', icon:'🎼', label:'Inizio'};
-  })();
-
-  // =====================
-  // DOM HELPERS
-  // =====================
-  function $(id) { return document.getElementById(id); }
-  function goPage(id) {
-    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
-    $(id).classList.add('on');
-    window.scrollTo(0,0);
-  }
-
-  // =====================
-  // RENDER BOARD
-  // =====================
-  function renderBoard() {
-    var grid = $('board-grid');
-    grid.innerHTML = '';
-    CELLS.forEach(function(cell, i) {
-      var div = document.createElement('div');
-      div.className = 'cell ct-' + cell.type;
-      if (i === G.pos) div.classList.add('cur');
-      if (i < G.pos) div.classList.add('vis');
-      div.innerHTML = '<span class="cell-icon">' + cell.icon + '</span><span class="cell-name">' + cell.label + '</span>';
-      grid.appendChild(div);
-    });
-    $('progress-fill').style.width = (G.pos / (G.TOTAL-1) * 100) + '%';
-    $('score-el').textContent = G.score;
-    $('streak-el').textContent = G.streak;
-  }
-
-  // =====================
-  // SELEZIONE LIVELLO
-  // =====================
-  function initLevelCards() {
-    var cards = document.querySelectorAll('#level-cards .card');
-    cards.forEach(function(card) {
-      card.onclick = function() {
-        cards.forEach(function(c){ c.classList.remove('sel'); });
-        card.classList.add('sel');
-        G.level = card.getAttribute('data-level');
-        var labels = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
-        $('lv-badge').textContent = 'Livello: ' + (labels[G.level] || G.level);
-      };
-    });
-  }
-
-  // =====================
-  // SHOW QUESTION
-  // =====================
-  function getUniqueQ(poolKey) {
-    var pool = QDB[poolKey];
-    if (!pool || pool.length === 0) return null;
-    if (!G.usedQ[poolKey]) G.usedQ[poolKey] = [];
-    var avail = [];
-    for (var i=0; i<pool.length; i++) {
-      if (G.usedQ[poolKey].indexOf(i) === -1) avail.push(i);
-    }
-    if (avail.length === 0) { G.usedQ[poolKey] = []; avail = pool.map(function(_,i){return i;}); }
-    var pick = avail[Math.floor(Math.random() * avail.length)];
-    G.usedQ[poolKey].push(pick);
-    return pool[pick];
-  }
-
-  function showQuestion() {
-    var cellType = CELLS[G.pos].type;
-    var poolKey = (cellType === 'audio') ? 'audio' : G.level;
-    var q = getUniqueQ(poolKey);
-    if (!q) { clearQ(); return; }
-
-    $('qcat').textContent = q.cat;
-    $('qtxt').textContent = q.q;
-    $('fbk').textContent = '';
-    $('fbk').className = 'fbk';
-    $('hint-box').style.display = 'none';
-    $('hint-box').textContent = '';
-
-    var grid = $('agrid');
-    grid.innerHTML = '';
-
-    if (cellType === 'audio' && q.freqs) {
-      var playBtn = document.createElement('button');
-      playBtn.className = 'audio-play-btn';
-      playBtn.innerHTML = '▶ Ascolta l\'intervallo';
-      playBtn.onclick = function() {
-        initAudio();
-        if (q.type === 'chord') { playChord(q.freqs); }
-        else { playTones(q.freqs, 'sine'); }
-      };
-      grid.appendChild(playBtn);
-    }
-
-    q.a.forEach(function(ans, i) {
-      var btn = document.createElement('button');
-      btn.className = 'abtn';
-      btn.textContent = ans;
-      btn.onclick = function() { checkAnswer(i === q.c, btn, q.hint); };
-      grid.appendChild(btn);
-    });
-
-    G.waiting = false;
-  }
-
-  function clearQ() {
-    $('qcat').textContent = '—';
-    $('qtxt').textContent = 'Tocca il dado per lanciare! 🎲';
-    $('agrid').innerHTML = '';
-    $('fbk').textContent = '';
-    $('fbk').className = 'fbk';
-  }
-
-  function checkAnswer(isCorrect, clickedBtn, hint) {
-    if (G.waiting) return;
-    G.waiting = true;
-
-    document.querySelectorAll('.abtn').forEach(function(b){ b.disabled = true; });
-    var pts = 0;
-    if (isCorrect) {
-      G.streak++;
-      if (G.streak > G.maxStreak) G.maxStreak = G.streak;
-      G.correct++;
-      pts = 100 + (G.streak >= 3 ? 50 : 0);
-      G.score += pts;
-      $('fbk').textContent = '✅ Corretto! +' + pts + 'pt' + (G.streak >= 3 ? ' 🔥 Streak!' : '');
-      $('fbk').className = 'fbk g';
-      clickedBtn.classList.add('ok');
-      beep(880, 0.15, 0.12);
-    } else {
-      G.streak = 0;
-      G.wrong++;
-      G.score = Math.max(0, G.score - 20);
-      $('fbk').textContent = '❌ Sbagliato! -20pt';
-      $('fbk').className = 'fbk b';
-      clickedBtn.classList.add('ko');
-      beep(180, 0.3, 0.12);
-    }
-    if (hint) {
-      $('hint-box').textContent = '💡 ' + hint;
-      $('hint-box').style.display = 'block';
-    }
-    $('score-el').textContent = G.score;
-    $('streak-el').textContent = G.streak;
-  }
-
-  // =====================
-  // DADO
-  // =====================
-  function rollDice() {
-    if (G.waiting) return;
-    initAudio();
-    var diceEl = $('dice-el');
-    var faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-    diceEl.style.transform = 'rotate(720deg) scale(1.3)';
-    diceEl.textContent = faces[Math.floor(Math.random()*6)];
-    setTimeout(function() {
-      var roll = Math.floor(Math.random()*6) + 1;
-      G.pos = Math.min(G.pos + roll, G.TOTAL - 1);
-      $('dinfo').textContent = 'Hai tirato ' + roll + '! Avanzato di ' + roll + ' caselle.';
-      diceEl.style.transform = '';
-      diceEl.textContent = '🎲';
-      renderBoard();
-      if (G.pos >= G.TOTAL - 1) {
-        setTimeout(showVictory, 800);
-      } else {
-        setTimeout(showQuestion, 600);
-      }
-    }, 600);
-  }
-
-  // =====================
-  // VITTORIA
-  // =====================
-  function showVictory() {
-    $('final-score').textContent = G.score;
-    $('v-correct').textContent = G.correct;
-    $('v-wrong').textContent = G.wrong;
-    $('v-streak').textContent = G.maxStreak;
-    goPage('pg-victory');
-  }
-
-  // =====================
-  // MODAL
-  // =====================
-  function showModal(icon, title, bodyHTML) {
-    $('m-icon').textContent = icon;
-    $('m-title').textContent = title;
-    $('m-body').innerHTML = bodyHTML;
-    $('modal').classList.add('on');
-  }
-  function closeModal() { $('modal').classList.remove('on'); }
-
-  // =====================
-  // ISTRUZIONI
-  // =====================
-  function showHowTo() {
-    showModal('📖', 'Come si gioca', [
-      '<ul class="instructions">',
-      '<li>🎯 <b>Obiettivo:</b> arriva all\'ultima casella del tabellone rispondendo alle domande di teoria musicale.</li>',
-      '<li>🎲 <b>Il dado:</b> tocca il dado per avanzare di 1–6 caselle sul tabellone.</li>',
-      '<li>❓ <b>Domande:</b> ogni casella ha una categoria diversa. Scegli la risposta giusta tra quelle proposte.</li>',
-      '<li>✅ <b>Risposta giusta:</b> guadagni <b>+100 punti</b>. Se sei in streak (3+ di fila), guadagni <b>+50 bonus</b>!</li>',
-      '<li>❌ <b>Risposta sbagliata:</b> perdi <b>20 punti</b> e lo streak si azzera.</li>',
-      '<li>🎵 <b>Caselle Audio:</b> senti un suono e devi riconoscere l\'intervallo o l\'accordo. Premi ▶ per ascoltare.</li>',
-      '<li>🌱 <b>Livelli:</b> scegli Principiante, Intermedio o Avanzato — le domande cambiano!</li>',
-      '</ul>',
-      '<div class="legend-desc">',
-      '<div>♭ <b style="color:#3a6aee">Scala</b> — domande sulle scale musicali</div>',
-      '<div>♯ <b style="color:#8a4aee">Accordo</b> — riconosci accordi e triadi</div>',
-      '<div>🎵 <b style="color:#00aacc">Audio</b> — ascolta e riconosci</div>',
-      '<div>♩ <b style="color:#ee4a7a">Ritmo</b> — tempi, misure, sincopi</div>',
-      '<div>𝄐 <b style="color:#4aee9a">Modo</b> — modi greci e scale modali</div>',
-      '<div>♫ <b style="color:#aa44ee">Progressione</b> — accordi e cadenze</div>',
-      '<div>⭐ <b style="color:#ccaa00">Bonus</b> — punti extra gratis!</div>',
-      '</div>'
-    ].join(''));
-  }
-
-  // =====================
-  // AUDIO TOGGLE
-  // =====================
-  function toggleAudio() {
-    G.audioOn = !G.audioOn;
-    var lbl = G.audioOn ? '🔊' : '🔇';
-    $('b-au-home').innerHTML = (G.audioOn ? '🔊' : '🔇') + ' Audio: <span id="au-lbl-home">' + (G.audioOn ? 'ON' : 'OFF') + '</span>';
-    $('b-au-board').textContent = lbl;
-    if (G.audioOn) initAudio();
-  }
-
-  // =====================
-  // RESET
-  // =====================
-  function resetGame() {
-    G.pos = 0; G.score = 0; G.streak = 0; G.maxStreak = 0;
-    G.correct = 0; G.wrong = 0; G.waiting = false;
-    G.usedQ = { beginner: [], intermediate: [], advanced: [], audio: [] };
-    $('dinfo').textContent = 'Tocca per lanciare (1–6 caselle)';
-  }
-
-  // =====================
-  // EVENT LISTENERS
-  // =====================
-  $('b-start').onclick = function() { goPage('pg-level'); };
-  $('b-howto').onclick = showHowTo;
-  $('b-lv-back').onclick = function() { goPage('pg-home'); };
-  $('b-lv-go').onclick = function() {
-    resetGame();
-    var labels = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
-    $('lv-badge').textContent = 'Livello: ' + (labels[G.level] || G.level);
-    goPage('pg-board');
+// ─────────────────────────────────
+// DADO
+// ─────────────────────────────────
+function rollDice() {
+  if (G.waiting) return;
+  initCtx();
+  var d = document.getElementById('dice');
+  d.style.transform = 'rotate(720deg) scale(1.3)';
+  var faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+  d.textContent = faces[Math.floor(Math.random()*6)];
+  setTimeout(function(){
+    var roll = Math.floor(Math.random()*6)+1;
+    G.pos = Math.min(G.pos+roll, TOTAL-1);
+    document.getElementById('dinfo').textContent = 'Hai tirato ' + roll + '!';
+    d.style.transform = '';
+    d.textContent = '🎲';
     renderBoard();
-    clearQ();
-  };
-  $('dice-el').onclick = rollDice;
-  $('b-au-home').onclick = toggleAudio;
-  $('b-au-board').onclick = toggleAudio;
-  $('b-home-board').onclick = function() { goPage('pg-home'); };
-  $('b-modal-ok').onclick = closeModal;
-  $('b-restart').onclick = function() { goPage('pg-level'); };
-  $('b-v-home').onclick = function() { goPage('pg-home'); };
+    setTimeout(showQuestion, 500);
+  }, 600);
+}
 
-  // =====================
-  // INIT
-  // =====================
+// ─────────────────────────────────
+// VITTORIA
+// ─────────────────────────────────
+function showVictory() {
+  document.getElementById('final-sc').textContent = G.score;
+  document.getElementById('vc').textContent = G.correct;
+  document.getElementById('vw').textContent = G.wrong;
+  document.getElementById('vs').textContent = G.maxStreak;
+  goPage('pg-victory');
+}
+
+// ─────────────────────────────────
+// RESET
+// ─────────────────────────────────
+function resetGame() {
+  G.pos=0; G.score=0; G.streak=0; G.maxStreak=0;
+  G.correct=0; G.wrong=0; G.waiting=false; G.usedQ={};
+}
+
+// ─────────────────────────────────
+// AUDIO TOGGLE
+// ─────────────────────────────────
+function toggleAudio() {
+  G.audioOn = !G.audioOn;
+  var txt = G.audioOn ? '🔊 Audio: ON' : '🔇 Audio: OFF';
+  document.getElementById('btn-audio-toggle').textContent = txt;
+  document.getElementById('btn-audio-board').textContent = G.audioOn ? '🔊' : '🔇';
+  if (G.audioOn) initCtx();
+}
+
+// ─────────────────────────────────
+// CONFERMA TORNARE AL MENU
+// ─────────────────────────────────
+function confirmMenu() {
+  openModal('⚠️','Tornare al menu?',
+    '<p>Se torni al menu <b>perderai i progressi</b> attuali (posizione e punteggio). Sicuro?</p>',
+    [
+      {label:'Sì, torna al menu', cls:'btn-red', fn:function(){ goPage('pg-home'); }},
+      {label:'No, continua', cls:'btn-gray', fn:function(){}}
+    ]
+  );
+}
+
+// ─────────────────────────────────
+// COLLEGAMENTO LIVELLI
+// ─────────────────────────────────
+function initLevelCards() {
+  var lvNames = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
+  document.querySelectorAll('.lv-card').forEach(function(card) {
+    card.onclick = function() {
+      document.querySelectorAll('.lv-card').forEach(function(c){ c.classList.remove('sel'); });
+      card.classList.add('sel');
+      G.level = card.getAttribute('data-lv');
+      document.getElementById('lv-display').textContent = 'Livello: ' + (lvNames[G.level]||G.level);
+    };
+  });
+}
+
+// ─────────────────────────────────
+// BOOT: ATTACH EVENTS
+// ─────────────────────────────────
+window.onload = function() {
   initLevelCards();
 
-})();
+  document.getElementById('btn-start').onclick = function() { goPage('pg-level'); };
+  document.getElementById('btn-howto').onclick = showHowTo;
+  document.getElementById('btn-audio-toggle').onclick = toggleAudio;
+
+  document.getElementById('btn-lv-back').onclick = function() { goPage('pg-home'); };
+  document.getElementById('btn-lv-go').onclick = function() {
+    resetGame();
+    var lvNames = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
+    document.getElementById('lv-display').textContent = 'Livello: ' + (lvNames[G.level]||G.level);
+    goPage('pg-board');
+    renderBoard();
+    showIdle();
+  };
+
+  document.getElementById('dice').onclick = rollDice;
+  document.getElementById('btn-audio-board').onclick = toggleAudio;
+  document.getElementById('btn-menu').onclick = confirmMenu;
+
+  document.getElementById('btn-replay').onclick = function() { goPage('pg-level'); };
+  document.getElementById('btn-vh').onclick = function() { goPage('pg-home'); };
+
+  // Chiudi modal cliccando fuori
+  document.getElementById('modal').onclick = function(e) {
+    if (e.target === this) closeModal();
+  };
+};
 </script>
 </body>
 </html>
