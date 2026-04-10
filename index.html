@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,477 +5,627 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>HarmonyQuest 🎵</title>
 <style>
-* {box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-body {background:#0d0d1a;color:#e8e8f0;font-family:system-ui,sans-serif;min-height:100vh}
-.page {display:none;min-height:100vh;padding:20px 12px;justify-content:flex-start}
-.page.on {display:flex;flex-direction:column;align-items:center}
-h1 {font-size:clamp(1.8rem,5vw,2.6rem);font-weight:900;margin:20px 0 10px}
-h1 span {color:#e94560}
-h2 {font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-align:center}
-.sub {color:#8888aa;margin-bottom:28px;text-align:center;font-size:clamp(.8rem,3vw,.9rem);max-width:90%}
-.btn {display:block;width:100%;max-width:320px;padding:15px 20px;margin:7px auto;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;text-align:center;transition:all .15s}
-.btn:active {opacity:.85;transform:scale(.98)}
-.r {background:linear-gradient(135deg,#e94560,#c73652);color:#fff}
-.p {background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
-.t {background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff}
-.o {background:rgba(255,255,255,.08);color:#e8e8f0;border:1.5px solid #333355}
-.sm {padding:12px 20px;font-size:.9rem;width:auto}
-.btn-row {display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
-.cards {display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;max-width:600px;width:100%}
-.card {background:#16213e;border-radius:16px;padding:20px 16px;text-align:center;cursor:pointer;border:2px solid transparent;flex:1;min-width:130px;max-width:180px;transition:all .2s}
-.card:active {transform:scale(.95)}
-.card.sel {border-color:#e94560;box-shadow:0 0 20px rgba(233,69,96,.3)}
-.card .ic {font-size:clamp(1.6rem,4vw,1.8rem);margin-bottom:8px;display:block}
-.card b {font-size:.95rem;font-weight:800;display:block;margin-bottom:4px}
-.card p {font-size:.75rem;color:#8888aa;line-height:1.3}
-#pg-board {padding-top:12px}
-.topbar {display:flex;justify-content:space-between;align-items:center;width:100%;max-width:900px;margin-bottom:12px;flex-wrap:wrap;gap:12px}
-.badge {background:#16213e;border-radius:20px;padding:8px 14px;font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:4px}
-.badge span {color:#f0a500;font-weight:900}
-.red-badge {color:#e94560}
-.progbar {width:100%;max-width:900px;height:6px;background:#1e1e3a;border-radius:3px;margin-bottom:12px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
-.progfill {height:100%;background:linear-gradient(90deg,#7c3aed 0%,#e94560 100%);border-radius:3px;transition:width .4s ease-out;box-shadow:0 0 10px rgba(233,69,96,.4)}
-.legend {display:flex;gap:12px;flex-wrap:wrap;max-width:900px;width:100%;margin-bottom:12px;padding:12px;background:rgba(22,33,62,.5);border-radius:12px;border:1px solid #2a2a4a}
-.leg-item {display:flex;align-items:center;gap:6px;font-size:clamp(.7rem,1vw,.8rem);color:#8888aa;font-weight:500}
-.leg-dot {width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 4px rgba(0,0,0,.5)}
-.board {display:grid;gap:clamp(4px,1.2vw,6px);width:100%;max-width:900px;margin-bottom:16px}
-@media (max-width:600px) {.board {grid-template-columns:repeat(8,1fr)}}
-@media (max-width:450px) {.board {grid-template-columns:repeat(6,1fr)}}
-@media (min-width:601px) {.board {grid-template-columns:repeat(10,1fr)}}
-.cell {aspect-ratio:1;border-radius:12px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;position:relative;transition:all .2s cubic-bezier(.4,0,.2,1);user-select:none}
-.cell:active {transform:scale(.95)}
-.cell.cur {transform:scale(1.15) translateZ(0);box-shadow:0 8px 25px rgba(240,165,0,.6);border-color:#f0a500 !important;z-index:10}
-.cell.vis {opacity:.4}
-.tok {position:absolute;top:-2px;right:-2px;font-size:.8rem;z-index:20;background:rgba(240,165,0,.9);border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:900}
-.cell-icon {font-size:clamp(1rem,2.5vw,1.2rem);line-height:1;margin-bottom:2px;display:block}
-.cell-name {font-size:clamp(.45rem,1vw,.55rem);color:rgba(255,255,255,.7);line-height:1.2}
-.ct-start {background:linear-gradient(135deg,#2a4a10,#1a3a00);border-color:#4a7a20}
-.ct-end {background:linear-gradient(135deg,#4a3a10,#3a2a00);border-color:#f0a500}
-.ct-scala {background:linear-gradient(135deg,#1a2a4a,#0a1a3a);border-color:#3a5aaa}
-.ct-accordo {background:linear-gradient(135deg,#2a1a4a,#1a0a3a);border-color:#6a3aaa}
-.ct-ritmo {background:linear-gradient(135deg,#3a1a2a,#2a0a1a);border-color:#aa2a5a}
-.ct-modo {background:linear-gradient(135deg,#1a3a2a,#0a2a1a);border-color:#2aaa6a}
-.ct-audio {background:linear-gradient(135deg,#1a2a38,#0a1a28);border-color:#00aacc;box-shadow:inset 0 0 8px rgba(0,170,204,.3)}
-.ct-bonus {background:linear-gradient(135deg,#2a2a10,#1a1a00);border-color:#ffaa00}
-.ct-penalty {background:linear-gradient(135deg,#3a1010,#2a0808);border-color:#ff4444}
-.ct-wild {background:linear-gradient(135deg,#2a1f10,#1a0f00);border-color:#ff8800}
-.ct-prog {background:linear-gradient(135deg,#2a1a3a,#1a0a28);border-color:#aa00cc}
-.qbox {background:linear-gradient(135deg,#16213e,#0f1628);border-radius:16px;padding:20px;width:100%;max-width:900px;border:1px solid #2a3a4a;margin:16px 0;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-.qcat {font-size:.75rem;color:#0f9b8e;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
-.qtxt {font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:700;margin-bottom:20px;line-height:1.5;text-align:center}
-.agrid {display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px}
-.abtn {background:#1e1e3a;border:2px solid #2a2a4a;border-radius:12px;padding:14px 16px;text-align:center;color:#e8e8f0;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .2s;-webkit-appearance:none}
-.abtn:active {transform:translateY(1px);box-shadow:inset 0 2px 4px rgba(0,0,0,.3)}
-.abtn.ok {border-color:#0f9b8e!important;background:linear-gradient(135deg,#0f9b8e,#0d7a6f)!important;color:#fff!important;transform:scale(1.02)}
-.abtn.ko {border-color:#e94560!important;background:linear-gradient(135deg,#e94560,#c73652)!important;color:#fff!important}
-.fbk {margin-top:16px;font-weight:900;font-size:clamp(1rem,2.5vw,1.1rem);min-height:24px;padding:12px;border-radius:10px}
-.fbk.g {background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff;text-align:center}
-.fbk.b {background:linear-gradient(135deg,#e94560,#c73652);color:#fff;text-align:center}
-.hint {background:rgba(28,18,52,.8);border-left:4px solid #7c3aed;padding:12px 16px;border-radius:10px;font-size:.85rem;color:#b8b8d0;margin-top:12px;display:none;line-height:1.5}
-.drow {display:flex;gap:16px;align-items:center;justify-content:center;margin-top:20px;flex-wrap:wrap}
-.dice {font-size:clamp(2.5rem,8vw,3.2rem);cursor:pointer;user-select:none;transition:transform .2s}
-.dice:active {transform:scale(1.1) rotate(90deg)}
-.dinfo {font-size:clamp(.85rem,2vw,.95rem);color:#8888aa;font-weight:500}
-.audio-btn {background:linear-gradient(135deg,#0a1a28,#081428);border:2px solid #00aacc;color:#00ccff;padding:16px 24px;border-radius:14px;font-weight:800;margin:12px 0;cursor:pointer;transition:all .2s;font-size:1rem}
-.audio-btn:active {background:linear-gradient(135deg,#00aacc,#0099aa);color:#000;transform:scale(1.02)}
-.ov {position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:1000}
-.ov.on {display:flex}
-.evcard {background:linear-gradient(135deg,#1a1a2e,#15152a);border-radius:24px;padding:40px 28px;max-width:360px;width:90%;text-align:center;border:3px solid #f0a500;box-shadow:0 20px 40px rgba(240,165,0,.3)}
-.stats {display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;justify-content:center}
-.sbox {background:#16213e;border-radius:16px;padding:16px 20px;text-align:center;min-width:90px}
-.sbox .sv {font-size:clamp(1.2rem,3vw,1.4rem);font-weight:900}
-.sbox .sl {font-size:.75rem;color:#8888aa;margin-top:4px}
-@media (max-width:500px) {.agrid{grid-template-columns:1fr}.cards{flex-direction:column;align-items:stretch}.card{min-width:unset;flex:1 1 100%}.legend{gap:8px;justify-content:center}.legend .leg-item{font-size:.7rem}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{background:#0d0d1a;color:#e8e8f0;font-family:system-ui,sans-serif;min-height:100vh}
+.page{display:none;min-height:100vh;padding:20px 14px;flex-direction:column;align-items:center;justify-content:center}
+.page.on{display:flex}
+h1{font-size:clamp(2rem,6vw,3rem);font-weight:900;margin-bottom:8px;letter-spacing:-1px}
+h1 span{color:#e94560}
+h2{font-size:clamp(1.2rem,4vw,1.5rem);font-weight:800;margin-bottom:8px;text-align:center}
+.sub{color:#8888aa;margin-bottom:24px;text-align:center;font-size:clamp(.85rem,2.5vw,1rem)}
+.btn{display:block;width:100%;max-width:320px;padding:15px 20px;margin:8px auto;border:none;border-radius:14px;font-size:1rem;font-weight:700;cursor:pointer;text-align:center;transition:all .15s}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{transform:scale(.97);filter:brightness(.9)}
+.r{background:linear-gradient(135deg,#e94560,#c73652);color:#fff}
+.p{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
+.t{background:linear-gradient(135deg,#0f9b8e,#0d7a6f);color:#fff}
+.g{background:linear-gradient(135deg,#2a7a2a,#1a5a1a);color:#fff}
+.o{background:rgba(255,255,255,.08);color:#e8e8f0;border:1.5px solid #444466}
+.sm{padding:12px 18px;font-size:.9rem;width:auto}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+
+/* === CARDS LIVELLO === */
+.cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0;width:100%;max-width:600px}
+.card{background:#16213e;border-radius:16px;padding:22px 18px;text-align:center;cursor:pointer;border:3px solid transparent;flex:1;min-width:130px;max-width:180px;transition:all .2s;user-select:none}
+.card:hover{border-color:#666688;transform:translateY(-2px)}
+.card:active{transform:scale(.95)}
+.card.sel{border-color:#e94560;box-shadow:0 0 20px rgba(233,69,96,.4);background:#1e1a2e}
+.card .ic{font-size:2rem;margin-bottom:10px;display:block}
+.card b{font-size:1rem;font-weight:800;display:block;margin-bottom:6px}
+.card p{font-size:.78rem;color:#8888aa;line-height:1.4}
+@media(max-width:500px){.cards{flex-direction:column;align-items:center}.card{max-width:90%;width:90%}}
+
+/* === BOARD === */
+#pg-board{justify-content:flex-start;padding-top:14px}
+.topbar{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:920px;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.badge{background:#16213e;border-radius:20px;padding:8px 14px;font-weight:800;font-size:.95rem}
+.badge span{color:#f0a500}
+.progbar{width:100%;max-width:920px;height:6px;background:#1e1e3a;border-radius:3px;margin-bottom:12px;overflow:hidden}
+.progfill{height:100%;background:linear-gradient(90deg,#7c3aed,#e94560);border-radius:3px;transition:width .5s ease-out}
+.legend{display:flex;gap:10px;flex-wrap:wrap;max-width:920px;width:100%;margin-bottom:12px;font-size:.75rem}
+.leg-item{display:flex;align-items:center;gap:5px;color:#8888aa}
+.leg-dot{width:11px;height:11px;border-radius:50%}
+.board{display:grid;gap:clamp(3px,1vw,6px);width:100%;max-width:920px;margin-bottom:16px}
+@media(min-width:601px){.board{grid-template-columns:repeat(10,1fr)}}
+@media(max-width:600px){.board{grid-template-columns:repeat(8,1fr)}}
+@media(max-width:420px){.board{grid-template-columns:repeat(6,1fr)}.legend{display:none}}
+.cell{aspect-ratio:1;border-radius:10px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:all .2s;cursor:default}
+.cell.cur{transform:scale(1.18) translateZ(0);box-shadow:0 0 18px rgba(240,165,0,.7);border-color:#f0a500 !important;z-index:10}
+.cell.vis{opacity:.35}
+.cell-icon{font-size:clamp(1rem,2.5vw,1.2rem);line-height:1;margin-bottom:1px}
+.cell-name{font-size:clamp(.42rem,1vw,.55rem);color:rgba(255,255,255,.6);line-height:1.1}
+.ct-start{background:linear-gradient(135deg,#1a3a00,#0a2a00);border-color:#3a6a10}
+.ct-end{background:linear-gradient(135deg,#3a2a00,#2a1a00);border-color:#f0a500}
+.ct-scala{background:linear-gradient(135deg,#0a1a3a,#061226);border-color:#2a4aaa}
+.ct-accordo{background:linear-gradient(135deg,#1a0a3a,#100626);border-color:#6a2aaa}
+.ct-ritmo{background:linear-gradient(135deg,#2a0a1a,#1a0610);border-color:#aa2a5a}
+.ct-modo{background:linear-gradient(135deg,#0a2a1a,#062010);border-color:#2aaa6a}
+.ct-audio{background:linear-gradient(135deg,#001a28,#001018);border-color:#00aacc;box-shadow:inset 0 0 8px rgba(0,170,204,.2)}
+.ct-bonus{background:linear-gradient(135deg,#2a2a00,#1a1a00);border-color:#ccaa00}
+.ct-prog{background:linear-gradient(135deg,#1a0a28,#100618);border-color:#9900cc}
+.ct-wild{background:linear-gradient(135deg,#1a1000,#100800);border-color:#cc6600}
+
+/* === QBOX === */
+.qbox{background:linear-gradient(135deg,#13192e,#0d1220);border-radius:16px;padding:20px 18px;width:100%;max-width:920px;border:1px solid #2a3a4a;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+.qcat{font-size:.75rem;color:#0f9b8e;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.qtxt{font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:700;margin-bottom:18px;line-height:1.5;text-align:center;min-height:40px}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px}
+@media(max-width:400px){.agrid{grid-template-columns:1fr 1fr}}
+.abtn{background:#1a1a32;border:2px solid #2a2a4a;border-radius:12px;padding:14px 12px;text-align:center;color:#e8e8f0;cursor:pointer;font-size:.92rem;font-weight:600;transition:all .2s;width:100%}
+.abtn:hover{border-color:#4a4a8a;background:#22223a}
+.abtn:active{transform:scale(.97)}
+.abtn.ok{border-color:#0f9b8e !important;background:linear-gradient(135deg,#0f4a44,#0a3a34) !important;color:#4fffcc !important}
+.abtn.ko{border-color:#e94560 !important;background:linear-gradient(135deg,#4a0a18,#3a0610) !important;color:#ff9aa8 !important}
+.abtn:disabled{cursor:default;opacity:.8}
+.fbk{margin-top:14px;font-weight:800;font-size:clamp(1rem,2.5vw,1.1rem);min-height:22px;text-align:center;padding:10px;border-radius:10px}
+.fbk.g{background:linear-gradient(135deg,#0f3a34,#0a2a28);color:#4fffcc}
+.fbk.b{background:linear-gradient(135deg,#3a0a14,#2a060e);color:#ff9aa8}
+.hint{background:#0e0e28;border-left:4px solid #7c3aed;padding:12px 14px;border-radius:10px;font-size:.85rem;color:#b0b0cc;margin-top:12px;display:none;line-height:1.6}
+.drow{display:flex;gap:16px;align-items:center;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.dice{font-size:clamp(2.5rem,7vw,3rem);cursor:pointer;user-select:none;transition:transform .3s;display:inline-block}
+.dinfo{font-size:.9rem;color:#8888aa}
+
+/* === AUDIO BTN === */
+.audio-play-btn{background:linear-gradient(135deg,#00334a,#001e2e);border:2px solid #00aacc;color:#00ddff;padding:14px 22px;border-radius:14px;font-weight:800;margin:10px 0;cursor:pointer;transition:all .2s;font-size:1rem;width:100%;display:block;text-align:center}
+.audio-play-btn:hover{background:linear-gradient(135deg,#004a6a,#003050);border-color:#00ddff}
+.audio-play-btn:active{transform:scale(.97);background:linear-gradient(135deg,#00aacc,#0099aa);color:#000}
+
+/* === MODAL === */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+.ov.on{display:flex}
+.evcard{background:linear-gradient(135deg,#181830,#121228);border-radius:24px;padding:36px 28px;max-width:420px;width:100%;text-align:center;border:3px solid #f0a500;box-shadow:0 20px 50px rgba(240,165,0,.25);overflow-y:auto;max-height:90vh}
+.evcard h3{font-size:1.4rem;margin-bottom:16px}
+
+/* === VICTORY === */
+#pg-victory{justify-content:center}
+.stats{display:flex;gap:16px;margin:24px 0;flex-wrap:wrap;justify-content:center}
+.sbox{background:#16213e;border-radius:16px;padding:16px 22px;text-align:center;min-width:90px}
+.sbox .sv{font-size:1.5rem;font-weight:900}
+.sbox .sl{font-size:.75rem;color:#8888aa;margin-top:4px}
+
+/* === ISTRUZIONI === */
+.instructions{text-align:left;color:#c8c8e0;line-height:1.8;font-size:.95rem}
+.instructions li{margin-bottom:10px;padding-left:4px}
+.instructions b{color:#f0a500}
+.legend-desc{margin-top:16px;padding:14px;background:#0e0e28;border-radius:10px;font-size:.85rem;line-height:1.8}
+.legend-desc div{margin-bottom:6px}
 </style>
 </head>
 <body>
 
+<!-- HOME -->
 <div id="pg-home" class="page on">
   <h1>Harmony<span>Quest</span></h1>
-  <p class="sub">Gioco per imparare la teoria musicale con tabellone, audio e domande uniche</p>
-  <button class="btn r" id="b-start">▶ Inizia Gioco</button>
-  <button class="btn t" id="b-theory">📚 Teoria</button>
-  <button class="btn p" id="b-challenge">⚡ Sfida Rapida</button>
-  <div style="margin-top:32px;color:#8888aa;font-size:.85rem">
-    <div>✅ Responsive mobile</div>
-    <div>✅ Domande mai ripetute</div>
-    <div>✅ Riconoscimento audio</div>
-  </div>
+  <p class="sub">Esplora la teoria musicale giocando 🎲</p>
+  <button class="btn r" id="b-start">▶ Nuova Partita</button>
+  <button class="btn t" id="b-howto">📖 Come si gioca</button>
+  <button class="btn o" id="b-au-home">🔊 Audio: <span id="au-lbl-home">ON</span></button>
 </div>
 
-<div id="pg-board" class="page">
-  <div class="topbar">
-    <span id="level-display" style="color:#8888aa;font-size:.9rem;font-weight:600">Livello: Intermedio</span>
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="badge">
-        ⭐ <span id="score-display">0</span>
-      </div>
-      <div class="badge red-badge" id="timer-display" style="display:none">
-        ⏱ <span id="timer-count">15</span>s
-      </div>
-      <button class="btn o sm" id="audio-toggle">🔊</button>
+<!-- SELEZIONE LIVELLO -->
+<div id="pg-level" class="page">
+  <h2>Scegli il tuo livello</h2>
+  <p class="sub">Puoi tornare a cambiarlo in qualsiasi momento</p>
+  <div class="cards" id="level-cards">
+    <div class="card" data-level="beginner">
+      <span class="ic">🌱</span>
+      <b>Principiante</b>
+      <p>Note, scale, accordi base e ritmo semplice</p>
     </div>
-  </div>
-  <div class="progbar">
-    <div class="progfill" id="progress-bar"></div>
-  </div>
-  <div class="legend">
-    <div class="leg-item"><div class="leg-dot" style="background:#1a6aaa"></div><span>Scala ♭</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#6a3aaa"></div><span>Accordo ♯</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#00aacc"></div><span>Audio 🎵</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#aa2a5a"></div><span>Ritmo ♪</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#2aaa6a"></div><span>Modo 𝄐</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#ffaa00"></div><span>Bonus ⭐</span></div>
-  </div>
-  <div class="board" id="game-board"></div>
-  <div class="qbox">
-    <div class="qcat" id="question-category">Preparati!</div>
-    <div class="qtxt" id="question-text">Tocca il dado per lanciare e iniziare l'avventura musicale 🎲</div>
-    <div class="agrid" id="answer-grid"></div>
-    <div class="fbk" id="feedback-message"></div>
-    <div class="hint" id="question-hint"></div>
-    <div class="drow">
-      <span class="dice" id="roll-dice">🎲</span>
-      <span class="dinfo" id="dice-info">Tocca per lanciare (1-6 caselle)</span>
+    <div class="card sel" data-level="intermediate">
+      <span class="ic">🎸</span>
+      <b>Intermedio</b>
+      <p>Settime, modi, progressioni II-V-I</p>
     </div>
-  </div>
-</div>
-
-<div id="pg-victory" class="page">
-  <div style="font-size:clamp(4rem,12vw,6rem);margin-bottom:20px">🏆</div>
-  <div id="final-score" style="font-size:clamp(2.5rem,7vw,3.5rem);font-weight:900;color:#f0a500;margin-bottom:24px">0</div>
-  <p style="color:#8888aa;margin-bottom:32px;font-size:clamp(1rem,2.5vw,1.2rem)">Hai completato il percorso!</p>
-  <div class="stats" id="victory-stats">
-    <div class="sbox"><div class="sv" id="stat-correct">0</div><div class="sl">Corrette</div></div>
-    <div class="sbox"><div class="sv" id="stat-wrong">0</div><div class="sl">Sbagliate</div></div>
-    <div class="sbox"><div class="sv" id="stat-streak">0</div><div class="sl">Max Streak</div></div>
+    <div class="card" data-level="advanced">
+      <span class="ic">🎓</span>
+      <b>Avanzato</b>
+      <p>Modulazioni, jazz, analisi armonica</p>
+    </div>
   </div>
   <div class="btn-row">
-    <button class="btn r" id="restart-game">🔁 Nuova Partita</button>
-    <button class="btn o" id="back-home">🏠 Home</button>
+    <button class="btn o sm" id="b-lv-back">← Indietro</button>
+    <button class="btn r sm" id="b-lv-go">Inizia! 🎲</button>
   </div>
 </div>
 
-<div class="ov" id="modal-overlay">
-  <div class="evcard">
-    <div id="modal-icon" style="font-size:3.5rem;margin-bottom:16px">🃏</div>
-    <h2 id="modal-title" style="margin-bottom:12px;font-size:1.4rem">Evento Speciale</h2>
-    <p id="modal-description" style="color:#ccc;margin-bottom:24px;line-height:1.5;font-size:1rem">Descrizione dell'evento</p>
-    <button class="btn r" id="modal-confirm">OK!</button>
+<!-- BOARD -->
+<div id="pg-board" class="page">
+  <div class="topbar">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span id="lv-badge" style="color:#8888aa;font-size:.9rem;font-weight:600">Intermedio</span>
+      <div class="badge">⭐ <span id="score-el">0</span></div>
+      <div class="badge" style="color:#e94560">🔥 <span id="streak-el">0</span></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn o sm" id="b-au-board">🔊</button>
+      <button class="btn o sm" id="b-home-board">🏠</button>
+    </div>
+  </div>
+  <div class="progbar"><div class="progfill" id="progress-fill"></div></div>
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot" style="background:#2a4aaa"></div>Scala ♭</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#6a2aaa"></div>Accordo ♯</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#00aacc"></div>Audio 🎵</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#aa2a5a"></div>Ritmo ♩</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#2aaa6a"></div>Modo 𝄐</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#9900cc"></div>Prog. ♫</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#ccaa00"></div>Bonus ⭐</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#cc6600"></div>Jolly 🃏</div>
+  </div>
+  <div class="board" id="board-grid"></div>
+  <div class="qbox">
+    <div id="qcat" class="qcat">—</div>
+    <div id="qtxt" class="qtxt">Tocca il dado per iniziare il viaggio! 🎲</div>
+    <div id="agrid" class="agrid"></div>
+    <div id="fbk" class="fbk"></div>
+    <div id="hint-box" class="hint"></div>
+    <div class="drow">
+      <span id="dice-el" class="dice">🎲</span>
+      <span id="dinfo" class="dinfo">Tocca per lanciare (1–6 caselle)</span>
+    </div>
+  </div>
+</div>
+
+<!-- VITTORIA -->
+<div id="pg-victory" class="page">
+  <div style="font-size:5rem;margin-bottom:16px">🏆</div>
+  <div id="final-score" style="font-size:3rem;font-weight:900;color:#f0a500">0</div>
+  <p style="color:#8888aa;margin:12px 0 28px;font-size:1.1rem">Hai completato HarmonyQuest!</p>
+  <div class="stats">
+    <div class="sbox"><div class="sv" id="v-correct">0</div><div class="sl">Corrette</div></div>
+    <div class="sbox"><div class="sv" id="v-wrong">0</div><div class="sl">Sbagliate</div></div>
+    <div class="sbox"><div class="sv" id="v-streak">0</div><div class="sl">Max Streak</div></div>
+  </div>
+  <button class="btn r" id="b-restart">🔁 Nuova Partita</button>
+  <button class="btn o" id="b-v-home" style="margin-top:10px">🏠 Home</button>
+</div>
+
+<!-- MODAL GENERICO -->
+<div class="ov" id="modal">
+  <div class="evcard" id="modal-card">
+    <div id="m-icon" style="font-size:3rem;margin-bottom:12px">🎵</div>
+    <h3 id="m-title">Titolo</h3>
+    <div id="m-body" style="color:#aaa;font-size:.95rem;line-height:1.7;margin-bottom:24px;text-align:left"></div>
+    <button class="btn r" id="b-modal-ok">OK!</button>
   </div>
 </div>
 
 <script>
-(() => {
-  // === GAME STATE ===
-  let gameState = {
+(function() {
+  // =====================
+  // STATO GLOBALE
+  // =====================
+  var G = {
     level: 'intermediate',
-    mode: 'normal',
-    position: 0,
+    pos: 0,
     score: 0,
-    correct: 0,
-    wrong: 0,
     streak: 0,
     maxStreak: 0,
-    audioEnabled: true,
-    usedQuestions: {beginner: [], intermediate: [], advanced: [], audio: []},
-    totalCells: 40,
-    timeLeft: 15,
-    timerInterval: null
+    correct: 0,
+    wrong: 0,
+    audioOn: true,
+    waiting: false,
+    usedQ: { beginner: [], intermediate: [], advanced: [], audio: [] },
+    TOTAL: 40
   };
 
-  // === AUDIO CONTEXT ===
-  let audioContext = null;
+  // =====================
+  // AUDIO CONTEXT
+  // =====================
+  var actx = null;
 
-  // === QUESTIONS DATABASE ===
-  const questionsDB = {
+  function initAudio() {
+    if (!actx) {
+      try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+    }
+    if (actx && actx.state === 'suspended') actx.resume();
+  }
+
+  function playTones(freqs, type) {
+    if (!G.audioOn) return;
+    initAudio();
+    if (!actx) return;
+    var t = actx.currentTime;
+    freqs.forEach(function(f, i) {
+      try {
+        var osc = actx.createOscillator();
+        var gain = actx.createGain();
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.type = type || 'sine';
+        osc.frequency.value = f;
+        gain.gain.setValueAtTime(0, t + i * 0.5);
+        gain.gain.linearRampToValueAtTime(0.18, t + i * 0.5 + 0.05);
+        gain.gain.setValueAtTime(0.18, t + i * 0.5 + 0.3);
+        gain.gain.linearRampToValueAtTime(0, t + i * 0.5 + 0.45);
+        osc.start(t + i * 0.5);
+        osc.stop(t + i * 0.5 + 0.5);
+      } catch(e) {}
+    });
+  }
+
+  function playChord(freqs) {
+    if (!G.audioOn) return;
+    initAudio();
+    if (!actx) return;
+    var t = actx.currentTime;
+    freqs.forEach(function(f) {
+      try {
+        var osc = actx.createOscillator();
+        var gain = actx.createGain();
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.type = 'triangle';
+        osc.frequency.value = f;
+        gain.gain.setValueAtTime(0.12, t);
+        gain.gain.exponentialRampToValueAtTime(0.01, t + 1.5);
+        osc.start(t);
+        osc.stop(t + 1.5);
+      } catch(e) {}
+    });
+  }
+
+  function beep(freq, dur, vol) {
+    if (!G.audioOn) return;
+    initAudio();
+    if (!actx) return;
+    try {
+      var osc = actx.createOscillator();
+      var gain = actx.createGain();
+      osc.connect(gain); gain.connect(actx.destination);
+      osc.frequency.value = freq || 440; osc.type = 'sine';
+      gain.gain.setValueAtTime(vol || 0.1, actx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + (dur || 0.2));
+      osc.start(actx.currentTime); osc.stop(actx.currentTime + (dur || 0.2));
+    } catch(e) {}
+  }
+
+  // =====================
+  // DOMANDE DB (pool unici per livello)
+  // =====================
+  var QDB = {
     beginner: [
-      {category: 'scala', q: 'Quale scala non ha alterazioni?', a: ['Do Maggiore', 'Sol Maggiore', 'Fa Maggiore'], correct: 0, hint: 'Tutti tasti bianchi del pianoforte' },
-      {category: 'ritmo', q: 'In 4/4 ci sono?', a: ['4 quarti', '3 quarti', '6 ottavi'], correct: 0, hint: 'Il numeratore indica i tempi' },
-      {category: 'accordo', q: 'Triade Do Maggiore?', a: ['Do-Mi-Sol', 'Do-Mib-Sol', 'Do-Fa-Sol'], correct: 0, hint: '1a-3a-5a grado' }
+      {cat:'🎼 Scala', q:'Quale scala ha solo tasti bianchi al pianoforte?', a:['Do Maggiore','Sol Maggiore','Re Maggiore','Fa Maggiore'], c:0, hint:'Non ha diesis né bemolle. Pensa a "Do Re Mi Fa Sol La Si Do"'},
+      {cat:'🎼 Scala', q:'Quante note ha una scala maggiore?', a:['7','5','8','12'], c:0, hint:'Do Re Mi Fa Sol La Si — poi si ripete'},
+      {cat:'♩ Ritmo', q:'In 4/4, quanti quarti ci sono per battuta?', a:['4','3','2','6'], c:0, hint:'Il numeratore indica i tempi'},
+      {cat:'♩ Ritmo', q:'Una semiminima vale?', a:['1 quarto','1 mezzo','2 quarti','1 ottavo'], c:0, hint:'È la nota con la testa nera e il gambo'},
+      {cat:'♯ Accordo', q:'Do Maggiore è formato da?', a:['Do-Mi-Sol','Do-Mib-Sol','Do-Fa-Sol','Re-Fa-La'], c:0, hint:'1a - 3a - 5a della scala'},
+      {cat:'♯ Accordo', q:'Un accordo minore ha il?', a:['III grado abbassato di un semitono','V grado abbassato','VII grado abbassato','II grado abbassato'], c:0, hint:'La terza minore: es. La-Do-Mi'},
+      {cat:'🎵 Teoria', q:'Quanti semitoni ha un\'ottava?', a:['12','7','8','6'], c:0, hint:'Da Do al Do successivo contando tutti i tasti'},
+      {cat:'🎵 Teoria', q:'Cos\'è il BPM?', a:['Battiti per minuto','Basso per misura','Battuta per metro','Bemolle per modulazione'], c:0, hint:'Indica la velocità del brano'},
     ],
     intermediate: [
-      {category: 'progressione', q: 'II-V-I in Do?', a: ['Rem7-Sol7-DoMaj7', 'Do-Fa-Sol', 'Lam-Fa-Do'], correct: 0, hint: 'Standard jazz' },
-      {category: 'modo', q: 'Dorico parte dal?', a: ['II grado', 'VI grado', 'IV grado'], correct: 0, hint: 'Scala minore con VI maggiore' },
-      {category: 'settime', q: 'Sol7 contiene?', a: ['Fa naturale', 'Fa#', 'Sib'], correct: 0, hint: 'b7 del V grado' }
+      {cat:'♫ Progressione', q:'II-V-I in Do è?', a:['Rem7-Sol7-DoMaj7','Do-Fa-Sol7','Lam-Rem-Sol','Fa-Sol-Do'], c:0, hint:'Standard jazz fondamentale'},
+      {cat:'𝄐 Modo', q:'Il Dorico parte dal?', a:['II grado','I grado','VI grado','IV grado'], c:0, hint:'"So What" di Miles Davis — scala di Re con 2 bemolle'},
+      {cat:'𝄐 Modo', q:'Il Misolidio differisce dal Maggiore per?', a:['VII abbassato','VI abbassato','III abbassato','II abbassato'], c:0, hint:'Come la scala di Sol con Fa naturale invece di Fa#'},
+      {cat:'♯ Settime', q:'Sol7 contiene?', a:['Fa naturale','Fa#','La#','Sib'], c:0, hint:'V7 ha la settima minore, dominante per eccellenza'},
+      {cat:'♯ Settime', q:'Un accordo min7 ha?', a:['3a minore + 7a minore','3a magg + 7a minore','3a minore + 7a magg','3a magg + 7a magg'], c:0, hint:'Es. Lam7 = La-Do-Mi-Sol'},
+      {cat:'🎼 Scala', q:'Scala pentatonica maggiore ha?', a:['5 note','7 note','6 note','4 note'], c:0, hint:'"My Girl" o riff di blues classici'},
+      {cat:'♩ Ritmo', q:'La sincope è?', a:['Accento su tempo debole','Tempo forte che si ripete','Pausa nel ritmo','Nota tenuta lunga'], c:0, hint:'Crea tensione: anticipi il battere'},
+      {cat:'♩ Ritmo', q:'Le terzine dividono il tempo in?', a:['3 parti uguali','2 parti uguali','4 parti uguali','5 parti uguali'], c:0, hint:'Tre note nello spazio di due'},
+      {cat:'♫ Progressione', q:'La progressione I-V-vi-IV è usata in?', a:['Migliaia di pop','Solo jazz','Solo classica','Solo metal'], c:0, hint:'"Let It Be", "No Woman No Cry", "Someone Like You"'},
+      {cat:'𝄐 Modo', q:'Il Lidio differisce dal Maggiore per?', a:['IV alzato (#4)','VII alzato','II alzato','VI alzato'], c:0, hint:'Suono "magico, sospeso" — "Lydian" di Joe Satriani'},
     ],
     advanced: [
-      {category: 'modulazione', q: 'Sostituzione tritono?', a: ['bII7 per V7', 'IV per I', 'VI per II'], correct: 0, hint: 'Sol7 → Reb7 in Do' },
-      {category: 'ritmo', q: '6/8 è?', a: ['Binario composto', 'Ternario semplice', 'Quadruplo'], correct: 0, hint: '2 gruppi di 3' }
+      {cat:'♯ Armonia', q:'La sostituzione di tritono sostituisce?', a:['V7 con bII7','I con VI','II con IV','VII con V'], c:0, hint:'Sol7 → Reb7 nella tonalità di Do'},
+      {cat:'𝄐 Modo', q:'La Superlocria si usa su?', a:['Accordi alterati','Accordi maj7','Accordi dim','Accordi sus4'], c:0, hint:'7alt: b9, #9, #11, b13'},
+      {cat:'♫ Modulazione', q:'La modulazione enarmonica sfrutta?', a:['Note con stesso suono ma nome diverso','Cambio di tempo','Modulazione cromatica','Cadenza deceptiva'], c:0, hint:'Es. Sol# = Lab per passare a una tonalità lontana'},
+      {cat:'♩ Ritmo', q:'L\'emiola è?', a:['2 gruppi di 3 sentiti come 3 di 2','Ritmo binario su ternario','Poliritmia in 5/4','Sincope sul IV tempo'], c:0, hint:'Crea ambiguità metrica, comune in Brahms'},
+      {cat:'♯ Armonia', q:'Accordo di Napoli (bII) si usa tipicamente?', a:['In posizione di 1° rivolto sulla IV','In posizione fondamentale sulla I','Come sostituto della V','In posizione di 2° rivolto'], c:0, hint:'Tipico nella musica romantica'},
+      {cat:'♫ Progressione', q:'Il "coltrane changes" usa?', a:['Cadenze per terze di grande terza','II-V-I semplice','Pedali e ostinati','Solo accordi di settima'], c:0, hint:'"Giant Steps" di Coltrane — tre centri tonali a distanza di 3a'},
     ],
     audio: [
-      {q: 'Quale intervallo?', a: ['Terza magg.', 'Quarta giu.', 'Quinta giu.', 'Sesta magg.'], correct: 1, frequencies: [440, 554.37], hint: '"Amazing Grace"', category: 'audio'},
-      {q: 'Triade?', a: ['Maggiore', 'Minore', 'Diminuita'], correct: 0, frequencies: [440, 554.37, 659.25], hint: 'Suono luminoso', category: 'audio'}
+      {cat:'🎧 Audio', q:'Ascolta e riconosci: quale intervallo senti?', a:['2a Maggiore','3a Maggiore','4a Giusta','5a Giusta'], c:1, freqs:[440,554.37], type:'melody', hint:'"Mi" e "Sol#" — base di mille accordi maggiori', song:'Pensa al Do-Mi delle canzonette'},
+      {cat:'🎧 Audio', q:'Ascolta l\'intervallo. Qual è?', a:['3a Minore','4a Giusta','5a Giusta','Ottava'], c:2, freqs:[440,659.25], type:'melody', hint:'Do-Sol — l\'intervallo più stabile in assoluto', song:'"Star Wars" di John Williams parte da questo'},
+      {cat:'🎧 Audio', q:'Che tipo di triade senti?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:0, freqs:[261.63,329.63,392.00], type:'chord', hint:'Suono brillante e stabile', song:'"Happy Birthday" — inizio'},
+      {cat:'🎧 Audio', q:'Questa triade è?', a:['Maggiore','Minore','Diminuita','Aumentata'], c:1, freqs:[261.63,311.13,392.00], type:'chord', hint:'Suono cupo, malinconico', song:'"Requiem" di Mozart — accordo di Re minore'},
+      {cat:'🎧 Audio', q:'Ascolta la scala. È?', a:['Scala Maggiore','Scala Minore Naturale','Scala Dorica','Scala Pentatonica'], c:0, freqs:[261.63,293.66,329.63,349.23,392.00,440,493.88,523.25], type:'melody', hint:'Toni e semitoni: T-T-S-T-T-T-S', song:'"Do Re Mi" del Sound of Music'},
+      {cat:'🎧 Audio', q:'Che intervallo è questo salto?', a:['4a Giusta','5a Giusta','6a Maggiore','Ottava'], c:3, freqs:[261.63,523.25], type:'melody', hint:'Il salto doppio della nota', song:'"Somewhere Over The Rainbow" — primo intervallo'},
+      {cat:'🎧 Audio', q:'Questo accordo a 4 voci è?', a:['Maj7','Dom7 (7a dominante)','Min7','Dim7'], c:1, freqs:[392.00,493.88,587.33,698.46], type:'chord', hint:'Ha la settima minore sopra la triade maggiore', song:'Base di ogni jazz standard: "Autumn Leaves"'},
     ]
   };
 
-  // === DOM ELEMENTS ===
-  const els = {};
-  ['pg-home','pg-board','pg-victory','modal-overlay','b-start','b-theory','roll-dice','audio-toggle','game-board','score-display','progress-bar','question-category','question-text','answer-grid','feedback-message','dice-info','modal-icon','modal-title','modal-description','modal-confirm'].forEach(id => {
-    els[id] = document.getElementById(id);
-  });
+  // =====================
+  // LAYOUT BOARD
+  // =====================
+  var CELLS = [];
+  (function buildCells() {
+    var pattern = ['scala','scala','audio','ritmo','scala','modo','accordo','scala','audio','bonus',
+                   'scala','prog','accordo','scala','audio','ritmo','scala','modo','accordo','bonus',
+                   'scala','audio','prog','scala','ritmo','accordo','scala','audio','modo','bonus',
+                   'scala','ritmo','scala','audio','accordo','scala','prog','ritmo','scala','end'];
+    var icons = {scala:'♭',accordo:'♯',ritmo:'♩',modo:'𝄐',audio:'🎵',bonus:'⭐',prog:'♫',wild:'🃏',end:'🏆',start:'🎼'};
+    var labels = {scala:'Scala',accordo:'Accordo',ritmo:'Ritmo',modo:'Modo',audio:'Audio',bonus:'Bonus',prog:'Prog.',wild:'Jolly',end:'Fine',start:'Inizio'};
+    CELLS = pattern.map(function(t,i) {
+      return {type:t, icon:icons[t]||'♫', label:labels[t]||t};
+    });
+    CELLS[0] = {type:'start', icon:'🎼', label:'Inizio'};
+  })();
 
-  // === UTILITY FUNCTIONS ===
-  function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
-    document.getElementById(pageId).classList.add('on');
-    window.scrollTo(0, 0);
+  // =====================
+  // DOM HELPERS
+  // =====================
+  function $(id) { return document.getElementById(id); }
+  function goPage(id) {
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('on'); });
+    $(id).classList.add('on');
+    window.scrollTo(0,0);
   }
 
-  function showModal(icon, title, desc) {
-    els['modal-icon'].textContent = icon;
-    els['modal-title'].textContent = title;
-    els['modal-description'].textContent = desc;
-    els['modal-overlay'].classList.add('on');
+  // =====================
+  // RENDER BOARD
+  // =====================
+  function renderBoard() {
+    var grid = $('board-grid');
+    grid.innerHTML = '';
+    CELLS.forEach(function(cell, i) {
+      var div = document.createElement('div');
+      div.className = 'cell ct-' + cell.type;
+      if (i === G.pos) div.classList.add('cur');
+      if (i < G.pos) div.classList.add('vis');
+      div.innerHTML = '<span class="cell-icon">' + cell.icon + '</span><span class="cell-name">' + cell.label + '</span>';
+      grid.appendChild(div);
+    });
+    $('progress-fill').style.width = (G.pos / (G.TOTAL-1) * 100) + '%';
+    $('score-el').textContent = G.score;
+    $('streak-el').textContent = G.streak;
   }
 
-  function hideModal() {
-    els['modal-overlay'].classList.remove('on');
-  }
-
-  function updateUI() {
-    els['score-display'].textContent = gameState.score;
-    els['progress-bar'].style.width = (gameState.position / gameState.totalCells * 100) + '%';
-  }
-
-  function getRandomUniqueQuestion(level = gameState.level, category = null) {
-    const poolKey = category || level;
-    const pool = questionsDB[poolKey] || [];
-    const used = gameState.usedQuestions[poolKey] || [];
-    const available = pool.filter((_, index) => !used.includes(index));
-
-    if (available.length === 0) {
-      gameState.usedQuestions[poolKey] = [];
-      return pool[Math.floor(Math.random() * pool.length)];
-    }
-
-    const selectedIndex = Math.floor(Math.random() * available.length);
-    const questionIndex = pool.indexOf(available[selectedIndex]);
-    gameState.usedQuestions[poolKey].push(questionIndex);
-    return pool[questionIndex];
-  }
-
-  function playAudioSequence(frequencies) {
-    if (!gameState.audioEnabled || !audioContext) return;
-
-    if (audioContext.state === 'suspended') audioContext.resume();
-
-    frequencies.forEach((freq, index) => {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.frequency.value = freq;
-      oscillator.type = 'sine';
-
-      gainNode.gain.setValueAtTime(0.15, audioContext.currentTime + index * 0.45);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.45 + 0.35);
-
-      oscillator.start(audioContext.currentTime + index * 0.45);
-      oscillator.stop(audioContext.currentTime + index * 0.45 + 0.4);
+  // =====================
+  // SELEZIONE LIVELLO
+  // =====================
+  function initLevelCards() {
+    var cards = document.querySelectorAll('#level-cards .card');
+    cards.forEach(function(card) {
+      card.onclick = function() {
+        cards.forEach(function(c){ c.classList.remove('sel'); });
+        card.classList.add('sel');
+        G.level = card.getAttribute('data-level');
+        var labels = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
+        $('lv-badge').textContent = 'Livello: ' + (labels[G.level] || G.level);
+      };
     });
   }
 
-  function createBoardCell(index) {
-    const cellTypes = ['scala', 'scala', 'audio', 'ritmo', 'modo', 'scala', 'accordo', 'progr', 'audio', 'bonus'];
-    const cellType = cellTypes[index % cellTypes.length];
-
-    const cell = document.createElement('div');
-    cell.className = `cell ct-${cellType}`;
-    cell.style.setProperty('--glow', index === gameState.position ? '#f0a500' : '#2a2a4a');
-
-    const icons = {
-      scala: '♭', accordo: '♯', ritmo: '♪', modo: '𝄐', 
-      audio: '🎵', bonus: '⭐', progr: 'II', start: '🎼', end: '🏆'
-    };
-
-    cell.innerHTML = `
-      <span class="cell-icon">${icons[cellType] || '♫'}</span>
-      <span class="cell-name">${index + 1}</span>
-    `;
-
-    cell.addEventListener('click', () => {
-      gameState.position = Math.min(index, gameState.totalCells - 1);
-      updateBoard();
-      showQuestion();
-    });
-
-    return cell;
-  }
-
-  function updateBoard() {
-    const board = els['game-board'];
-    board.innerHTML = '';
-
-    for (let i = 0; i < gameState.totalCells; i++) {
-      board.appendChild(createBoardCell(i));
+  // =====================
+  // SHOW QUESTION
+  // =====================
+  function getUniqueQ(poolKey) {
+    var pool = QDB[poolKey];
+    if (!pool || pool.length === 0) return null;
+    if (!G.usedQ[poolKey]) G.usedQ[poolKey] = [];
+    var avail = [];
+    for (var i=0; i<pool.length; i++) {
+      if (G.usedQ[poolKey].indexOf(i) === -1) avail.push(i);
     }
-
-    updateUI();
+    if (avail.length === 0) { G.usedQ[poolKey] = []; avail = pool.map(function(_,i){return i;}); }
+    var pick = avail[Math.floor(Math.random() * avail.length)];
+    G.usedQ[poolKey].push(pick);
+    return pool[pick];
   }
 
   function showQuestion() {
-    const cellType = ['scala', 'scala', 'audio', 'ritmo', 'modo', 'scala', 'accordo', 'progr', 'audio', 'bonus'][gameState.position % 10];
+    var cellType = CELLS[G.pos].type;
+    var poolKey = (cellType === 'audio') ? 'audio' : G.level;
+    var q = getUniqueQ(poolKey);
+    if (!q) { clearQ(); return; }
 
-    if (cellType === 'audio') {
-      showAudioQuestion();
-    } else {
-      showTextQuestion(cellType);
+    $('qcat').textContent = q.cat;
+    $('qtxt').textContent = q.q;
+    $('fbk').textContent = '';
+    $('fbk').className = 'fbk';
+    $('hint-box').style.display = 'none';
+    $('hint-box').textContent = '';
+
+    var grid = $('agrid');
+    grid.innerHTML = '';
+
+    if (cellType === 'audio' && q.freqs) {
+      var playBtn = document.createElement('button');
+      playBtn.className = 'audio-play-btn';
+      playBtn.innerHTML = '▶ Ascolta l\'intervallo';
+      playBtn.onclick = function() {
+        initAudio();
+        if (q.type === 'chord') { playChord(q.freqs); }
+        else { playTones(q.freqs, 'sine'); }
+      };
+      grid.appendChild(playBtn);
     }
-  }
 
-  function showTextQuestion(type) {
-    const q = getRandomUniqueQuestion(gameState.level, type);
-    els['question-category'].textContent = q.category.toUpperCase();
-    els['question-text'].textContent = q.q;
-
-    const grid = els['answer-grid'];
-    grid.innerHTML = '';
-
-    q.a.forEach((answer, index) => {
-      const btn = document.createElement('button');
+    q.a.forEach(function(ans, i) {
+      var btn = document.createElement('button');
       btn.className = 'abtn';
-      btn.textContent = answer;
-      btn.addEventListener('click', () => handleAnswer(q.correct === index, btn));
+      btn.textContent = ans;
+      btn.onclick = function() { checkAnswer(i === q.c, btn, q.hint); };
       grid.appendChild(btn);
     });
 
-    els['feedback-message'].textContent = '';
-    els['question-hint'].style.display = 'none';
+    G.waiting = false;
   }
 
-  function showAudioQuestion() {
-    const q = getRandomUniqueQuestion('audio');
-    els['question-category'].textContent = '🎧 RICONOSCIMENTO AUDIO';
-    els['question-text'].textContent = q.q;
-
-    const grid = els['answer-grid'];
-    grid.innerHTML = '';
-
-    const playBtn = document.createElement('button');
-    playBtn.className = 'audio-btn';
-    playBtn.innerHTML = '▶ <strong>ASCOLTA</strong>';
-    playBtn.addEventListener('click', () => playAudioSequence(q.frequencies));
-    grid.appendChild(playBtn);
-
-    q.a.forEach((answer, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'abtn';
-      btn.textContent = answer;
-      btn.addEventListener('click', () => handleAnswer(q.correct === index, btn));
-      grid.appendChild(btn);
-    });
-
-    els['feedback-message'].textContent = '';
-    els['question-hint'].style.display = 'none';
+  function clearQ() {
+    $('qcat').textContent = '—';
+    $('qtxt').textContent = 'Tocca il dado per lanciare! 🎲';
+    $('agrid').innerHTML = '';
+    $('fbk').textContent = '';
+    $('fbk').className = 'fbk';
   }
 
-  function handleAnswer(isCorrect, clickedButton) {
-    clearInterval(gameState.timerInterval);
+  function checkAnswer(isCorrect, clickedBtn, hint) {
+    if (G.waiting) return;
+    G.waiting = true;
 
-    document.querySelectorAll('.abtn').forEach(btn => btn.disabled = true);
-
+    document.querySelectorAll('.abtn').forEach(function(b){ b.disabled = true; });
+    var pts = 0;
     if (isCorrect) {
-      gameState.streak++;
-      if (gameState.streak > gameState.maxStreak) gameState.maxStreak = gameState.streak;
-      gameState.correct++;
-      gameState.score += 100 + (gameState.streak > 2 ? 50 : 0);
-      els['feedback-message'].textContent = `✅ Corretto! +${100 + (gameState.streak > 2 ? 50 : 0)}pt${gameState.streak > 2 ? ' 🔥' : ''}`;
-      els['feedback-message'].className = 'fbk g';
+      G.streak++;
+      if (G.streak > G.maxStreak) G.maxStreak = G.streak;
+      G.correct++;
+      pts = 100 + (G.streak >= 3 ? 50 : 0);
+      G.score += pts;
+      $('fbk').textContent = '✅ Corretto! +' + pts + 'pt' + (G.streak >= 3 ? ' 🔥 Streak!' : '');
+      $('fbk').className = 'fbk g';
+      clickedBtn.classList.add('ok');
+      beep(880, 0.15, 0.12);
     } else {
-      gameState.streak = 0;
-      gameState.wrong++;
-      gameState.score = Math.max(0, gameState.score - 25);
-      els['feedback-message'].textContent = '❌ Sbagliato! -25pt';
-      els['feedback-message'].className = 'fbk b';
+      G.streak = 0;
+      G.wrong++;
+      G.score = Math.max(0, G.score - 20);
+      $('fbk').textContent = '❌ Sbagliato! -20pt';
+      $('fbk').className = 'fbk b';
+      clickedBtn.classList.add('ko');
+      beep(180, 0.3, 0.12);
     }
-
-    els['question-hint'].textContent = questionsDB[gameState.level][0]?.hint || 'Prova ancora!';
-    els['question-hint'].style.display = 'block';
-
-    clickedButton.classList.add(isCorrect ? 'ok' : 'ko');
-    updateUI();
-
-    setTimeout(() => {
-      gameState.position = Math.min(gameState.position + 1, gameState.totalCells - 1);
-      if (gameState.position >= gameState.totalCells - 1) {
-        showVictory();
-      } else {
-        document.querySelectorAll('.abtn').forEach(btn => btn.disabled = false);
-        document.querySelectorAll('.abtn').forEach(btn => btn.classList.remove('ok', 'ko'));
-        showQuestion();
-      }
-    }, 2500);
+    if (hint) {
+      $('hint-box').textContent = '💡 ' + hint;
+      $('hint-box').style.display = 'block';
+    }
+    $('score-el').textContent = G.score;
+    $('streak-el').textContent = G.streak;
   }
 
+  // =====================
+  // DADO
+  // =====================
   function rollDice() {
-    els['roll-dice'].style.transform = 'rotate(360deg) scale(1.2)';
-    els['roll-dice'].textContent = ['⚀','⚁','⚂','⚃','⚄','⚅'][Math.floor(Math.random()*6)];
-
-    setTimeout(() => {
-      const roll = Math.floor(Math.random() * 6) + 1;
-      gameState.position = Math.min(gameState.position + roll, gameState.totalCells - 1);
-      els['dice-info'].textContent = `Hai tirato ${roll}!`;
-      updateBoard();
-
-      if (gameState.position >= gameState.totalCells - 1) {
-        showVictory();
+    if (G.waiting) return;
+    initAudio();
+    var diceEl = $('dice-el');
+    var faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
+    diceEl.style.transform = 'rotate(720deg) scale(1.3)';
+    diceEl.textContent = faces[Math.floor(Math.random()*6)];
+    setTimeout(function() {
+      var roll = Math.floor(Math.random()*6) + 1;
+      G.pos = Math.min(G.pos + roll, G.TOTAL - 1);
+      $('dinfo').textContent = 'Hai tirato ' + roll + '! Avanzato di ' + roll + ' caselle.';
+      diceEl.style.transform = '';
+      diceEl.textContent = '🎲';
+      renderBoard();
+      if (G.pos >= G.TOTAL - 1) {
+        setTimeout(showVictory, 800);
       } else {
-        setTimeout(showQuestion, 800);
+        setTimeout(showQuestion, 600);
       }
     }, 600);
-
-    setTimeout(() => {
-      els['roll-dice'].style.transform = '';
-      els['roll-dice'].textContent = '🎲';
-      els['dice-info'].textContent = 'Tocca per lanciare';
-    }, 1200);
   }
 
+  // =====================
+  // VITTORIA
+  // =====================
   function showVictory() {
-    els['final-score'].textContent = gameState.score;
-    els['stat-correct'].textContent = gameState.correct;
-    els['stat-wrong'].textContent = gameState.wrong;
-    els['stat-streak'].textContent = gameState.maxStreak;
-    showPage('pg-victory');
+    $('final-score').textContent = G.score;
+    $('v-correct').textContent = G.correct;
+    $('v-wrong').textContent = G.wrong;
+    $('v-streak').textContent = G.maxStreak;
+    goPage('pg-victory');
   }
 
-  // === EVENT LISTENERS ===
-  els['b-start'].addEventListener('click', () => {
-    gameState = {
-      level: 'intermediate',
-      mode: 'normal',
-      position: 0,
-      score: 0,
-      correct: 0,
-      wrong: 0,
-      streak: 0,
-      maxStreak: 0,
-      audioEnabled: true,
-      usedQuestions: {beginner: [], intermediate: [], advanced: [], audio: []},
-      totalCells: 40,
-      timeLeft: 15,
-      timerInterval: null
-    };
-    showPage('pg-board');
-    updateBoard();
-    showQuestion();
-  });
+  // =====================
+  // MODAL
+  // =====================
+  function showModal(icon, title, bodyHTML) {
+    $('m-icon').textContent = icon;
+    $('m-title').textContent = title;
+    $('m-body').innerHTML = bodyHTML;
+    $('modal').classList.add('on');
+  }
+  function closeModal() { $('modal').classList.remove('on'); }
 
-  els['roll-dice'].addEventListener('click', rollDice);
-  els['audio-toggle'].addEventListener('click', () => {
-    gameState.audioEnabled = !gameState.audioEnabled;
-    els['audio-toggle'].textContent = gameState.audioEnabled ? '🔊' : '🔇';
-  });
+  // =====================
+  // ISTRUZIONI
+  // =====================
+  function showHowTo() {
+    showModal('📖', 'Come si gioca', [
+      '<ul class="instructions">',
+      '<li>🎯 <b>Obiettivo:</b> arriva all\'ultima casella del tabellone rispondendo alle domande di teoria musicale.</li>',
+      '<li>🎲 <b>Il dado:</b> tocca il dado per avanzare di 1–6 caselle sul tabellone.</li>',
+      '<li>❓ <b>Domande:</b> ogni casella ha una categoria diversa. Scegli la risposta giusta tra quelle proposte.</li>',
+      '<li>✅ <b>Risposta giusta:</b> guadagni <b>+100 punti</b>. Se sei in streak (3+ di fila), guadagni <b>+50 bonus</b>!</li>',
+      '<li>❌ <b>Risposta sbagliata:</b> perdi <b>20 punti</b> e lo streak si azzera.</li>',
+      '<li>🎵 <b>Caselle Audio:</b> senti un suono e devi riconoscere l\'intervallo o l\'accordo. Premi ▶ per ascoltare.</li>',
+      '<li>🌱 <b>Livelli:</b> scegli Principiante, Intermedio o Avanzato — le domande cambiano!</li>',
+      '</ul>',
+      '<div class="legend-desc">',
+      '<div>♭ <b style="color:#3a6aee">Scala</b> — domande sulle scale musicali</div>',
+      '<div>♯ <b style="color:#8a4aee">Accordo</b> — riconosci accordi e triadi</div>',
+      '<div>🎵 <b style="color:#00aacc">Audio</b> — ascolta e riconosci</div>',
+      '<div>♩ <b style="color:#ee4a7a">Ritmo</b> — tempi, misure, sincopi</div>',
+      '<div>𝄐 <b style="color:#4aee9a">Modo</b> — modi greci e scale modali</div>',
+      '<div>♫ <b style="color:#aa44ee">Progressione</b> — accordi e cadenze</div>',
+      '<div>⭐ <b style="color:#ccaa00">Bonus</b> — punti extra gratis!</div>',
+      '</div>'
+    ].join(''));
+  }
 
-  els['modal-confirm'].addEventListener('click', hideModal);
-  els['restart-game'].addEventListener('click', () => showPage('pg-home'));
-  els['back-home'].addEventListener('click', () => showPage('pg-home'));
+  // =====================
+  // AUDIO TOGGLE
+  // =====================
+  function toggleAudio() {
+    G.audioOn = !G.audioOn;
+    var lbl = G.audioOn ? '🔊' : '🔇';
+    $('b-au-home').innerHTML = (G.audioOn ? '🔊' : '🔇') + ' Audio: <span id="au-lbl-home">' + (G.audioOn ? 'ON' : 'OFF') + '</span>';
+    $('b-au-board').textContent = lbl;
+    if (G.audioOn) initAudio();
+  }
 
-  // === INIT ===
-  updateUI();
+  // =====================
+  // RESET
+  // =====================
+  function resetGame() {
+    G.pos = 0; G.score = 0; G.streak = 0; G.maxStreak = 0;
+    G.correct = 0; G.wrong = 0; G.waiting = false;
+    G.usedQ = { beginner: [], intermediate: [], advanced: [], audio: [] };
+    $('dinfo').textContent = 'Tocca per lanciare (1–6 caselle)';
+  }
+
+  // =====================
+  // EVENT LISTENERS
+  // =====================
+  $('b-start').onclick = function() { goPage('pg-level'); };
+  $('b-howto').onclick = showHowTo;
+  $('b-lv-back').onclick = function() { goPage('pg-home'); };
+  $('b-lv-go').onclick = function() {
+    resetGame();
+    var labels = {beginner:'Principiante', intermediate:'Intermedio', advanced:'Avanzato'};
+    $('lv-badge').textContent = 'Livello: ' + (labels[G.level] || G.level);
+    goPage('pg-board');
+    renderBoard();
+    clearQ();
+  };
+  $('dice-el').onclick = rollDice;
+  $('b-au-home').onclick = toggleAudio;
+  $('b-au-board').onclick = toggleAudio;
+  $('b-home-board').onclick = function() { goPage('pg-home'); };
+  $('b-modal-ok').onclick = closeModal;
+  $('b-restart').onclick = function() { goPage('pg-level'); };
+  $('b-v-home').onclick = function() { goPage('pg-home'); };
+
+  // =====================
+  // INIT
+  // =====================
+  initLevelCards();
+
 })();
 </script>
 </body>
